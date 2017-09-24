@@ -87,8 +87,8 @@ as.data.frame(a, row.names=c("Variables", "Type"))
 ```
 
   A: The table above lists the types of all variabls. 
-     + Integer: country, contient, year, and pop
-     + Double: lifeExp and gdpPercap
+     - Integer: country, contient, year, and pop
+     - Double: lifeExp and gdpPercap
 
 
 # Explore individual variables

@@ -43,7 +43,7 @@ library(tidyverse)
 Smell Test the Data
 ===================
 
-1.  Is it a data.frame, a matrix, a vector, a list?
+-   Q: Is it a data.frame, a matrix, a vector, a list?
 
 ``` r
 gapminder
@@ -76,7 +76,9 @@ str(gapminder)
     ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
     ##  $ gdpPercap: num  779 821 853 836 740 ...
 
-1.  What’s its class?
+A: The data is a tibble, because we load the `tidyverse` package. It is also a data.frame by the classes shown in `str(gapminder)`.
+
+-   Q: What’s its class?
 
 ``` r
 class(gapminder)
@@ -84,7 +86,9 @@ class(gapminder)
 
     ## [1] "tbl_df"     "tbl"        "data.frame"
 
-1.  How many variables/columns?
+A: The class of gapminder includes tbl\_df, tbl, data.frame.
+
+-   Q: How many variables/columns?
 
 ``` r
 ncol(gapminder)
@@ -92,7 +96,9 @@ ncol(gapminder)
 
     ## [1] 6
 
-1.  How many rows/observations?
+A: There are 6 variables.
+
+-   Q: How many rows/observations?
 
 ``` r
 nrow(gapminder)
@@ -100,7 +106,9 @@ nrow(gapminder)
 
     ## [1] 1704
 
-1.  Can you get these facts about “extent” or “size” in more than one way?
+A: A: There are 1704 observations.
+
+-   Q: Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?
 
 ``` r
 dim(gapminder) # number of observations and number of variables
@@ -114,9 +122,9 @@ length(gapminder) # number of variables
 
     ## [1] 6
 
-1.  Can you imagine different functions being useful in different contexts?
+A: We can also use functions `dim()` to check the basic extent, and use `length()` to check the number of variables. In addition, we can also get the extent by using `str()`.
 
-2.  What data type is each variable?
+-   Q: What data type is each variable?
 
 ``` r
 attach(gapminder)
@@ -128,9 +136,11 @@ as.data.frame(a, row.names=c("Variables", "Type"))
     ## Variables country continent    year lifeExp     pop gdpPercap
     ## Type      integer   integer integer  double integer    double
 
+A: The table above lists the types of all variabls. + Integer: country, contient, year, and pop + Double: lifeExp and gdpPercap
+
 Explore individual variables
 ============================
 
-1.  Categorical Variable
+-   Categorical Variable:
 
-2.  quantitative Variable
+-   quantitative Variable
