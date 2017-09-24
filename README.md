@@ -1,31 +1,36 @@
 # STAT545 Homework
-*created by Xinmiao Wang on September 17, 2017*
 
-Hello everyone! Welcome to my repo.
+**Hello everyone! Welcome to my repo.** 
 
-Here is the repository created by Xinmiao for her homework of [STAT545A](http://stat545.com/).  :octocat: 
+:round_pushpin: Here is the repository created by Xinmiao for her homework of [STAT545A](http://stat545.com/). :octocat:
 
 ## To-Dos List
 
   *Homework*   |   **Due Date**    | *Check*
--------------- | ------------------|---------
- HW 02         |  *Spe. 26, 2017*  | -[ ]
- HW 03         |  *Oct. 03, 2017*  | -[ ]
- HW 04         |  *Oct. 10, 2017*  | -[ ]
- HW 05         |  *Oct. 20, 2017*  | -[ ]
+-------------- | ------------------|-------------------------
+ HW 02         |  *Spe. 26, 2017*  | :ballot_box_with_check:
+ HW 03         |  *Oct. 03, 2017*  | 
+ HW 04         |  *Oct. 10, 2017*  | 
+ HW 05         |  *Oct. 20, 2017*  | 
 
 
 ## Homework 02: Explore Gapminder and use dplyr
 
-My hw02 folder is [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw02). 
+* Requirement for Homework 02: click [here](http://stat545.com/hw02_explore-gapminder-dplyr.html)
 
-The files inside are as follows:
+* hw02 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw02).
 
-1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/README.md)
+* Files inside hw02:
 
-2. 
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/README.md)
 
-3.
+  2. [hw02_Gapminder.Rmd] 
+
+  3. [hw02_Gapminder.md]
+
+
+***
+*(To Be Contiued)*
 
 
 
