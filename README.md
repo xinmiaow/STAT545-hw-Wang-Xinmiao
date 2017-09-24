@@ -7,7 +7,7 @@ Here is the repository created by Xinmiao for her homework of [STAT545A](http://
 
 ## To-Dos List
 
-               |  **Due Date**    
+  *Homework*   |   **Due Date**    
 -------------- | ---------------
 - [ ] HW 02    |  *Spe. 26, 2017*
 - [ ] HW 03    |  *Oct. 03, 2017*
