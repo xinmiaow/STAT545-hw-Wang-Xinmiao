@@ -7,12 +7,12 @@ Here is the repository created by Xinmiao for her homework of [STAT545A](http://
 
 ## To-Dos List
 
-               | **Due Date**    
--------------- |---------------
-- [ ] HW 02    | *Spe. 26, 2017*
-- [ ] HW 03    | *Oct. 03, 2017*
-- [ ] HW 04    | *Oct. 10, 2017*
-- [ ] HW 05    | *Oct. 20, 2017*
+               |  **Due Date**    
+-------------- | ---------------
+- [ ] HW 02    |  *Spe. 26, 2017*
+- [ ] HW 03    |  *Oct. 03, 2017*
+- [ ] HW 04    |  *Oct. 10, 2017*
+- [ ] HW 05    |  *Oct. 20, 2017*
 
 
 ## Homework 02: Explore Gapminder and use dplyr
