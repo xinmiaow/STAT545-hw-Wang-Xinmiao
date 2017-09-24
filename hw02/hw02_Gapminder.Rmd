@@ -1,0 +1,81 @@
+---
+title: "STAT545 HW02"
+author: "Xinmiao Wang"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+# Bring Rectangular Data in
+
+In this module, we intend to explore Gapminder data and practice the functions in dplyr, which can be loaded from gapminder package and tidyverse package in R. Please make it sure that those package have been installed before we load them.
+
+Install `gapminder` from CRAN:
+```{r eval=FALSE}
+install.packages("gapminder")
+```
+
+Install `tidyverse` from CRAN:
+```{r eval=FALSE}
+install.packages("tidyverse")
+```
+
+Here, we load those two packages.
+
+```{r load_library, warning=F}
+#load packages
+library(gapminder)
+library(tidyverse)
+```
+
+
+# Smell Test the Data
+
+1. Is it a data.frame, a matrix, a vector, a list?
+
+```{r type_data}
+gapminder
+str(gapminder)
+```
+
+2. What¡¯s its class?
+
+```{r class_data}
+class(gapminder)
+```
+
+3. How many variables/columns?
+
+```{r ncol_data} 
+ncol(gapminder)
+```
+
+4. How many rows/observations?
+
+```{r nrow_data}
+nrow(gapminder)
+```
+
+5. Can you get these facts about ¡°extent¡± or ¡°size¡± in more than one way? 
+
+```{r other_extent}
+dim(gapminder) # number of observations and number of variables
+length(gapminder) # number of variables
+```
+
+6. Can you imagine different functions being useful in different contexts?
+
+7. What data type is each variable?
+
+```{r type_var}
+attach(gapminder)
+a <- rbind(names(gapminder), c(typeof(country), typeof(continent), typeof(year), typeof(lifeExp), typeof(pop), typeof(gdpPercap)))
+as.data.frame(a, row.names=c("Variables", "Type"))
+
+```
+
+
+# Explore individual variables
+
+1. Categorical Variable
+
+2. quantitative Variable
