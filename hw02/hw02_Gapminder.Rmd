@@ -30,41 +30,54 @@ library(tidyverse)
 
 # Smell Test the Data
 
-1. Is it a data.frame, a matrix, a vector, a list?
+* Q: Is it a data.frame, a matrix, a vector, a list?
 
 ```{r type_data}
 gapminder
 str(gapminder)
 ```
 
-2. What¡¯s its class?
+  A: The data is a tibble, because we load the `tidyverse` package. It is also a data.frame by the classes shown in `str(gapminder)`.
+
+
+* Q: What¡¯s its class?
 
 ```{r class_data}
 class(gapminder)
 ```
+ 
+  A: The class of gapminder includes `r class(gapminder)`.
 
-3. How many variables/columns?
+
+* Q: How many variables/columns?
 
 ```{r ncol_data} 
 ncol(gapminder)
 ```
 
-4. How many rows/observations?
+  A: There are `r ncol(gapminder)` variables.
+
+
+* Q: How many rows/observations?
 
 ```{r nrow_data}
 nrow(gapminder)
 ```
 
-5. Can you get these facts about ¡°extent¡± or ¡°size¡± in more than one way? 
+  A: A: There are `r nrow(gapminder)` observations.
+  
+  
+* Q: Can you get these facts about ¡°extent¡± or ¡°size¡± in more than one way? Can you imagine different functions being useful in different contexts? 
 
 ```{r other_extent}
 dim(gapminder) # number of observations and number of variables
 length(gapminder) # number of variables
 ```
 
-6. Can you imagine different functions being useful in different contexts?
-
-7. What data type is each variable?
+  A: We can also use functions `dim()` to check the basic extent, and use `length()` to check the number of variables. In addition, we can also get the extent by using `str()`.
+  
+  
+* Q: What data type is each variable?
 
 ```{r type_var}
 attach(gapminder)
@@ -73,9 +86,13 @@ as.data.frame(a, row.names=c("Variables", "Type"))
 
 ```
 
+  A: The table above lists the types of all variabls. 
+     + Integer: country, contient, year, and pop
+     + Double: lifeExp and gdpPercap
+
 
 # Explore individual variables
 
-1. Categorical Variable
+* Categorical Variable:  
 
-2. quantitative Variable
+* quantitative Variable
