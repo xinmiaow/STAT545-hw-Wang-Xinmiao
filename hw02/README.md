@@ -25,7 +25,7 @@ _**Explore Gapminder and use dplyr**_
 
 ## My Process Report
 
-The tutorials in HW02 and lecture notes are very helpful for this assignment. I think this assignment gets harder than the pervious one, but good to practice.
+The tutorials in HW02 and lecture notes are very helpful for this assignment. I think this assignment gets harder than the previous one, but good to practice.
 
 
 
