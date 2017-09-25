@@ -201,14 +201,43 @@ ggplot(gapminder, aes(x=log10(gdpPercap), y=lifeExp))+
 
 # Use filter(), select() and %>%
 
+Here is the scatter plot of log(gdpPercap) vs. LifeExp in Americas and in Europe. They both show us a positive linear relationship between log(gdpPercap) and lifeExp.
 
+```{r piping}
+gapminder %>% 
+  filter(continent %in% c("Americas", "Europe") ) %>% 
+  select(continent, country, lifeExp, gdpPercap) %>% 
+  ggplot(aes(x=log10(gdpPercap), y=lifeExp, color=continent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The Scatterplot of Log(gdpPerCap) vs. LifeExp in Americas and in Europe")
+
+```
+
+
+Here is the density plots of Log(gdp) for each continent except Africa.
+
+```{r piping2}
+gapminder %>% 
+  filter(continent != "Africa") %>% 
+  select(continent, year, pop, gdpPercap) %>% 
+  mutate(gdp = gdpPercap*pop) %>% 
+  ggplot(aes(x=log10(gdp), fill=continent))+
+  geom_density(alpha=0.5)+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The Density Plots of Log(gdp) for Each Continent Except Africa")
+
+```
 
 
 # Extra Question
 
-```{r}
+```{r extra_question}
 knitr::kable(filter(gapminder, country == c("Rwanda", "Afghanistan")))
-
+knitr::kable(filter(gapminder, country %in% c("Rwanda", "Afghanistan")))
 ```
 
 
