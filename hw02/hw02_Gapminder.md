@@ -209,8 +209,51 @@ ggplot(gapminder, aes(x=lifeExp))+
 Explore various plot types
 ==========================
 
+Life Expectancy vs. Contient
+----------------------------
+
+Here is the boxplot of Continent vs. Life Expectancy. We can observe that the average of life expectancy in Oceania is the highest one. However, we are nor sure yet based on the boxplot, which continent has the highest expectancy than any other continents, because the box overlap with each other.
+
+``` r
+ggplot(gapminder, aes(x=continent, y=lifeExp))+
+  geom_boxplot(aes(color=continent), fill=continent_colors)+
+  theme_calc()+
+  ggtitle("The Boxplot of Continent vs. LifeExp")
+```
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/boxplot_continent_lifeExp-1.png)
+
+In addition, I plot the density of lifeExp for each continent. We can compare the distribution of lifeExp in each continent.
+
+``` r
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of Continent vs. LifeExp")
+```
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/densityplot_continent_lifeExp-1.png)
+
+Life Expectancy vs. GDP per capita
+----------------------------------
+
+First, I plot the gdpPercap versus LifeExp. We observe a shape of logarithm function in the plot.
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/plot_gdpPercap_lifeExp-1.png)
+
+Hence, I plot the log of gdpPercap versus LifeExp instead, which show us a linear relationship between these two variables.
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/plot_log_gdpPercap_lifeExp-1.png)
+
 Use filter(), select() and %&gt;%
 =================================
 
 Extra Question
 ==============
+
+Reference
+=========
+
+-   [STAT545: cm005 Notes and Exercises](http://stat545.com/cm005-notes_and_exercises.html)
+-   [ggplot2 Tutorial](https://github.com/jennybc/ggplot2-tutorial)
+-   [Gapminder README.md by jennybc](https://github.com/jennybc/gapminder/blob/master/README.md)
