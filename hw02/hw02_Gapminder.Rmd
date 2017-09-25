@@ -25,6 +25,7 @@ Here, we load those two packages.
 #load packages
 library(gapminder)
 library(tidyverse)
+library(ggthemes)
 ```
 
 
@@ -32,7 +33,7 @@ library(tidyverse)
 
 ### Is it a data.frame, a matrix, a vector, a list?
 
-```{r type_data}
+```{r type_dat}
 gapminder
 str(gapminder)
 ```
