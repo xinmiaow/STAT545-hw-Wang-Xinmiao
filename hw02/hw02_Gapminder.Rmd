@@ -221,7 +221,7 @@ Here is the density plots of Log(gdp) for each continent except Africa.
 
 ```{r piping2}
 gapminder %>% 
-  filter(continent != "Africa") %>% 
+  filter(continent != "Oceania") %>% 
   select(continent, year, pop, gdpPercap) %>% 
   mutate(gdp = gdpPercap*pop) %>% 
   ggplot(aes(x=log10(gdp), fill=continent))+
@@ -232,14 +232,48 @@ gapminder %>%
 
 ```
 
+I just found the interesting plot from ggplot tutorial and try to plot it.
+
+```{r piping3}
+jYear <- 2007 # this can obviously be changed
+jPch <- 21
+jDarkGray <- 'grey20'
+jXlim <- c(150, 115000)
+jYlim <- c(16, 100)
+
+gapminder %>%
+  filter(continent != "Oceania", year == jYear) %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  scale_x_log10(limits = jXlim) + ylim(jYlim) +
+  geom_point(aes(size = sqrt(pop/pi)), pch = jPch, color = jDarkGray,
+             show.legend = FALSE) + 
+  scale_size_continuous(range=c(1,40)) +
+  facet_wrap(~ continent) + coord_fixed(ratio = 1/43) +
+  aes(fill = country) + scale_fill_manual(values = country_colors) +
+  theme_calc() + theme(strip.text = element_text(size = rel(1.1)))
+
+```
+
 
 # Extra Question
 
 ```{r extra_question}
-knitr::kable(filter(gapminder, country == c("Rwanda", "Afghanistan")))
-knitr::kable(filter(gapminder, country %in% c("Rwanda", "Afghanistan")))
+extra_dat <- filter(gapminder, country == c("Rwanda", "Afghanistan")) %>% 
+  arrange(year)
+my_dat <- filter(gapminder, country %in% c("Rwanda", "Afghanistan")) %>% 
+  arrange(year)
+nrow(extra_dat)
+nrow(my_dat)
 ```
 
+The answer of this question is No.
+The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only `r nrow(extra_dat)` observations. However, there are actually `r nrow(my_dat)` observations. This is because, R will compare two consecutive observations with  each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan.
+We can also check it from the tables below.
+
+```{r extra_question_table}
+knitr::kable(extra_dat)
+knitr::kable(my_dat)
+```
 
 
 # Reference

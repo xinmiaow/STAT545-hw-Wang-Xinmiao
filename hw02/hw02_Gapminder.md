@@ -275,7 +275,7 @@ Here is the density plots of Log(gdp) for each continent except Africa.
 
 ``` r
 gapminder %>% 
-  filter(continent != "Africa") %>% 
+  filter(continent != "Oceania") %>% 
   select(continent, year, pop, gdpPercap) %>% 
   mutate(gdp = gdpPercap*pop) %>% 
   ggplot(aes(x=log10(gdp), fill=continent))+
@@ -287,57 +287,98 @@ gapminder %>%
 
 ![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/piping2-1.png)
 
+I just found the interesting plot from ggplot tutorial and try to plot it.
+
+``` r
+jYear <- 2007 # this can obviously be changed
+jPch <- 21
+jDarkGray <- 'grey20'
+jXlim <- c(150, 115000)
+jYlim <- c(16, 100)
+
+gapminder %>%
+  filter(continent != "Oceania", year == jYear) %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  scale_x_log10(limits = jXlim) + ylim(jYlim) +
+  geom_point(aes(size = sqrt(pop/pi)), pch = jPch, color = jDarkGray,
+             show.legend = FALSE) + 
+  scale_size_continuous(range=c(1,40)) +
+  facet_wrap(~ continent) + coord_fixed(ratio = 1/43) +
+  aes(fill = country) + scale_fill_manual(values = country_colors) +
+  theme_calc() + theme(strip.text = element_text(size = rel(1.1)))
+```
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/piping3-1.png)
+
 Extra Question
 ==============
 
 ``` r
-knitr::kable(filter(gapminder, country == c("Rwanda", "Afghanistan")))
+extra_dat <- filter(gapminder, country == c("Rwanda", "Afghanistan")) %>% 
+  arrange(year)
+my_dat <- filter(gapminder, country %in% c("Rwanda", "Afghanistan")) %>% 
+  arrange(year)
+nrow(extra_dat)
+```
+
+    ## [1] 12
+
+``` r
+nrow(my_dat)
+```
+
+    ## [1] 24
+
+The answer of this question is No. The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only 12 observations. However, there are actually 24 observations. This is because, R will compare two consecutive observations with each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan. We can also check it from the tables below.
+
+``` r
+knitr::kable(extra_dat)
 ```
 
 | country     | continent |  year|  lifeExp|       pop|  gdpPercap|
 |:------------|:----------|-----:|--------:|---------:|----------:|
-| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
-| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
-| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
-| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
-| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
-| Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
 | Rwanda      | Africa    |  1952|   40.000|   2534927|   493.3239|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
 | Rwanda      | Africa    |  1962|   43.000|   3051242|   597.4731|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
 | Rwanda      | Africa    |  1972|   44.600|   3992121|   590.5807|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
 | Rwanda      | Africa    |  1982|   46.218|   5507565|   881.5706|
+| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
 | Rwanda      | Africa    |  1992|   23.599|   7290203|   737.0686|
+| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
 | Rwanda      | Africa    |  2002|   43.413|   7852401|   785.6538|
+| Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
 
 ``` r
-knitr::kable(filter(gapminder, country %in% c("Rwanda", "Afghanistan")))
+knitr::kable(my_dat)
 ```
 
 | country     | continent |  year|  lifeExp|       pop|  gdpPercap|
 |:------------|:----------|-----:|--------:|---------:|----------:|
 | Afghanistan | Asia      |  1952|   28.801|   8425333|   779.4453|
-| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
-| Afghanistan | Asia      |  1962|   31.997|  10267083|   853.1007|
-| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
-| Afghanistan | Asia      |  1972|   36.088|  13079460|   739.9811|
-| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
-| Afghanistan | Asia      |  1982|   39.854|  12881816|   978.0114|
-| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
-| Afghanistan | Asia      |  1992|   41.674|  16317921|   649.3414|
-| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
-| Afghanistan | Asia      |  2002|   42.129|  25268405|   726.7341|
-| Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
 | Rwanda      | Africa    |  1952|   40.000|   2534927|   493.3239|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
 | Rwanda      | Africa    |  1957|   41.500|   2822082|   540.2894|
+| Afghanistan | Asia      |  1962|   31.997|  10267083|   853.1007|
 | Rwanda      | Africa    |  1962|   43.000|   3051242|   597.4731|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
 | Rwanda      | Africa    |  1967|   44.100|   3451079|   510.9637|
+| Afghanistan | Asia      |  1972|   36.088|  13079460|   739.9811|
 | Rwanda      | Africa    |  1972|   44.600|   3992121|   590.5807|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
 | Rwanda      | Africa    |  1977|   45.000|   4657072|   670.0806|
+| Afghanistan | Asia      |  1982|   39.854|  12881816|   978.0114|
 | Rwanda      | Africa    |  1982|   46.218|   5507565|   881.5706|
+| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
 | Rwanda      | Africa    |  1987|   44.020|   6349365|   847.9912|
+| Afghanistan | Asia      |  1992|   41.674|  16317921|   649.3414|
 | Rwanda      | Africa    |  1992|   23.599|   7290203|   737.0686|
+| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
 | Rwanda      | Africa    |  1997|   36.087|   7212583|   589.9445|
+| Afghanistan | Asia      |  2002|   42.129|  25268405|   726.7341|
 | Rwanda      | Africa    |  2002|   43.413|   7852401|   785.6538|
+| Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
 | Rwanda      | Africa    |  2007|   46.242|   8860588|   863.0885|
 
 Reference
