@@ -209,6 +209,13 @@ ggplot(gapminder, aes(x=lifeExp))+
 Explore various plot types
 ==========================
 
+Life Expectancy vs. Year
+------------------------
+
+Here is a boxplot of life expectancy among every five years from 1952 to 2007. From the boxplot, we can see the increasing trend of the average life expectancy all over the world.
+
+![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/year_lifeExp-1.png)
+
 Life Expectancy vs. Contient
 ----------------------------
 
@@ -218,7 +225,7 @@ Here is the boxplot of Continent vs. Life Expectancy. We can observe that the av
 ggplot(gapminder, aes(x=continent, y=lifeExp))+
   geom_boxplot(aes(color=continent), fill=continent_colors)+
   theme_calc()+
-  ggtitle("The Boxplot of Continent vs. LifeExp")
+  ggtitle("The Boxplot of LifeExp in each Continent")
 ```
 
 ![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/boxplot_continent_lifeExp-1.png)
@@ -250,6 +257,25 @@ Use filter(), select() and %&gt;%
 
 Extra Question
 ==============
+
+``` r
+knitr::kable(filter(gapminder, country == c("Rwanda", "Afghanistan")))
+```
+
+| country     | continent |  year|  lifeExp|       pop|  gdpPercap|
+|:------------|:----------|-----:|--------:|---------:|----------:|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
+| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
+| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
+| Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
+| Rwanda      | Africa    |  1952|   40.000|   2534927|   493.3239|
+| Rwanda      | Africa    |  1962|   43.000|   3051242|   597.4731|
+| Rwanda      | Africa    |  1972|   44.600|   3992121|   590.5807|
+| Rwanda      | Africa    |  1982|   46.218|   5507565|   881.5706|
+| Rwanda      | Africa    |  1992|   23.599|   7290203|   737.0686|
+| Rwanda      | Africa    |  2002|   43.413|   7852401|   785.6538|
 
 Reference
 =========

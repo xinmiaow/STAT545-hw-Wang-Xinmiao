@@ -139,6 +139,19 @@ ggplot(gapminder, aes(x=lifeExp))+
 
 # Explore various plot types
 
+## Life Expectancy vs. Year
+
+Here is a boxplot of life expectancy among every five years from 1952 to 2007. From the boxplot, we can see the increasing trend of the average life expectancy all over the world.
+
+```{r year_lifeExp, echo=FALSE}
+ggplot(gapminder, aes(x = year, y = lifeExp))+ 
+  geom_boxplot(aes(group = year), fill="pink")+
+  theme_calc()+
+  ggtitle("The Boxplot of LifeExp over each year")
+
+```
+
+
 ## Life Expectancy vs. Contient
 
 Here is the boxplot of Continent vs. Life Expectancy. We can observe that the average of life expectancy in Oceania is the highest one. However, we are nor sure yet based on the boxplot, which continent has the highest expectancy than any other continents, because the box overlap with each other. 
@@ -147,7 +160,7 @@ Here is the boxplot of Continent vs. Life Expectancy. We can observe that the av
 ggplot(gapminder, aes(x=continent, y=lifeExp))+
   geom_boxplot(aes(color=continent), fill=continent_colors)+
   theme_calc()+
-  ggtitle("The Boxplot of Continent vs. LifeExp")
+  ggtitle("The Boxplot of LifeExp in each Continent")
 
 ```
 
@@ -192,6 +205,11 @@ ggplot(gapminder, aes(x=log10(gdpPercap), y=lifeExp))+
 
 
 # Extra Question
+
+```{r}
+knitr::kable(filter(gapminder, country == c("Rwanda", "Afghanistan")))
+
+```
 
 
 
