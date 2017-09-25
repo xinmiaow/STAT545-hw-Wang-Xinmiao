@@ -287,29 +287,6 @@ gapminder %>%
 
 ![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/piping2-1.png)
 
-I just found the interesting plot from ggplot tutorial and try to plot it.
-
-``` r
-jYear <- 2007 # this can obviously be changed
-jPch <- 21
-jDarkGray <- 'grey20'
-jXlim <- c(150, 115000)
-jYlim <- c(16, 100)
-
-gapminder %>%
-  filter(continent != "Oceania", year == jYear) %>% 
-  ggplot(aes(x = gdpPercap, y = lifeExp)) +
-  scale_x_log10(limits = jXlim) + ylim(jYlim) +
-  geom_point(aes(size = sqrt(pop/pi)), pch = jPch, color = jDarkGray,
-             show.legend = FALSE) + 
-  scale_size_continuous(range=c(1,40)) +
-  facet_wrap(~ continent) + coord_fixed(ratio = 1/43) +
-  aes(fill = country) + scale_fill_manual(values = country_colors) +
-  theme_calc() + theme(strip.text = element_text(size = rel(1.1)))
-```
-
-![](hw02_Gapminder_files/figure-markdown_github-ascii_identifiers/piping3-1.png)
-
 Extra Question
 ==============
 
