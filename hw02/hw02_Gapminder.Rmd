@@ -30,69 +30,114 @@ library(tidyverse)
 
 # Smell Test the Data
 
-* Q: Is it a data.frame, a matrix, a vector, a list?
+### Is it a data.frame, a matrix, a vector, a list?
 
 ```{r type_data}
 gapminder
 str(gapminder)
 ```
 
-  A: The data is a tibble, because we load the `tidyverse` package. It is also a data.frame by the classes shown in `str(gapminder)`.
+* A tibble, because we load the `tidyverse` package
+
+* A data.frame by the classes shown in `str(gapminder)`
 
 
-* Q: What¡¯s its class?
+### What¡¯s its class?
 
 ```{r class_data}
 class(gapminder)
 ```
  
-  A: The class of gapminder includes `r class(gapminder)`.
+* The class of gapminder includes `r class(gapminder)`.
 
 
-* Q: How many variables/columns?
+### How many variables/columns?
 
 ```{r ncol_data} 
 ncol(gapminder)
 ```
 
-  A: There are `r ncol(gapminder)` variables.
+* There are `r ncol(gapminder)` variables.
 
 
-* Q: How many rows/observations?
+### How many rows/observations?
 
 ```{r nrow_data}
 nrow(gapminder)
 ```
 
-  A: A: There are `r nrow(gapminder)` observations.
+* There are `r nrow(gapminder)` observations.
   
   
-* Q: Can you get these facts about ¡°extent¡± or ¡°size¡± in more than one way? Can you imagine different functions being useful in different contexts? 
+### Can you get these facts about ¡°extent¡± or ¡°size¡± in more than one way? Can you imagine different functions being useful in different contexts? 
 
 ```{r other_extent}
 dim(gapminder) # number of observations and number of variables
 length(gapminder) # number of variables
 ```
 
-  A: We can also use functions `dim()` to check the basic extent, and use `length()` to check the number of variables. In addition, we can also get the extent by using `str()`.
-  
-  
-* Q: What data type is each variable?
+* `dim()`: the number of observations and the number of variables
 
-```{r type_var}
+* `str()`: the number of observations and the number of variables
+
+* `length()`: the number of variables
+  
+  
+### What data type is each variable?
+
+```{r type_data}
 attach(gapminder)
 a <- rbind(names(gapminder), c(typeof(country), typeof(continent), typeof(year), typeof(lifeExp), typeof(pop), typeof(gdpPercap)))
-as.data.frame(a, row.names=c("Variables", "Type"))
-
+as.data.frame(a, row.names=c("Variables", "Data Type")) #Data type of each variable
 ```
 
-  A: The table above lists the types of all variabls. 
-     - Integer: country, contient, year, and pop
-     - Double: lifeExp and gdpPercap
+* Integer: country, continent, year, pop
+
+* Numeric: lifeExp, gdpPercap
+
+<Notes> Here, the data types of variables country and continent are integer, even though we can see their values are characters not integer numbers. I think it is because that these two variables are treated as factors with order when we import the data into R. The integers represent the levels. For example, for country, 1 represents Afghanistan, and for continent, 1 represent Africa. You can check it by using `str(gapminder)`, `levels(gapminder$country)` and `levels(gapminder$continent)`. 
 
 
 # Explore individual variables
 
-* Categorical Variable:  
+### Categorical Variable: Continent
 
-* quantitative Variable
+Here are the summary table and the barchart for Continent. 
+
+There are six continents where we collected data, including Africa, Americas, Asia, Europe and Oceania. We collected the most number of data from Africa. The smallest number of data were collect in Oceania. From the barchart below, we can observe the distribution of continent more clearly.
+
+```{r continent}
+summary(continent)
+
+ggplot(gapminder, aes(x=continent))+
+  geom_bar(aes(color=continent), fill=continent_colors)+
+  theme_calc()+
+  ggtitle("The Bar Chart of Continent")
+
+```
+
+
+### Quantitative Variable: LifeExp
+
+Here are the summary data and the histogram for LifeExp. 
+
+The range of lifeExp is from `r range(lifeExp)[1]` to `r range(lifeExp)[2]`. The mean of LifeExp is `r mean(lifeExp)` with standard derivation `r sd(lifeExp)`, and the Median is `r median(lifeExp)`. From the histogram, we can observe the mode of lifeExp is around 70, the shape of its distribution is a little bit left-skewed. Based in the histogram, I suspect the minimum of lifeExp might be an outliter. However, by the 1.5 IQR rule, the minimum value is considerable.
+
+```{r lifeExp}
+summary(lifeExp)
+sd(lifeExp)
+
+ggplot(gapminder, aes(x=lifeExp))+
+  geom_histogram(binwidth = 1,col="red", aes(fill=..count..))+
+  scale_fill_gradient("count", low = "green", high = "red")+
+  theme_calc()+
+  ggtitle("The Histogram of LifeExp")
+
+```
+
+
+# Explore various plot types
+
+# Use filter(), select() and %>%
+
+# Extra Question
