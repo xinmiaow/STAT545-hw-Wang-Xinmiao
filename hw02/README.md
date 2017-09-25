@@ -6,26 +6,27 @@ _**Explore Gapminder and use dplyr**_
 
 ## Files inside
 
-1. [hw02_Gapminder.Rmd] 
+1. [hw02_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.Rmd)
 
-3. [hw02_Gapminder.md]
+3. [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)
 
 
 ## To-Dos List
 
 - [X] Make a homework repo
-- [ ] Bring rectangular data in: Gapminder
-- [ ] Smell test the data
-- [ ] Explore individual variables
-- [ ] Explore various plot types
-- [ ] Use `filter()`, `select()` and `%>%`
-- [ ] Exact Question
-- [ ] Report your process
+- [X] Bring rectangular data in: Gapminder
+- [X] Smell test the data
+- [X] Explore individual variables
+- [X] Explore various plot types
+- [X] Use `filter()`, `select()` and `%>%`
+- [X] Extra Question
+- [X] Report your process
 - [ ] Submit the assignment
 
-## R Markdown
-
-
 ## My Process Report
+
+The tutorials in HW02 and lecture notes are very helpful for this assignment. I think this assignment gets harder than the pervious one, but good to practice.
+
+
 
 
