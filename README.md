@@ -24,9 +24,9 @@
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/README.md)
 
-  2. [hw02_Gapminder.Rmd] 
+  2. [hw02_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.Rmd) 
 
-  3. [hw02_Gapminder.md]
+  3. [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)
 
 
 ***
