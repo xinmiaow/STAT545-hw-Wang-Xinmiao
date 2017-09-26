@@ -281,25 +281,27 @@ In the following section, I try some other functions in dplyr.
 ```{r extra_queation_dplyr}
 extra_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp)) %>%
-  select(country, avg_lifeExp) %>% 
+  summarize(avg_lifeExp = mean(lifeExp)) %>% 
   knitr::kable()
 
 my_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp))
+  summarize(avg_lifeExp = mean(lifeExp)) %>%
+  knitr::kable()
 
 extra_dat %>%  
   group_by(country) %>% 
   select(country, year, lifeExp) %>% 
   arrange(country) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
+  knitr::kable()
 
 my_dat %>%  
   group_by(country) %>% 
   select(country, year, lifeExp) %>% 
   arrange(country) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
+  knitr::kable()
 
 ```
 

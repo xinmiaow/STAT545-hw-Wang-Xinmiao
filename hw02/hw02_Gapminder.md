@@ -387,8 +387,7 @@ In the following section, I try some other functions in dplyr.
 ``` r
 extra_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp)) %>%
-  select(country, avg_lifeExp) %>% 
+  summarize(avg_lifeExp = mean(lifeExp)) %>% 
   knitr::kable()
 ```
 
@@ -400,65 +399,74 @@ extra_dat %>%
 ``` r
 my_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp))
+  summarize(avg_lifeExp = mean(lifeExp)) %>%
+  knitr::kable()
 ```
 
-    ## # A tibble: 2 × 2
-    ##       country avg_lifeExp
-    ##        <fctr>       <dbl>
-    ## 1 Afghanistan    37.47883
-    ## 2      Rwanda    41.48158
+| country     |  avg\_lifeExp|
+|:------------|-------------:|
+| Afghanistan |      37.47883|
+| Rwanda      |      41.48158|
 
 ``` r
 extra_dat %>%  
   group_by(country) %>% 
   select(country, year, lifeExp) %>% 
   arrange(country) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
+  knitr::kable()
 ```
 
-    ## Source: local data frame [12 x 4]
-    ## Groups: country [2]
-    ## 
-    ##        country  year lifeExp lifeExp_gain
-    ##         <fctr> <int>   <dbl>        <dbl>
-    ## 1  Afghanistan  1957  30.332        0.000
-    ## 2  Afghanistan  1967  34.020        3.688
-    ## 3  Afghanistan  1977  38.438        8.106
-    ## 4  Afghanistan  1987  40.822       10.490
-    ## 5  Afghanistan  1997  41.763       11.431
-    ## 6  Afghanistan  2007  43.828       13.496
-    ## 7       Rwanda  1952  40.000        0.000
-    ## 8       Rwanda  1962  43.000        3.000
-    ## 9       Rwanda  1972  44.600        4.600
-    ## 10      Rwanda  1982  46.218        6.218
-    ## 11      Rwanda  1992  23.599      -16.401
-    ## 12      Rwanda  2002  43.413        3.413
+| country     |  year|  lifeExp|  lifeExp\_gain|
+|:------------|-----:|--------:|--------------:|
+| Afghanistan |  1957|   30.332|          0.000|
+| Afghanistan |  1967|   34.020|          3.688|
+| Afghanistan |  1977|   38.438|          8.106|
+| Afghanistan |  1987|   40.822|         10.490|
+| Afghanistan |  1997|   41.763|         11.431|
+| Afghanistan |  2007|   43.828|         13.496|
+| Rwanda      |  1952|   40.000|          0.000|
+| Rwanda      |  1962|   43.000|          3.000|
+| Rwanda      |  1972|   44.600|          4.600|
+| Rwanda      |  1982|   46.218|          6.218|
+| Rwanda      |  1992|   23.599|        -16.401|
+| Rwanda      |  2002|   43.413|          3.413|
 
 ``` r
 my_dat %>%  
   group_by(country) %>% 
   select(country, year, lifeExp) %>% 
   arrange(country) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
+  knitr::kable()
 ```
 
-    ## Source: local data frame [24 x 4]
-    ## Groups: country [2]
-    ## 
-    ##        country  year lifeExp lifeExp_gain
-    ##         <fctr> <int>   <dbl>        <dbl>
-    ## 1  Afghanistan  1952  28.801        0.000
-    ## 2  Afghanistan  1957  30.332        1.531
-    ## 3  Afghanistan  1962  31.997        3.196
-    ## 4  Afghanistan  1967  34.020        5.219
-    ## 5  Afghanistan  1972  36.088        7.287
-    ## 6  Afghanistan  1977  38.438        9.637
-    ## 7  Afghanistan  1982  39.854       11.053
-    ## 8  Afghanistan  1987  40.822       12.021
-    ## 9  Afghanistan  1992  41.674       12.873
-    ## 10 Afghanistan  1997  41.763       12.962
-    ## # ... with 14 more rows
+| country     |  year|  lifeExp|  lifeExp\_gain|
+|:------------|-----:|--------:|--------------:|
+| Afghanistan |  1952|   28.801|          0.000|
+| Afghanistan |  1957|   30.332|          1.531|
+| Afghanistan |  1962|   31.997|          3.196|
+| Afghanistan |  1967|   34.020|          5.219|
+| Afghanistan |  1972|   36.088|          7.287|
+| Afghanistan |  1977|   38.438|          9.637|
+| Afghanistan |  1982|   39.854|         11.053|
+| Afghanistan |  1987|   40.822|         12.021|
+| Afghanistan |  1992|   41.674|         12.873|
+| Afghanistan |  1997|   41.763|         12.962|
+| Afghanistan |  2002|   42.129|         13.328|
+| Afghanistan |  2007|   43.828|         15.027|
+| Rwanda      |  1952|   40.000|          0.000|
+| Rwanda      |  1957|   41.500|          1.500|
+| Rwanda      |  1962|   43.000|          3.000|
+| Rwanda      |  1967|   44.100|          4.100|
+| Rwanda      |  1972|   44.600|          4.600|
+| Rwanda      |  1977|   45.000|          5.000|
+| Rwanda      |  1982|   46.218|          6.218|
+| Rwanda      |  1987|   44.020|          4.020|
+| Rwanda      |  1992|   23.599|        -16.401|
+| Rwanda      |  1997|   36.087|         -3.913|
+| Rwanda      |  2002|   43.413|          3.413|
+| Rwanda      |  2007|   46.242|          6.242|
 
 My Process Report
 =================
