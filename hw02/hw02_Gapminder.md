@@ -387,14 +387,15 @@ In the following section, I try some other functions in dplyr.
 ``` r
 extra_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp)) 
+  summarize(avg_lifeExp = mean(lifeExp)) %>%
+  select(country, avg_lifeExp) %>% 
+  knitr::kable()
 ```
 
-    ## # A tibble: 2 × 2
-    ##       country avg_lifeExp
-    ##        <fctr>       <dbl>
-    ## 1 Afghanistan    38.20050
-    ## 2      Rwanda    40.13833
+| country     |  avg\_lifeExp|
+|:------------|-------------:|
+| Afghanistan |      38.20050|
+| Rwanda      |      40.13833|
 
 ``` r
 my_dat %>% 

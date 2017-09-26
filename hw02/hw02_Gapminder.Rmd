@@ -281,7 +281,9 @@ In the following section, I try some other functions in dplyr.
 ```{r extra_queation_dplyr}
 extra_dat %>% 
   group_by(country) %>% 
-  summarize(avg_lifeExp = mean(lifeExp)) 
+  summarize(avg_lifeExp = mean(lifeExp)) %>%
+  select(country, avg_lifeExp) %>% 
+  knitr::kable()
 
 my_dat %>% 
   group_by(country) %>% 
