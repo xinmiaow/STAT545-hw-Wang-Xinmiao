@@ -1,7 +1,22 @@
 STAT545 HW02
 ================
 Xinmiao Wang
-2017-09-24
+2017-09-25
+
+Navigation
+==========
+
+-   The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao)
+
+-   Requirement for Homework 02: click [here](http://stat545.com/hw02_explore-gapminder-dplyr.html)
+
+-   hw02 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw02).
+
+-   Files inside hw02:
+
+1.  [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/README.md)
+
+2.  [hw02\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)
 
 Bring Rectangular Data in
 =========================
@@ -83,6 +98,8 @@ str(gapminder)
 -   A tibble, because we load the `tidyverse` package
 
 -   A data.frame by the classes shown in `str(gapminder)`
+
+-   A list, if we use `typeof()`. But a data.frame is a special case of a list.
 
 ### What’s its class?
 
@@ -295,6 +312,15 @@ extra_dat <- filter(gapminder, country == c("Rwanda", "Afghanistan")) %>%
   arrange(year)
 my_dat <- filter(gapminder, country %in% c("Rwanda", "Afghanistan")) %>% 
   arrange(year)
+```
+
+-   The answer of this question is NO.
+
+-   The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only 12 observations. However, there are actually 24 observations. This is because, R will compare two consecutive observations with each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan.
+
+-   We can also check it from the tables below.
+
+``` r
 nrow(extra_dat)
 ```
 
@@ -305,8 +331,6 @@ nrow(my_dat)
 ```
 
     ## [1] 24
-
-The answer of this question is No. The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only 12 observations. However, there are actually 24 observations. This is because, R will compare two consecutive observations with each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan. We can also check it from the tables below.
 
 ``` r
 knitr::kable(extra_dat)
@@ -357,6 +381,92 @@ knitr::kable(my_dat)
 | Rwanda      | Africa    |  2002|   43.413|   7852401|   785.6538|
 | Afghanistan | Asia      |  2007|   43.828|  31889923|   974.5803|
 | Rwanda      | Africa    |  2007|   46.242|   8860588|   863.0885|
+
+In the following section, I try some other functions in dplyr.
+
+``` r
+extra_dat %>% 
+  group_by(country) %>% 
+  summarize(avg_lifeExp = mean(lifeExp)) 
+```
+
+    ## # A tibble: 2 × 2
+    ##       country avg_lifeExp
+    ##        <fctr>       <dbl>
+    ## 1 Afghanistan    38.20050
+    ## 2      Rwanda    40.13833
+
+``` r
+my_dat %>% 
+  group_by(country) %>% 
+  summarize(avg_lifeExp = mean(lifeExp))
+```
+
+    ## # A tibble: 2 × 2
+    ##       country avg_lifeExp
+    ##        <fctr>       <dbl>
+    ## 1 Afghanistan    37.47883
+    ## 2      Rwanda    41.48158
+
+``` r
+extra_dat %>%  
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  arrange(country) %>% 
+  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+```
+
+    ## Source: local data frame [12 x 4]
+    ## Groups: country [2]
+    ## 
+    ##        country  year lifeExp lifeExp_gain
+    ##         <fctr> <int>   <dbl>        <dbl>
+    ## 1  Afghanistan  1957  30.332        0.000
+    ## 2  Afghanistan  1967  34.020        3.688
+    ## 3  Afghanistan  1977  38.438        8.106
+    ## 4  Afghanistan  1987  40.822       10.490
+    ## 5  Afghanistan  1997  41.763       11.431
+    ## 6  Afghanistan  2007  43.828       13.496
+    ## 7       Rwanda  1952  40.000        0.000
+    ## 8       Rwanda  1962  43.000        3.000
+    ## 9       Rwanda  1972  44.600        4.600
+    ## 10      Rwanda  1982  46.218        6.218
+    ## 11      Rwanda  1992  23.599      -16.401
+    ## 12      Rwanda  2002  43.413        3.413
+
+``` r
+my_dat %>%  
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  arrange(country) %>% 
+  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+```
+
+    ## Source: local data frame [24 x 4]
+    ## Groups: country [2]
+    ## 
+    ##        country  year lifeExp lifeExp_gain
+    ##         <fctr> <int>   <dbl>        <dbl>
+    ## 1  Afghanistan  1952  28.801        0.000
+    ## 2  Afghanistan  1957  30.332        1.531
+    ## 3  Afghanistan  1962  31.997        3.196
+    ## 4  Afghanistan  1967  34.020        5.219
+    ## 5  Afghanistan  1972  36.088        7.287
+    ## 6  Afghanistan  1977  38.438        9.637
+    ## 7  Afghanistan  1982  39.854       11.053
+    ## 8  Afghanistan  1987  40.822       12.021
+    ## 9  Afghanistan  1992  41.674       12.873
+    ## 10 Afghanistan  1997  41.763       12.962
+    ## # ... with 14 more rows
+
+My Process Report
+=================
+
+-   The tutorials in HW02 and lecture notes are very helpful for this assignment. I have listed those links below in the reference section.
+
+-   I think this assignment gets harder than the previous one. It is not harder in a technical way, but requires us to spend more time to work on it and discover some new functions and figure out which can be use properly. However, it's still interesting to do so.
+
+-   The type of data set and the data type of each variable are two question I feel very confused, but after reading the lecture notes and doing some research, I think I give a reasonable answer for these questions.
 
 Reference
 =========

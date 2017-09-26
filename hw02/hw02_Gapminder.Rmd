@@ -5,6 +5,22 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+#Navigation 
+
+* The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao) 
+
+* Requirement for Homework 02: click [here](http://stat545.com/hw02_explore-gapminder-dplyr.html)
+
+* hw02 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw02).
+
+* Files inside hw02:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/README.md)
+
+  2. [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)
+
+
+
 # Bring Rectangular Data in
 
 In this module, we intend to explore Gapminder data and practice the functions in dplyr, which can be loaded from gapminder package and tidyverse package in R. Please make it sure that those package have been installed before we load them.
@@ -41,6 +57,8 @@ str(gapminder)
 * A tibble, because we load the `tidyverse` package
 
 * A data.frame by the classes shown in `str(gapminder)`
+
+* A list, if we use `typeof()`. But a data.frame is a special case of a list.
 
 
 ### What¡¯s its class?
@@ -240,18 +258,57 @@ extra_dat <- filter(gapminder, country == c("Rwanda", "Afghanistan")) %>%
   arrange(year)
 my_dat <- filter(gapminder, country %in% c("Rwanda", "Afghanistan")) %>% 
   arrange(year)
-nrow(extra_dat)
-nrow(my_dat)
 ```
 
-The answer of this question is No.
-The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only `r nrow(extra_dat)` observations. However, there are actually `r nrow(my_dat)` observations. This is because, R will compare two consecutive observations with  each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan.
-We can also check it from the tables below.
 
-```{r extra_question_table}
+* The answer of this question is NO.
+
+* The command, `filter(gapminder, country == c("Rwanda", "Afghanistan"))`, give us only `r nrow(extra_dat)` observations. However, there are actually `r nrow(my_dat)` observations. This is because, R will compare two consecutive observations with  each time when you use `country==c("Rwanda", "Afghanistan")`. For example, R will compare the country of first observation with Rwanda and the country of second observation with Afghanistan.
+
+* We can also check it from the tables below.
+
+```{r extra_queation_table}
+nrow(extra_dat)
+nrow(my_dat)
+
 knitr::kable(extra_dat)
 knitr::kable(my_dat)
 ```
+
+
+In the following section, I try some other functions in dplyr.
+
+```{r extra_queation_dplyr}
+extra_dat %>% 
+  group_by(country) %>% 
+  summarize(avg_lifeExp = mean(lifeExp)) 
+
+my_dat %>% 
+  group_by(country) %>% 
+  summarize(avg_lifeExp = mean(lifeExp))
+
+extra_dat %>%  
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  arrange(country) %>% 
+  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+
+my_dat %>%  
+  group_by(country) %>% 
+  select(country, year, lifeExp) %>% 
+  arrange(country) %>% 
+  mutate(lifeExp_gain = lifeExp - first(lifeExp))
+
+```
+
+
+# My Process Report
+
+* The tutorials in HW02 and lecture notes are very helpful for this assignment. I have listed those links below in the reference section.
+
+* I think this assignment gets harder than the previous one. It is not harder in a technical way, but requires us to spend more time to work on it and discover some new functions and figure out which can be use properly. However, it's still interesting to do so.
+
+* The type of data set and the data type of each variable are two question I feel very confused, but after reading the lecture notes and doing some research, I think I give a reasonable answer for these questions.
 
 
 # Reference
