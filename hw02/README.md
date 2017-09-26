@@ -23,6 +23,8 @@ _**Explore Gapminder and use dplyr**_
 - [X] Use `filter()`, `select()` and `%>%`
 - [X] Extra Question
 - [X] Report your process
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
+***
+*on Sep. 25, 2017*
 
