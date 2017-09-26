@@ -4,7 +4,7 @@ _**Explore Gapminder and use dplyr**_
 
 :round_pushpin: Here is hw02 folder under [my STAT545 Homework Repo](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao). :octocat:
 
-*Click (here)[https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao] back to the main repo*
+*Click [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao) back to the main repo*
 
 ## Files inside
 
