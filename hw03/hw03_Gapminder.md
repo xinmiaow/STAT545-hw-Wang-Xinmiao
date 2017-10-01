@@ -85,7 +85,7 @@ ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
   geom_point() + ggtitle("GDP per cap by continent") 
 ```
 
-![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/max_min-1.png)
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
 
 Look at the spread of GDP per capita within the continents.
 ===========================================================
@@ -95,9 +95,6 @@ Compute a trimmed mean of life expectancy for different years. Or a weighted mea
 
 How is life expectancy changing over time on different continents?
 ==================================================================
-
-Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy – you decide – a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
-=====================================================================================================================================================================================================================================================================================================================================================================
 
 Find countries with interesting stories
 =======================================

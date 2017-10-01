@@ -44,7 +44,6 @@ library(ggthemes)
 ```
 
 
-  
 
 # Get the maximum and minimum of GDP per capita for all continents
 
@@ -56,10 +55,13 @@ gtbl <- tbl_df(gapminder)
 tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
 
 knitr::kable(tbl1) 
+```
 
+```{r}
 ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
   geom_point() + ggtitle("GDP per cap by continent") 
 ```
+
 </div>
 <div class="clearer"></div>
 
@@ -68,8 +70,5 @@ ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
 # Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. 
 
 # How is life expectancy changing over time on different continents?
-
-# Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy ¨C you decide ¨C a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
-
 
 # Find countries with interesting stories
