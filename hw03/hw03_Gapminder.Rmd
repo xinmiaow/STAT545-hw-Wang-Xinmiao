@@ -48,8 +48,7 @@ library(ggthemes)
 
 # Get the maximum and minimum of GDP per capita for all continents
 
-```{r max_min, results = 'asis'}
-
+<div class="twoC">
 
 <style type="text/css">
 .twoC {width: 100%}
@@ -57,7 +56,9 @@ library(ggthemes)
 .twoC .table {max-width: 50%; float: right}
 .twoC img {max-width: 50%; float: left}
 </style>
-  
+
+```{r max_min, results = 'asis'}
+
 gtbl <- tbl_df(gapminder)
 
 tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
@@ -70,11 +71,10 @@ ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
 gapminder %>% 
   group_by(continent) %>% 
   summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
-  
-  
+
 ```
-
-
+</div>
+<div class="clearer"></div>
 
 # Look at the spread of GDP per capita within the continents.
 
