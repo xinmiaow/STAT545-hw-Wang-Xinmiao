@@ -47,28 +47,60 @@ library(ggthemes)
 
 # Get the maximum and minimum of GDP per capita for all continents
 
-<div class="twoC">
+```{r max_min}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
+  knitr::kable()
 
-```{r max_min, results = 'asis'}
-gtbl <- tbl_df(gapminder)
+ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
+  geom_point()+ 
+  theme_calc()+
+  ggtitle("GDP per cap by continent")
 
-tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
-
-knitr::kable(tbl1) 
 ```
 
-```{r}
-ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
-  geom_point() + ggtitle("GDP per cap by continent") 
-```
-
-</div>
-<div class="clearer"></div>
 
 # Look at the spread of GDP per capita within the continents.
 
+```{r spread_gpd}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(SD.gdp=sd(gdpPercap), IQR.gdp=IQR(gdpPercap)) %>% 
+  knitr::kable()
+
+ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of gdpPercap for each continents")
+
+ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
+  geom_boxplot(fill=continent_colors)+
+  theme_calc()+
+  ggtitle("The Boxplot of GDP per capita in each Continent")
+
+```
+
+
 # Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. 
 
+
+
 # How is life expectancy changing over time on different continents?
+
+```{r change_lifeExp}
+#lag
+
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, color=continent))+
+  geom_point(aes(group=continent))+
+  geom_smooth(se=FALSE)+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The plot of lifeExp over time in each Continent")
+  
+  
+```
+
 
 # Find countries with interesting stories

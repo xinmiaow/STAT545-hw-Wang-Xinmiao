@@ -65,36 +65,86 @@ Get the maximum and minimum of GDP per capita for all continents
 ================================================================
 
 ``` r
-gtbl <- tbl_df(gapminder)
-
-tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
-
-knitr::kable(tbl1) 
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
+  knitr::kable()
 ```
 
-| continent |       mean|     median|
-|:----------|----------:|----------:|
-| Africa    |   2193.755|   1192.138|
-| Americas  |   7136.110|   5465.510|
-| Asia      |   7902.150|   2646.787|
-| Europe    |  14469.476|  12081.749|
-| Oceania   |  18621.609|  17983.304|
+| continent |        Max|         Min|
+|:----------|----------:|-----------:|
+| Africa    |   21951.21|    241.1659|
+| Americas  |   42951.65|   1201.6372|
+| Asia      |  113523.13|    331.0000|
+| Europe    |   49357.19|    973.5332|
+| Oceania   |   34435.37|  10039.5956|
 
 ``` r
-ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
-  geom_point() + ggtitle("GDP per cap by continent") 
+ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
+  geom_point()+ 
+  theme_calc()+
+  ggtitle("GDP per cap by continent")
 ```
 
-![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/max_min-1.png)
 
 Look at the spread of GDP per capita within the continents.
 ===========================================================
+
+``` r
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(SD.gdp=sd(gdpPercap), IQR.gdp=IQR(gdpPercap)) %>% 
+  knitr::kable()
+```
+
+| continent |     SD.gdp|    IQR.gdp|
+|:----------|----------:|----------:|
+| Africa    |   2827.930|   1616.170|
+| Americas  |   6396.764|   4402.431|
+| Asia      |  14045.373|   7492.262|
+| Europe    |   9355.213|  13248.301|
+| Oceania   |   6358.983|   8072.258|
+
+``` r
+ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of gdpPercap for each continents")
+```
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/spread_gpd-1.png)
+
+``` r
+ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
+  geom_boxplot(fill=continent_colors)+
+  theme_calc()+
+  ggtitle("The Boxplot of GDP per capita in each Continent")
+```
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/spread_gpd-2.png)
 
 Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
 ===========================================================================================================
 
 How is life expectancy changing over time on different continents?
 ==================================================================
+
+``` r
+#lag
+
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, color=continent))+
+  geom_point(aes(group=continent))+
+  geom_smooth(se=FALSE)+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The plot of lifeExp over time in each Continent")
+```
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/change_lifeExp-1.png)
 
 Find countries with interesting stories
 =======================================
