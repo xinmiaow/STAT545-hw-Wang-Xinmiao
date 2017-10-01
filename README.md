@@ -17,7 +17,7 @@
 
 * Requirement for Homework 03: click [here](http://stat545.com/hw03_dplyr-and-more-ggplot2.html)
 
-* hw02 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw03).
+* hw03 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw03).
 
 * Files inside hw03:
 
