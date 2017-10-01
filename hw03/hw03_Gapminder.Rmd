@@ -50,15 +50,7 @@ library(ggthemes)
 
 <div class="twoC">
 
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
-
 ```{r max_min, results = 'asis'}
-
 gtbl <- tbl_df(gapminder)
 
 tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
