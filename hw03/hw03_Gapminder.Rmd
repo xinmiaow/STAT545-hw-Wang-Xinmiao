@@ -1,0 +1,88 @@
+---
+title: "STAT HW03"
+author: "Xinmiao Wang"
+date: "`r format(Sys.Date())`"
+output: html_document
+---
+
+#Navigation 
+
+* The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao) 
+
+* Requirement for Homework 03: click [here](http://stat545.com/hw03_dplyr-and-more-ggplot2.html)
+
+* hw03 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw03).
+
+* Files inside hw03:
+
+  1. [README.md]
+  2. [hw03_Gapminder.md]
+
+# Induction 
+
+In this module, the main goal is to pracitce dplyr as our manipulation tool with ggplot2 as our visulization tool. We conitnue to explore Gapminder dataset. Those can be loaded from tidyverse package and gapminder package in R. Please make it sure that those package have been installed before we load them.
+
+# Load Package
+
+Install `gapminder` from CRAN:
+```{r eval=FALSE}
+install.packages("gapminder")
+```
+
+Install `tidyverse` from CRAN:
+```{r eval=FALSE}
+install.packages("tidyverse")
+```
+
+Here, we load those two packages.
+
+```{r load_library, warning=F}
+#load packages
+library(gapminder)
+library(tidyverse)
+library(ggthemes)
+```
+
+
+  
+
+# Get the maximum and minimum of GDP per capita for all continents
+
+```{r max_min, results = 'asis'}
+
+
+<style type="text/css">
+.twoC {width: 100%}
+.clearer {clear: both}
+.twoC .table {max-width: 50%; float: right}
+.twoC img {max-width: 50%; float: left}
+</style>
+  
+gtbl <- tbl_df(gapminder)
+
+tbl1 <- gtbl %>% group_by(continent) %>% summarise_each(funs(mean, median), gdpPercap) 
+
+knitr::kable(tbl1) 
+
+ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
+  geom_point() + ggtitle("GDP per cap by continent") 
+ 
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
+  
+  
+```
+
+
+
+# Look at the spread of GDP per capita within the continents.
+
+# Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. 
+
+# How is life expectancy changing over time on different continents?
+
+# Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy ¨C you decide ¨C a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
+
+
+# Find countries with interesting stories
