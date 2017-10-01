@@ -62,7 +62,7 @@ ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
  
 gapminder %>% 
   group_by(continent) %>% 
-  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
+  summarise(Max=max(gdpPercap), Min=min(gdpPercap))
 
 ```
 </div>
