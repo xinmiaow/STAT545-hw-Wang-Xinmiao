@@ -306,6 +306,19 @@ Find countries with interesting stories
 
 (Continuing last part) I still plot the life expectancy over year in each continent, but use the `country_colors` to distinguish the countries in each continent. We can find overall the life expectancy also has an increasing trend in each country.
 
+``` r
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, group=country))+
+  geom_line(lwd=0.75, show.legend=FALSE)+
+  aes(color = country)+ 
+  scale_color_manual(values = country_colors)+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The plot of lifeExp over time in each continent")
+```
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/country_lifeExp-1.png)
+
 Process Report
 ==============
 

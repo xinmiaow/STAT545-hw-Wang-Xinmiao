@@ -165,7 +165,7 @@ ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
 (Continuing last part)
 I still plot the life expectancy over year in each continent, but use the `country_colors` to distinguish the countries in each continent. We can find overall the life expectancy also has an increasing trend in each country. 
 
-```{r lag_lifeExp, eval=FALSE, echo=FALSE}
+```{r country_lifeExp}
 gapminder %>% 
   ggplot(aes(x=year, y=lifeExp, group=country))+
   geom_line(lwd=0.75, show.legend=FALSE)+
