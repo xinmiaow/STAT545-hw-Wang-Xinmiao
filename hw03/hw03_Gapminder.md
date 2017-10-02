@@ -14,8 +14,8 @@ Navigation
 
 -   Files inside hw03:
 
-1.  \[README.md\]
-2.  \[hw03\_Gapminder.md\]
+1.  [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/README.md)
+2.  [hw03\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)
 
 Induction
 =========
@@ -59,35 +59,23 @@ library(tidyverse)
 
 ``` r
 library(ggthemes)
+library(xtable)
 ```
 
 Get the maximum and minimum of GDP per capita for all continents
 ================================================================
 
-``` r
-gapminder %>% 
-  group_by(continent) %>% 
-  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
-  knitr::kable()
-```
+<table border="1">
+<tr>
+<td>
+continent Max Min ---------- ---------- ----------- Africa 21951.21 241.1659 Americas 42951.65 1201.6372 Asia 113523.13 331.0000 Europe 49357.19 973.5332 Oceania 34435.37 10039.5956
+</td>
+<td>
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/gdpPerca_plot-1.png)
 
-| continent |        Max|         Min|
-|:----------|----------:|-----------:|
-| Africa    |   21951.21|    241.1659|
-| Americas  |   42951.65|   1201.6372|
-| Asia      |  113523.13|    331.0000|
-| Europe    |   49357.19|    973.5332|
-| Oceania   |   34435.37|  10039.5956|
-
-``` r
-ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
-  geom_point()+ 
-  theme_calc()+
-  ggtitle("GDP per cap by continent")
-```
-
-![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/max_min-1.png)
-
+</td>
+</tr>
+</table>
 Look at the spread of GDP per capita within the continents.
 ===========================================================
 
@@ -163,20 +151,39 @@ gapminder %>%
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/tim_mean_lifeExp-1.png)
 
 ``` r
-output <- gapminder %>% 
+gapminder %>% 
   group_by(year) %>% 
   summarise(weighted_mean=weighted.mean(lifeExp, pop)) %>% 
   knitr::kable()
-
-# gapminder %>% 
-#   group_by(year) %>% 
-#   summarise(weighted_mean=weighted.mean(lifeExp, pop)) %>% 
-#   ggplot(aes(x=factor(year), y=weighted_mean, group=1)) %>% 
-#   geom_point()+
-#   labs(x="year", y="Weighted mean of lifeExp")+
-#   theme_calc()+
-#   ggtitle("The Plot of Weighted Mean of LifeExp by population for each year")
 ```
+
+|  year|  weighted\_mean|
+|-----:|---------------:|
+|  1952|        48.94424|
+|  1957|        52.12189|
+|  1962|        52.32438|
+|  1967|        56.98431|
+|  1972|        59.51478|
+|  1977|        61.23726|
+|  1982|        62.88176|
+|  1987|        64.41635|
+|  1992|        65.64590|
+|  1997|        66.84934|
+|  2002|        67.83904|
+|  2007|        68.91909|
+
+``` r
+gapminder %>%
+  group_by(year) %>%
+  summarise(weighted_mean=weighted.mean(lifeExp, pop)) %>%
+  ggplot(aes(x=factor(year), y=weighted_mean))+
+  geom_point()+
+  labs(x="year", y="Weighted mean of lifeExp")+
+  theme_calc()+
+  ggtitle("The Plot of Weighted Mean of LifeExp by population for each year")
+```
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/weighted_mean_lifeExp-1.png)
 
 How is life expectancy changing over time on different continents?
 ==================================================================
@@ -266,10 +273,9 @@ ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/change_lifeExp-1.png)
 
-Find countries with interesting stories
-=======================================
-
 Reference
 =========
 
 -   [ggplot2: Stat Summary](http://ggplot2.tidyverse.org/reference/stat_summary.html)
+
+-   [lotr-tidy: xtable](https://github.com/jennybc/lotr-tidy/blob/master/01-intro.Rmd)
