@@ -34,7 +34,7 @@ Install `tidyverse` from CRAN:
 install.packages("tidyverse")
 ```
 
-Here, we load those two packages.
+Here, we load packages that we gonna use later.
 
 ```{r load_library, warning=F}
 #load packages
@@ -44,8 +44,8 @@ library(ggthemes)
 ```
 
 
-
 # Get the maximum and minimum of GDP per capita for all continents
+
 
 ```{r max_min}
 gapminder %>% 
@@ -63,16 +63,20 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
 
 # Look at the spread of GDP per capita within the continents.
 
+```{r density_gdp}
+ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of gdpPercap for each continents")
+
+```
+
+
 ```{r spread_gpd}
 gapminder %>% 
   group_by(continent) %>% 
   summarise(SD.gdp=sd(gdpPercap), IQR.gdp=IQR(gdpPercap)) %>% 
   knitr::kable()
-
-ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
-  geom_density(alpha = 0.2, lwd=0.65)+
-  theme_calc()+
-  ggtitle("The Density Plot of gdpPercap for each continents")
 
 ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
   geom_boxplot(fill=continent_colors)+
@@ -84,23 +88,78 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
 
 # Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. 
 
+```{r tim_mean_lifeExp}
+gapminder %>% 
+  group_by(year) %>%
+  summarise(trimmed_mean=mean(lifeExp,trim=0.1)) %>% 
+  knitr::kable()
+
+gapminder %>% 
+  group_by(year) %>% 
+  summarise(trimmed_mean=mean(lifeExp,trim=0.1)) %>% 
+  ggplot(aes(x=factor(year), y=trimmed_mean))+
+  geom_point()+
+  labs(x="year", y="Trimmed mean of lifeExp")+
+  theme_calc()+
+  ggtitle("The Plot of Trimmed Mean of LifeExp for each year")
+
+```
+
+```{r weighted_mean_lifeExp}
+output <- gapminder %>% 
+  group_by(year) %>% 
+  summarise(weighted_mean=weighted.mean(lifeExp, pop)) %>% 
+  knitr::kable()
+
+# gapminder %>% 
+#   group_by(year) %>% 
+#   summarise(weighted_mean=weighted.mean(lifeExp, pop)) %>% 
+#   ggplot(aes(x=factor(year), y=weighted_mean, group=1)) %>% 
+#   geom_point()+
+#   labs(x="year", y="Weighted mean of lifeExp")+
+#   theme_calc()+
+#   ggtitle("The Plot of Weighted Mean of LifeExp by population for each year")
+
+```
+
 
 
 # How is life expectancy changing over time on different continents?
 
 ```{r change_lifeExp}
-#lag
-
 gapminder %>% 
-  ggplot(aes(x=year, y=lifeExp, color=continent))+
+  group_by(country) %>%  
+  mutate(diff.lifeExp=lifeExp-lag(lifeExp)) %>% 
+  group_by(continent, year) %>% 
+  summarise(Diff=mean(diff.lifeExp, na.rm = T)) %>% 
+  knitr::kable()
+  
+ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
   geom_point(aes(group=continent))+
   geom_smooth(se=FALSE)+
   facet_wrap(~continent)+
   theme_calc()+
-  ggtitle("The plot of lifeExp over time in each Continent")
-  
+  ggtitle("The plot of lifeExp over time in each Continent with trend")
   
 ```
 
 
+```{r lag_lifeExp, eval=FALSE, echo=FALSE}
+#lag
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, group=country))+
+  geom_line(lwd=0.75, show.legend=FALSE)+
+  aes(color = country)+ 
+  scale_color_manual(values = country_colors)+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The plot of lifeExp over time in each Continent")
+
+```
+
 # Find countries with interesting stories
+
+
+# Reference
+
+* [ggplot2: Stat Summary](http://ggplot2.tidyverse.org/reference/stat_summary.html)
