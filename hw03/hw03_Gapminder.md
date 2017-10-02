@@ -66,7 +66,7 @@ Get the maximum and minimum of GDP per capita for all continents
 
 The table below summarizes the maximum and minimum of GDP per capita for each continents.
 
-We can see the maximum of GDP per capita in Asia is the largest one among five continents, along with a widest range. Both maximum and minimum of GDP per capita in Africa are the smallest among these continents. The GDP per capita in Oceania has the narrowest range.
+We can see the maximum of GDP per capita in Asia is the largest one among five continents, along with a widest range. Both maximum and minimum of GDP per capita in Africa are the smallest among these continents.
 
 The plot following with the table also tells us the information.
 
@@ -97,7 +97,7 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
 Look at the spread of GDP per capita within the continents
 ==========================================================
 
-Firstly, I make a density plot for gdpPercap in each continent, to explore the spread of GDP per capita within the continents. I found that most of the plots are extremely skewed. Hence, I decided to use IQR along with boxplots to show the spread, but I also calculate the standard deviation of gdpPercap in each continent.
+At first, I make a density plot for gdpPercap in each continent, to explore the spread of GDP per capita within the continents. I found that most of the plots are extremely skewed. Hence, I decided to use IQR along with boxplots to show the spread, but I also calculate the standard deviation of gdpPercap in each continent.
 
 ``` r
 ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
@@ -108,7 +108,7 @@ ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/density_gdp-1.png)
 
-The table below show us the standard deviation and IQR for gdpPercap in each continent.Also, the side-by-side boxplot is displayed. We can compare the spread of gdpPercap in each continent by comparing the length of each box.
+The table below shows us the standard deviation and IQR for gdpPercap in each continent.Also, the side-by-side boxplot is displayed. We can compare the spread of gdpPercap in each continent by comparing the length of each box.
 
 ``` r
 gapminder %>% 
