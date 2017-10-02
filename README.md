@@ -23,9 +23,9 @@
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/README.md)
 
-  2. [hw03_Gapminder.Rmd] 
+  2. [hw03_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.Rmd) 
 
-  3. [hw03_Gapminder.md]
+  3. [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)
 
 
 ## Homework 02: Explore Gapminder and use dplyr

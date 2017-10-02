@@ -1,7 +1,7 @@
 STAT HW03
 ================
 Xinmiao Wang
-2017-10-01
+2017-10-02
 
 Navigation
 ==========
@@ -94,8 +94,8 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/max_min-1.png)
 
-Look at the spread of GDP per capita within the continents.
-===========================================================
+Look at the spread of GDP per capita within the continents
+==========================================================
 
 Firstly, I make a density plot for gdpPercap in each continent, to explore the spread of GDP per capita within the continents. I found that most of the plots are extremely skewed. Hence, I decided to use IQR along with boxplots to show the spread, but I also calculate the standard deviation of gdpPercap in each continent.
 
@@ -134,8 +134,8 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/spread_gpd-1.png)
 
-Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
-===========================================================================================================
+Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population
+==========================================================================================================
 
 Here is the table and plot about trimmed mean of life expectancy in each year. I use the argument `trim=0.1` in the function `mean`.
 
