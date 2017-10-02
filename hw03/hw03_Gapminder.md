@@ -20,7 +20,7 @@ Navigation
 Induction
 =========
 
-In this module, the main goal is to pracitce dplyr as our manipulation tool with ggplot2 as our visulization tool. We conitnue to explore Gapminder dataset. Those can be loaded from tidyverse package and gapminder package in R. Please make it sure that those package have been installed before we load them.
+In this module, the main goal is to practice dplyr as our manipulation tool with ggplot2 as our visualization tool. We continue to explore Gapminder dataset. Those can be loaded from tidyverse package and gapminder package in R. Please make it sure that those package have been installed before we load them.
 
 Load Package
 ============
@@ -59,34 +59,56 @@ library(tidyverse)
 
 ``` r
 library(ggthemes)
-library(xtable)
 ```
 
 Get the maximum and minimum of GDP per capita for all continents
 ================================================================
 
-<table border="1">
-<tr>
-<td>
-continent Max Min ---------- ---------- ----------- Africa 21951.21 241.1659 Americas 42951.65 1201.6372 Asia 113523.13 331.0000 Europe 49357.19 973.5332 Oceania 34435.37 10039.5956
-</td>
-<td>
-![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/gdpPerca_plot-1.png)
+The table below summarizes the maximum and minimum of GDP per capita for each continents.
 
-</td>
-</tr>
-</table>
+We can see the maximum of GDP per capita in Asia is the largest one among five continents, along with a widest range. Both maximum and minimum of GDP per capita in Africa are the smallest among these continents. The GDP per capita in Oceania has the narrowest range.
+
+The plot following with the table also tells us the information.
+
+``` r
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
+  knitr::kable()
+```
+
+| continent |        Max|         Min|
+|:----------|----------:|-----------:|
+| Africa    |   21951.21|    241.1659|
+| Americas  |   42951.65|   1201.6372|
+| Asia      |  113523.13|    331.0000|
+| Europe    |   49357.19|    973.5332|
+| Oceania   |   34435.37|  10039.5956|
+
+``` r
+ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
+  geom_point()+ 
+  theme_calc()+
+  ggtitle("The plot of GDP per cap by continent")
+```
+
+![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/max_min-1.png)
+
 Look at the spread of GDP per capita within the continents.
 ===========================================================
+
+Firstly, I make a density plot for gdpPercap in each continent, to explore the spread of GDP per capita within the continents. I found that most of the plots are extremely skewed. Hence, I decided to use IQR along with boxplots to show the spread, but I also calculate the standard deviation of gdpPercap in each continent.
 
 ``` r
 ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
   geom_density(alpha = 0.2, lwd=0.65)+
   theme_calc()+
-  ggtitle("The Density Plot of gdpPercap for each continents")
+  ggtitle("The Density Plot of gdpPercap for each continent")
 ```
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/density_gdp-1.png)
+
+The table below show us the standard deviation and IQR for gdpPercap in each continent.Also, the side-by-side boxplot is displayed. We can compare the spread of gdpPercap in each continent by comparing the length of each box.
 
 ``` r
 gapminder %>% 
@@ -114,6 +136,8 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
 
 Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
 ===========================================================================================================
+
+Here is the table and plot about trimmed mean of life expectancy in each year. I use the argument `trim=0.1` in the function `mean`.
 
 ``` r
 gapminder %>% 
@@ -149,6 +173,8 @@ gapminder %>%
 ```
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/tim_mean_lifeExp-1.png)
+
+Here is the table and plot about weighted mean of life expectancy by population in each year. I use the function `weighted.mean` to calculate that.
 
 ``` r
 gapminder %>% 
@@ -187,6 +213,8 @@ gapminder %>%
 
 How is life expectancy changing over time on different continents?
 ==================================================================
+
+Here, I make a table which contains the difference of life expectancy between each two contiguous years for each continents.I also plot the life expectancy over time in each continent with a smooth line. Both of them tell us the increasing trend of life expectancy over time in each continent.
 
 ``` r
 gapminder %>% 
@@ -266,16 +294,30 @@ ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
   geom_smooth(se=FALSE)+
   facet_wrap(~continent)+
   theme_calc()+
-  ggtitle("The plot of lifeExp over time in each Continent with trend")
+  ggtitle("The plot of lifeExp over time in each continent with trend")
 ```
 
     ## `geom_smooth()` using method = 'loess'
 
 ![](hw03_Gapminder_files/figure-markdown_github-ascii_identifiers/change_lifeExp-1.png)
 
+Find countries with interesting stories
+=======================================
+
+(Continuing last part) I still plot the life expectancy over year in each continent, but use the `country_colors` to distinguish the countries in each continent. We can find overall the life expectancy also has an increasing trend in each country.
+
+Process Report
+==============
+
+Overall, I think the assignment is easy, and most of functions have been covered by lectures. The ggplot2 tutorial is also a very useful resource to discover the functions in ggplot2.
+
+There is one problem I did not solve, which is about the side-by-side plot and table. I found a useful link to do that, but it seems to be very complicated. We need to save the plots and tables and then using the css syntax to organize them in a table. I will try it late if I have any spare time. However, I also wonder any other simpler way to solve it.
+
 Reference
 =========
 
 -   [ggplot2: Stat Summary](http://ggplot2.tidyverse.org/reference/stat_summary.html)
+
+-   [ggplot2 Tutorial](https://github.com/jennybc/ggplot2-tutorial)
 
 -   [lotr-tidy: xtable](https://github.com/jennybc/lotr-tidy/blob/master/01-intro.Rmd)

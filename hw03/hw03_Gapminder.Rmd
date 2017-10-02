@@ -20,7 +20,7 @@ output: github_document
 
 # Induction 
 
-In this module, the main goal is to pracitce dplyr as our manipulation tool with ggplot2 as our visulization tool. We conitnue to explore Gapminder dataset. Those can be loaded from tidyverse package and gapminder package in R. Please make it sure that those package have been installed before we load them.
+In this module, the main goal is to practice dplyr as our manipulation tool with ggplot2 as our visualization tool. We continue to explore Gapminder dataset. Those can be loaded from tidyverse package and gapminder package in R. Please make it sure that those package have been installed before we load them.
 
 # Load Package
 
@@ -41,47 +41,46 @@ Here, we load packages that we gonna use later.
 library(gapminder)
 library(tidyverse)
 library(ggthemes)
-library(xtable)
 ```
 
 
 # Get the maximum and minimum of GDP per capita for all continents
 
-<table border = 1>
-<tr>
-<td>
+The table below summarizes the maximum and minimum of GDP per capita for each continents. 
 
-```{r max_min, results='asis', echo=FALSE}
+We can see the maximum of GDP per capita in Asia is the largest one among five continents, along with a widest range. Both maximum and minimum of GDP per capita in Africa are the smallest among these continents. The GDP per capita in Oceania has the narrowest range.
+
+The plot following with the table also tells us the information. 
+
+```{r max_min}
 gapminder %>% 
   group_by(continent) %>% 
   summarise(Max=max(gdpPercap), Min=min(gdpPercap)) %>% 
   knitr::kable()
-```
-</td>
-<td>
-```{r gdpPerca_plot, results='asis', echo=FALSE}
+
 ggplot(gapminder, aes(x=continent, y=gdpPercap, color = continent)) +
   geom_point()+ 
   theme_calc()+
-  ggtitle("GDP per cap by continent")
-```
+  ggtitle("The plot of GDP per cap by continent")
 
-</td>
-</tr>
-</table>
+```
 
 
 
 # Look at the spread of GDP per capita within the continents.
 
+Firstly, I make a density plot for gdpPercap in each continent, to explore the spread of GDP per capita within the continents. I found that most of the plots are extremely skewed. Hence, I decided to use IQR along with boxplots to show the spread, but I also calculate the standard deviation of gdpPercap in each continent.
+
 ```{r density_gdp}
 ggplot(gapminder, aes(x=gdpPercap, fill=continent))+
   geom_density(alpha = 0.2, lwd=0.65)+
   theme_calc()+
-  ggtitle("The Density Plot of gdpPercap for each continents")
+  ggtitle("The Density Plot of gdpPercap for each continent")
 
 ```
 
+
+The table below show us the standard deviation and IQR for gdpPercap in each continent.Also, the side-by-side boxplot is displayed. We can compare the spread of gdpPercap in each continent by comparing the length of each box.
 
 ```{r spread_gpd}
 gapminder %>% 
@@ -99,6 +98,8 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, color=continent))+
 
 # Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. 
 
+Here is the table and plot about trimmed mean of life expectancy in each year. I use the argument `trim=0.1` in the function `mean`.
+
 ```{r tim_mean_lifeExp}
 gapminder %>% 
   group_by(year) %>%
@@ -115,6 +116,8 @@ gapminder %>%
   ggtitle("The Plot of Trimmed Mean of LifeExp for each year")
 
 ```
+
+Here is the table and plot about weighted mean of life expectancy by population in each year. I use the function `weighted.mean` to calculate that.
 
 ```{r weighted_mean_lifeExp}
 gapminder %>% 
@@ -137,6 +140,8 @@ gapminder %>%
 
 # How is life expectancy changing over time on different continents?
 
+Here, I make a table which contains the difference of life expectancy between each two contiguous years for each continents.I also plot the life expectancy over time in each continent with a smooth line. Both of them tell us the increasing trend of life expectancy over time in each continent.
+
 ```{r change_lifeExp}
 gapminder %>% 
   group_by(country) %>%  
@@ -150,13 +155,17 @@ ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
   geom_smooth(se=FALSE)+
   facet_wrap(~continent)+
   theme_calc()+
-  ggtitle("The plot of lifeExp over time in each Continent with trend")
+  ggtitle("The plot of lifeExp over time in each continent with trend")
   
 ```
 
 
+# Find countries with interesting stories
+
+(Continuing last part)
+I still plot the life expectancy over year in each continent, but use the `country_colors` to distinguish the countries in each continent. We can find overall the life expectancy also has an increasing trend in each country. 
+
 ```{r lag_lifeExp, eval=FALSE, echo=FALSE}
-#lag
 gapminder %>% 
   ggplot(aes(x=year, y=lifeExp, group=country))+
   geom_line(lwd=0.75, show.legend=FALSE)+
@@ -164,12 +173,21 @@ gapminder %>%
   scale_color_manual(values = country_colors)+
   facet_wrap(~continent)+
   theme_calc()+
-  ggtitle("The plot of lifeExp over time in each Continent")
+  ggtitle("The plot of lifeExp over time in each continent")
 
 ```
+
+# Process Report
+
+Overall, I think the assignment is easy, and most of functions have been covered by lectures. The ggplot2 tutorial is also a very useful resource to discover the functions in ggplot2.
+
+There is one problem I did not solve, which is about the side-by-side plot and table. I found a useful link to do that, but it seems to be very complicated. We need to save the plots and tables and then using the css syntax to organize them in a table. I will try it late if I have any spare time. However, I also wonder any other simpler way to solve it.
 
 # Reference
 
 * [ggplot2: Stat Summary](http://ggplot2.tidyverse.org/reference/stat_summary.html)
 
+* [ggplot2 Tutorial](https://github.com/jennybc/ggplot2-tutorial)
+
 * [lotr-tidy: xtable](https://github.com/jennybc/lotr-tidy/blob/master/01-intro.Rmd)
+
