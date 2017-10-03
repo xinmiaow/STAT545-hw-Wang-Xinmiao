@@ -20,7 +20,7 @@ _**Use dplyr to manipulate and explore data**_
 - [X] Life expectancy changing over time on different continents
 - [X] Find countries with interesting stories
 - [X] Report your process
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ***
 *on Oct 01, 2017*

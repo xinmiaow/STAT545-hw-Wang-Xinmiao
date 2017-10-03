@@ -1,7 +1,7 @@
 STAT HW03
 ================
 Xinmiao Wang
-2017-10-02
+2017-10-03
 
 Navigation
 ==========
@@ -15,7 +15,8 @@ Navigation
 -   Files inside hw03:
 
 1.  [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/README.md)
-2.  [hw03\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)
+2.  [hw03\_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.Rmd)
+3.  [hw03\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)
 
 Induction
 =========
