@@ -69,6 +69,7 @@ library(tidyverse)
 library(gapminder)
 library(devtools)
 library(ggthemes)
+library(countrycode)
 ```
 
 General data reshaping and relationship to aggregation
@@ -127,3 +128,5 @@ Activity 1
 
 -   One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city. If you really want to be helpful, you could attempt to make a pull request to resolve this issue, where I would like to bring ISO country codes into the gapminder package.
 -   One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
+
+I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America.
