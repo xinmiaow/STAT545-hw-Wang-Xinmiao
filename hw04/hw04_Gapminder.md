@@ -1,0 +1,83 @@
+STAT HW04
+================
+Xinmiao Wang
+2017-10-06
+
+Navigation
+==========
+
+-   The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao)
+
+-   Requirement for Homework 04: click [here](http://stat545.com/hw04_tidy-data-joins.html)
+
+-   hw04 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw04).
+
+-   Files inside hw04:
+
+1.  [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/README.md)
+2.  [hw04\_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.Rmd)
+3.  [hw04\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)
+
+Induction
+=========
+
+The goal of this homework is to solidify your data wrangling skills by working some realistic problems in the grey area between data aggregation and data reshaping.
+
+In this Homework, we still work on Gapminder dataset
+
+Load Package
+============
+
+Install `gapminder` from CRAN:
+
+``` r
+install.packages("gapminder")
+```
+
+Install `tidyverse` from CRAN:
+
+``` r
+install.packages("tidyverse")
+```
+
+Install `devtools` from CRAN:
+
+``` r
+install.packages("devtools")
+```
+
+Here, we load packages that we gonna use later.
+
+``` r
+#load packages
+library(tidyverse)
+```
+
+    ## Loading tidyverse: ggplot2
+    ## Loading tidyverse: tibble
+    ## Loading tidyverse: tidyr
+    ## Loading tidyverse: readr
+    ## Loading tidyverse: purrr
+    ## Loading tidyverse: dplyr
+
+    ## Conflicts with tidy packages ----------------------------------------------
+
+    ## filter(): dplyr, stats
+    ## lag():    dplyr, stats
+
+``` r
+library(gapminder)
+library(devtools)
+library(ggthemes)
+```
+
+General data reshaping and relationship to aggregation
+======================================================
+
+Activity 2
+----------
+
+\*Make a tibble with one row per year and columns for life expectancy for two or more countries.
+
+-   Use knitr::kable() to make this table look pretty in your rendered homework.
+-   Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
