@@ -130,3 +130,19 @@ Activity 1
 -   One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
 
 I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America.
+
+``` r
+dat2 <- countrycode_data %>% 
+  filter(region=="Northern America") %>% 
+  select(country.name.en, iso2c, iso3n)
+
+knitr::kable(dat2)
+```
+
+| country.name.en           | iso2c |  iso3n|
+|:--------------------------|:------|------:|
+| Bermuda                   | BM    |     60|
+| Canada                    | CA    |    124|
+| Greenland                 | GL    |    304|
+| Saint Pierre and Miquelon | PM    |    666|
+| United States of America  | US    |    840|

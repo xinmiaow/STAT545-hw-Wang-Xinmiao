@@ -93,7 +93,14 @@ ggplot(dat1, aes(x=Canada, y=get("United States")))+
 
 
 I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America. 
+
 ```{r join_merge}
+dat2 <- countrycode_data %>% 
+  filter(region=="Northern America") %>% 
+  select(country.name.en, iso2c, iso3n)
+
+knitr::kable(dat2)
+
 
 ```
 
