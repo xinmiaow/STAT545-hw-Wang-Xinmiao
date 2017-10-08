@@ -51,7 +51,6 @@ library(tidyverse)
 library(gapminder)
 library(devtools)
 library(ggthemes)
-library(countrycode)
 library(geonames)
 ```
 
@@ -64,7 +63,10 @@ library(geonames)
 
   - Use knitr::kable() to make this table look pretty in your rendered homework.
   - Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
-  
+
+
+Here, I select all the countries in Americas and spread the life expectancy for each country in each year. And then, I plot the life expectancy in Canada aganist the life expectancy in United States. We can observe a positive linear relatinship between them along with an increasing trend.
+
 ```{r reshaping}
 dat1 <- gapminder %>% 
   filter(continent == "Americas") %>%
@@ -90,10 +92,9 @@ ggplot(dat1, aes(x=Canada, y=get("United States")))+
 * Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins. Examples of a second data frame you could build:
 
   - One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city. If you really want to be helpful, you could attempt to make a pull request to resolve this issue, where I would like to bring ISO country codes into the gapminder package.
-  - One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
 
 
-I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America. 
+I am going to use the data in `geonames` to create a new dataset which include the information of countries including Canada, United States and New Zealand. 
 
 ```{r echo=F}
 options(geonamesUsername="xinmiaow")
@@ -102,7 +103,7 @@ options(geonamesUsername="xinmiaow")
 ```{r creat_dataset}
 # Part of Gapminder dataset
 gapminder.part <- gapminder %>% 
-  filter(country%in%c("United States", "Canada", "Mexico")) %>%
+  filter(country%in%c("United States", "Canada", "Mexico"), year>2000) %>%
   select(country, year, lifeExp, gdpPercap) %>% 
   tbl_df()
 
@@ -111,7 +112,7 @@ knitr::kable(gapminder.part)
 # Information of Canada and United States
 countryinfo <- GNcountryInfo() %>% 
   tbl_df %>%
-  filter(countryName%in%c("Canada", "United States")) %>% 
+  filter(countryName%in%c("Canada", "United States", "New Zealand")) %>% 
   select(country=countryName, iso=isoAlpha3, capital=capital, lang=languages) %>%
   mutate(country=as.character(country), iso=as.character(iso), capital=as.character(capital), lang=as.character(lang))
 
@@ -119,33 +120,84 @@ knitr::kable(countryinfo)
 
 ```
 
+### Left_join
+
+>left_join(x, y): Return all rows from x, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
+
 ```{r left_join}
 gapminder.part %>% 
   left_join(countryinfo, by="country") %>% 
   knitr::kable()
+
+countryinfo %>% 
+  left_join(gapminder.part, by="country") %>% 
+  knitr::kable()
 ```
+
+### Inner_join
+
+>inner_join(x, y): Return all rows from x where there are matching values in y, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
 
 ```{r inner_join}
 gapminder.part %>% 
   inner_join(countryinfo, by="country") %>% 
   knitr::kable()
+
+countryinfo %>% 
+  inner_join(gapminder.part, by="country") %>% 
+  knitr::kable()
 ```
+
+
+### Anti_join
+
+>anti_join(x, y): Return all rows from x where there are not matching values in y, keeping just columns from x. This is a filtering join.
 
 ```{r anti_join}
 gapminder.part %>% 
-  anti_join(countryinfo, by="country") %>% 
+  anti_join(countryinfo, by="country")%>% 
+  knitr::kable() 
+
+countryinfo %>% 
+  anti_join(gapminder.part, by="country") %>% 
   knitr::kable()
 ```
+
+
+### Semi_join
+
+>semi_join(x, y): Return all rows from x where there are matching values in y, keeping just columns from x. A semi join differs from an inner join because an inner join will return one row of x for each matching row of y, where a semi join will never duplicate rows of x. This is a filtering join.
+
 ```{r semi_join}
 gapminder.part %>% 
   semi_join(countryinfo, by="country") %>% 
   knitr::kable()
 
+countryinfo %>% 
+  semi_join(gapminder.part, by="country") %>% 
+  knitr::kable()
 ```
+
+
+### Full_join
+
+>full_join(x, y): Return all rows and all columns from both x and y. Where there are not matching values, returns NA for the one missing. This is a mutating join.
+
 ```{r full_join}
 gapminder.part %>% 
   full_join(countryinfo, by="country") %>% 
   knitr::kable()
 ```
+
+
+# Process Report
+
+Overall, this assignment is easy, except creating the dataset containing the country information. When creating the country information dataset, first, I tried to use the function `countrycode_data` in the package `countrycode`, but the information in it is limited, which only contains the country name, continent, iso. Hence, I decided to ues `GNcountryInfo` in `geonames`. I tried several times, the problem is we need to creat an account in the websites of geonames web data before we use the data in R, but it's good to learn it.
+
+# Reference
+
+-[Methods for obtaining data online](http://cfss.uchicago.edu/webdata001_api.html)
+
+- [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html#inner_joinsuperheroes-publishers)
 
 

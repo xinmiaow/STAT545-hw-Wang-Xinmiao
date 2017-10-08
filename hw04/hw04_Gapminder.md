@@ -69,7 +69,6 @@ library(tidyverse)
 library(gapminder)
 library(devtools)
 library(ggthemes)
-library(countrycode)
 library(geonames)
 ```
 
@@ -85,6 +84,8 @@ Activity 2
 
 -   Use knitr::kable() to make this table look pretty in your rendered homework.
 -   Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
+
+Here, I select all the countries in Americas and spread the life expectancy for each country in each year. And then, I plot the life expectancy in Canada aganist the life expectancy in United States. We can observe a positive linear relatinship between them along with an increasing trend.
 
 ``` r
 dat1 <- gapminder %>% 
@@ -130,14 +131,13 @@ Activity 1
 -   Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a dplyr join function and make some observations about the process and result. Explore the different types of joins. Examples of a second data frame you could build:
 
 -   One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city. If you really want to be helpful, you could attempt to make a pull request to resolve this issue, where I would like to bring ISO country codes into the gapminder package.
--   One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
 
-I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America.
+I am going to use the data in `geonames` to create a new dataset which include the information of countries including Canada, United States and New Zealand.
 
 ``` r
 # Part of Gapminder dataset
 gapminder.part <- gapminder %>% 
-  filter(country%in%c("United States", "Canada", "Mexico")) %>%
+  filter(country%in%c("United States", "Canada", "Mexico"), year>2000) %>%
   select(country, year, lifeExp, gdpPercap) %>% 
   tbl_df()
 
@@ -146,48 +146,18 @@ knitr::kable(gapminder.part)
 
 | country       |  year|  lifeExp|  gdpPercap|
 |:--------------|-----:|--------:|----------:|
-| Canada        |  1952|   68.750|  11367.161|
-| Canada        |  1957|   69.960|  12489.950|
-| Canada        |  1962|   71.300|  13462.486|
-| Canada        |  1967|   72.130|  16076.588|
-| Canada        |  1972|   72.880|  18970.571|
-| Canada        |  1977|   74.210|  22090.883|
-| Canada        |  1982|   75.760|  22898.792|
-| Canada        |  1987|   76.860|  26626.515|
-| Canada        |  1992|   77.950|  26342.884|
-| Canada        |  1997|   78.610|  28954.926|
-| Canada        |  2002|   79.770|  33328.965|
-| Canada        |  2007|   80.653|  36319.235|
-| Mexico        |  1952|   50.789|   3478.126|
-| Mexico        |  1957|   55.190|   4131.547|
-| Mexico        |  1962|   58.299|   4581.609|
-| Mexico        |  1967|   60.110|   5754.734|
-| Mexico        |  1972|   62.361|   6809.407|
-| Mexico        |  1977|   65.032|   7674.929|
-| Mexico        |  1982|   67.405|   9611.148|
-| Mexico        |  1987|   69.498|   8688.156|
-| Mexico        |  1992|   71.455|   9472.384|
-| Mexico        |  1997|   73.670|   9767.298|
-| Mexico        |  2002|   74.902|  10742.441|
-| Mexico        |  2007|   76.195|  11977.575|
-| United States |  1952|   68.440|  13990.482|
-| United States |  1957|   69.490|  14847.127|
-| United States |  1962|   70.210|  16173.146|
-| United States |  1967|   70.760|  19530.366|
-| United States |  1972|   71.340|  21806.036|
-| United States |  1977|   73.380|  24072.632|
-| United States |  1982|   74.650|  25009.559|
-| United States |  1987|   75.020|  29884.350|
-| United States |  1992|   76.090|  32003.932|
-| United States |  1997|   76.810|  35767.433|
-| United States |  2002|   77.310|  39097.100|
-| United States |  2007|   78.242|  42951.653|
+| Canada        |  2002|   79.770|   33328.97|
+| Canada        |  2007|   80.653|   36319.24|
+| Mexico        |  2002|   74.902|   10742.44|
+| Mexico        |  2007|   76.195|   11977.57|
+| United States |  2002|   77.310|   39097.10|
+| United States |  2007|   78.242|   42951.65|
 
 ``` r
 # Information of Canada and United States
 countryinfo <- GNcountryInfo() %>% 
   tbl_df %>%
-  filter(countryName%in%c("Canada", "United States")) %>% 
+  filter(countryName%in%c("Canada", "United States", "New Zealand")) %>% 
   select(country=countryName, iso=isoAlpha3, capital=capital, lang=languages) %>%
   mutate(country=as.character(country), iso=as.character(iso), capital=as.character(capital), lang=as.character(lang))
 
@@ -197,7 +167,12 @@ knitr::kable(countryinfo)
 | country       | iso | capital          | lang               |
 |:--------------|:----|:-----------------|:-------------------|
 | Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |
+| New Zealand   | NZL | Wellington       | en-NZ,mi           |
 | United States | USA | Washington, D.C. | en-US,es-US,haw,fr |
+
+### Left\_join
+
+> left\_join(x, y): Return all rows from x, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
 
 ``` r
 gapminder.part %>% 
@@ -210,42 +185,33 @@ gapminder.part %>%
 
 | country       |  year|  lifeExp|  gdpPercap| iso | capital          | lang               |
 |:--------------|-----:|--------:|----------:|:----|:-----------------|:-------------------|
-| Canada        |  1952|   68.750|  11367.161| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1957|   69.960|  12489.950| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1962|   71.300|  13462.486| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1967|   72.130|  16076.588| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1972|   72.880|  18970.571| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1977|   74.210|  22090.883| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1982|   75.760|  22898.792| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1987|   76.860|  26626.515| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1992|   77.950|  26342.884| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1997|   78.610|  28954.926| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  2002|   79.770|  33328.965| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  2007|   80.653|  36319.235| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Mexico        |  1952|   50.789|   3478.126| NA  | NA               | NA                 |
-| Mexico        |  1957|   55.190|   4131.547| NA  | NA               | NA                 |
-| Mexico        |  1962|   58.299|   4581.609| NA  | NA               | NA                 |
-| Mexico        |  1967|   60.110|   5754.734| NA  | NA               | NA                 |
-| Mexico        |  1972|   62.361|   6809.407| NA  | NA               | NA                 |
-| Mexico        |  1977|   65.032|   7674.929| NA  | NA               | NA                 |
-| Mexico        |  1982|   67.405|   9611.148| NA  | NA               | NA                 |
-| Mexico        |  1987|   69.498|   8688.156| NA  | NA               | NA                 |
-| Mexico        |  1992|   71.455|   9472.384| NA  | NA               | NA                 |
-| Mexico        |  1997|   73.670|   9767.298| NA  | NA               | NA                 |
-| Mexico        |  2002|   74.902|  10742.441| NA  | NA               | NA                 |
-| Mexico        |  2007|   76.195|  11977.575| NA  | NA               | NA                 |
-| United States |  1952|   68.440|  13990.482| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1957|   69.490|  14847.127| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1962|   70.210|  16173.146| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1967|   70.760|  19530.366| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1972|   71.340|  21806.036| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1977|   73.380|  24072.632| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1982|   74.650|  25009.559| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1987|   75.020|  29884.350| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1992|   76.090|  32003.932| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1997|   76.810|  35767.433| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  2002|   77.310|  39097.100| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  2007|   78.242|  42951.653| USA | Washington, D.C. | en-US,es-US,haw,fr |
+| Canada        |  2002|   79.770|   33328.97| CAN | Ottawa           | en-CA,fr-CA,iu     |
+| Canada        |  2007|   80.653|   36319.24| CAN | Ottawa           | en-CA,fr-CA,iu     |
+| Mexico        |  2002|   74.902|   10742.44| NA  | NA               | NA                 |
+| Mexico        |  2007|   76.195|   11977.57| NA  | NA               | NA                 |
+| United States |  2002|   77.310|   39097.10| USA | Washington, D.C. | en-US,es-US,haw,fr |
+| United States |  2007|   78.242|   42951.65| USA | Washington, D.C. | en-US,es-US,haw,fr |
+
+``` r
+countryinfo %>% 
+  left_join(gapminder.part, by="country") %>% 
+  knitr::kable()
+```
+
+    ## Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## factor and character vector, coercing into character vector
+
+| country       | iso | capital          | lang               |  year|  lifeExp|  gdpPercap|
+|:--------------|:----|:-----------------|:-------------------|-----:|--------:|----------:|
+| Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |  2002|   79.770|   33328.97|
+| Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |  2007|   80.653|   36319.24|
+| New Zealand   | NZL | Wellington       | en-NZ,mi           |    NA|       NA|         NA|
+| United States | USA | Washington, D.C. | en-US,es-US,haw,fr |  2002|   77.310|   39097.10|
+| United States | USA | Washington, D.C. | en-US,es-US,haw,fr |  2007|   78.242|   42951.65|
+
+### Inner\_join
+
+> inner\_join(x, y): Return all rows from x where there are matching values in y, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
 
 ``` r
 gapminder.part %>% 
@@ -258,51 +224,55 @@ gapminder.part %>%
 
 | country       |  year|  lifeExp|  gdpPercap| iso | capital          | lang               |
 |:--------------|-----:|--------:|----------:|:----|:-----------------|:-------------------|
-| Canada        |  1952|   68.750|   11367.16| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1957|   69.960|   12489.95| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1962|   71.300|   13462.49| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1967|   72.130|   16076.59| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1972|   72.880|   18970.57| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1977|   74.210|   22090.88| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1982|   75.760|   22898.79| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1987|   76.860|   26626.52| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1992|   77.950|   26342.88| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1997|   78.610|   28954.93| CAN | Ottawa           | en-CA,fr-CA,iu     |
 | Canada        |  2002|   79.770|   33328.97| CAN | Ottawa           | en-CA,fr-CA,iu     |
 | Canada        |  2007|   80.653|   36319.24| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| United States |  1952|   68.440|   13990.48| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1957|   69.490|   14847.13| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1962|   70.210|   16173.15| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1967|   70.760|   19530.37| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1972|   71.340|   21806.04| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1977|   73.380|   24072.63| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1982|   74.650|   25009.56| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1987|   75.020|   29884.35| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1992|   76.090|   32003.93| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1997|   76.810|   35767.43| USA | Washington, D.C. | en-US,es-US,haw,fr |
 | United States |  2002|   77.310|   39097.10| USA | Washington, D.C. | en-US,es-US,haw,fr |
 | United States |  2007|   78.242|   42951.65| USA | Washington, D.C. | en-US,es-US,haw,fr |
 
 ``` r
-gapminder.part %>% 
-  anti_join(countryinfo, by="country") %>% 
+countryinfo %>% 
+  inner_join(gapminder.part, by="country") %>% 
   knitr::kable()
+```
+
+    ## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## character vector and factor, coercing into character vector
+
+| country       | iso | capital          | lang               |  year|  lifeExp|  gdpPercap|
+|:--------------|:----|:-----------------|:-------------------|-----:|--------:|----------:|
+| Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |  2002|   79.770|   33328.97|
+| Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |  2007|   80.653|   36319.24|
+| United States | USA | Washington, D.C. | en-US,es-US,haw,fr |  2002|   77.310|   39097.10|
+| United States | USA | Washington, D.C. | en-US,es-US,haw,fr |  2007|   78.242|   42951.65|
+
+### Anti\_join
+
+> anti\_join(x, y): Return all rows from x where there are not matching values in y, keeping just columns from x. This is a filtering join.
+
+``` r
+gapminder.part %>% 
+  anti_join(countryinfo, by="country")%>% 
+  knitr::kable() 
 ```
 
 | country |  year|  lifeExp|  gdpPercap|
 |:--------|-----:|--------:|----------:|
-| Mexico  |  1952|   50.789|   3478.126|
-| Mexico  |  1957|   55.190|   4131.547|
-| Mexico  |  1962|   58.299|   4581.609|
-| Mexico  |  1967|   60.110|   5754.734|
-| Mexico  |  1972|   62.361|   6809.407|
-| Mexico  |  1977|   65.032|   7674.929|
-| Mexico  |  1982|   67.405|   9611.148|
-| Mexico  |  1987|   69.498|   8688.156|
-| Mexico  |  1992|   71.455|   9472.384|
-| Mexico  |  1997|   73.670|   9767.298|
-| Mexico  |  2002|   74.902|  10742.441|
-| Mexico  |  2007|   76.195|  11977.575|
+| Mexico  |  2002|   74.902|   10742.44|
+| Mexico  |  2007|   76.195|   11977.57|
+
+``` r
+countryinfo %>% 
+  anti_join(gapminder.part, by="country") %>% 
+  knitr::kable()
+```
+
+| country     | iso | capital    | lang     |
+|:------------|:----|:-----------|:---------|
+| New Zealand | NZL | Wellington | en-NZ,mi |
+
+### Semi\_join
+
+> semi\_join(x, y): Return all rows from x where there are matching values in y, keeping just columns from x. A semi join differs from an inner join because an inner join will return one row of x for each matching row of y, where a semi join will never duplicate rows of x. This is a filtering join.
 
 ``` r
 gapminder.part %>% 
@@ -312,30 +282,25 @@ gapminder.part %>%
 
 | country       |  year|  lifeExp|  gdpPercap|
 |:--------------|-----:|--------:|----------:|
-| Canada        |  1952|   68.750|   11367.16|
-| Canada        |  1957|   69.960|   12489.95|
-| Canada        |  1962|   71.300|   13462.49|
-| Canada        |  1967|   72.130|   16076.59|
-| Canada        |  1972|   72.880|   18970.57|
-| Canada        |  1977|   74.210|   22090.88|
-| Canada        |  1982|   75.760|   22898.79|
-| Canada        |  1987|   76.860|   26626.52|
-| Canada        |  1992|   77.950|   26342.88|
-| Canada        |  1997|   78.610|   28954.93|
 | Canada        |  2002|   79.770|   33328.97|
 | Canada        |  2007|   80.653|   36319.24|
-| United States |  1952|   68.440|   13990.48|
-| United States |  1957|   69.490|   14847.13|
-| United States |  1962|   70.210|   16173.15|
-| United States |  1967|   70.760|   19530.37|
-| United States |  1972|   71.340|   21806.04|
-| United States |  1977|   73.380|   24072.63|
-| United States |  1982|   74.650|   25009.56|
-| United States |  1987|   75.020|   29884.35|
-| United States |  1992|   76.090|   32003.93|
-| United States |  1997|   76.810|   35767.43|
 | United States |  2002|   77.310|   39097.10|
 | United States |  2007|   78.242|   42951.65|
+
+``` r
+countryinfo %>% 
+  semi_join(gapminder.part, by="country") %>% 
+  knitr::kable()
+```
+
+| country       | iso | capital          | lang               |
+|:--------------|:----|:-----------------|:-------------------|
+| Canada        | CAN | Ottawa           | en-CA,fr-CA,iu     |
+| United States | USA | Washington, D.C. | en-US,es-US,haw,fr |
+
+### Full\_join
+
+> full\_join(x, y): Return all rows and all columns from both x and y. Where there are not matching values, returns NA for the one missing. This is a mutating join.
 
 ``` r
 gapminder.part %>% 
@@ -348,39 +313,22 @@ gapminder.part %>%
 
 | country       |  year|  lifeExp|  gdpPercap| iso | capital          | lang               |
 |:--------------|-----:|--------:|----------:|:----|:-----------------|:-------------------|
-| Canada        |  1952|   68.750|  11367.161| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1957|   69.960|  12489.950| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1962|   71.300|  13462.486| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1967|   72.130|  16076.588| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1972|   72.880|  18970.571| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1977|   74.210|  22090.883| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1982|   75.760|  22898.792| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1987|   76.860|  26626.515| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1992|   77.950|  26342.884| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  1997|   78.610|  28954.926| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  2002|   79.770|  33328.965| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Canada        |  2007|   80.653|  36319.235| CAN | Ottawa           | en-CA,fr-CA,iu     |
-| Mexico        |  1952|   50.789|   3478.126| NA  | NA               | NA                 |
-| Mexico        |  1957|   55.190|   4131.547| NA  | NA               | NA                 |
-| Mexico        |  1962|   58.299|   4581.609| NA  | NA               | NA                 |
-| Mexico        |  1967|   60.110|   5754.734| NA  | NA               | NA                 |
-| Mexico        |  1972|   62.361|   6809.407| NA  | NA               | NA                 |
-| Mexico        |  1977|   65.032|   7674.929| NA  | NA               | NA                 |
-| Mexico        |  1982|   67.405|   9611.148| NA  | NA               | NA                 |
-| Mexico        |  1987|   69.498|   8688.156| NA  | NA               | NA                 |
-| Mexico        |  1992|   71.455|   9472.384| NA  | NA               | NA                 |
-| Mexico        |  1997|   73.670|   9767.298| NA  | NA               | NA                 |
-| Mexico        |  2002|   74.902|  10742.441| NA  | NA               | NA                 |
-| Mexico        |  2007|   76.195|  11977.575| NA  | NA               | NA                 |
-| United States |  1952|   68.440|  13990.482| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1957|   69.490|  14847.127| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1962|   70.210|  16173.146| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1967|   70.760|  19530.366| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1972|   71.340|  21806.036| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1977|   73.380|  24072.632| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1982|   74.650|  25009.559| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1987|   75.020|  29884.350| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1992|   76.090|  32003.932| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  1997|   76.810|  35767.433| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  2002|   77.310|  39097.100| USA | Washington, D.C. | en-US,es-US,haw,fr |
-| United States |  2007|   78.242|  42951.653| USA | Washington, D.C. | en-US,es-US,haw,fr |
+| Canada        |  2002|   79.770|   33328.97| CAN | Ottawa           | en-CA,fr-CA,iu     |
+| Canada        |  2007|   80.653|   36319.24| CAN | Ottawa           | en-CA,fr-CA,iu     |
+| Mexico        |  2002|   74.902|   10742.44| NA  | NA               | NA                 |
+| Mexico        |  2007|   76.195|   11977.57| NA  | NA               | NA                 |
+| United States |  2002|   77.310|   39097.10| USA | Washington, D.C. | en-US,es-US,haw,fr |
+| United States |  2007|   78.242|   42951.65| USA | Washington, D.C. | en-US,es-US,haw,fr |
+| New Zealand   |    NA|       NA|         NA| NZL | Wellington       | en-NZ,mi           |
+
+Process Report
+==============
+
+Overall, this assignment is easy, except creating the dataset containing the country information. When creating the country information dataset, first, I tried to use the function `countrycode_data` in the package `countrycode`, but the information in it is limited, which only contains the country name, continent, iso. Hence, I decided to ues `GNcountryInfo` in `geonames`. I tried several times, the problem is we need to creat an account in the websites of geonames web data before we use the data in R, but it's good to learn it.
+
+Reference
+=========
+
+-[Methods for obtaining data online](http://cfss.uchicago.edu/webdata001_api.html)
+
+-   [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html#inner_joinsuperheroes-publishers)
