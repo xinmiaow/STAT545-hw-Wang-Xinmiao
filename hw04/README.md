@@ -16,7 +16,7 @@ _**Tidy data and joins**_
 - [X] General data reshaping and relationship to aggregation
 - [X] Join, merge, look up
 - [X] Report your process
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ***
 *on Oct 06, 2017*
