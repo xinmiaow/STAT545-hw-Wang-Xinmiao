@@ -98,6 +98,10 @@ ggplot(dat1, aes(x=Canada, y=get("United States")))+
 
 I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America. 
 
+```{r echo=F}
+options(geonamesUsername="xinmiaow")
+```
+
 ```{r creat_dataset}
 countryinfo <- GNcountryInfo() %>% 
   tbl_df %>%
