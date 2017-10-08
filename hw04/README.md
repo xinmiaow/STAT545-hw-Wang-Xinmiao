@@ -7,15 +7,15 @@ _**Tidy data and joins**_
 
 ## Files inside
 
-1. [hw04_Gapminder.Rmd]
-3. [hw04_Gapminder.md]
+1. [hw04_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.Rmd)
+2. [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)
 
 
 ## To-Dos List
 
-- [ ] General data reshaping and relationship to aggregation
-- [ ] Join, merge, look up
-- [ ] Report your process
+- [X] General data reshaping and relationship to aggregation
+- [X] Join, merge, look up
+- [X] Report your process
 - [ ] Submit the assignment
 
 ***
