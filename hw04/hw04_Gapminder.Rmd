@@ -66,14 +66,11 @@ library(geonames)
   - Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
   
 ```{r reshaping}
-gapminder.part <- gapminder %>% 
-  filter(continent == "Americas") %>% 
-  select(country, lifeExp, year, gdpPercap)
-
-dat1 <- gapminder.part %>% 
+dat1 <- gapminder %>% 
+  filter(continent == "Americas") %>%
   select(country, lifeExp, year) %>% 
   spread(country, lifeExp) %>% 
-  as.tbl()
+  tbl_df()
 
 knitr::kable(dat1)
 
@@ -103,9 +100,18 @@ options(geonamesUsername="xinmiaow")
 ```
 
 ```{r creat_dataset}
+# Part of Gapminder dataset
+gapminder.part <- gapminder %>% 
+  filter(country%in%c("United States", "Canada", "Mexico")) %>%
+  select(country, year, lifeExp, gdpPercap) %>% 
+  tbl_df()
+
+knitr::kable(gapminder.part)
+
+# Information of Canada and United States
 countryinfo <- GNcountryInfo() %>% 
   tbl_df %>%
-  filter(continent=="NA") %>% 
+  filter(countryName%in%c("Canada", "United States")) %>% 
   select(country=countryName, iso=isoAlpha3, capital=capital, lang=languages) %>%
   mutate(country=as.character(country), iso=as.character(iso), capital=as.character(capital), lang=as.character(lang))
 
@@ -113,12 +119,33 @@ knitr::kable(countryinfo)
 
 ```
 
-```{r join_merge}
+```{r left_join}
 gapminder.part %>% 
   left_join(countryinfo, by="country") %>% 
   knitr::kable()
-
 ```
 
+```{r inner_join}
+gapminder.part %>% 
+  inner_join(countryinfo, by="country") %>% 
+  knitr::kable()
+```
+
+```{r anti_join}
+gapminder.part %>% 
+  anti_join(countryinfo, by="country") %>% 
+  knitr::kable()
+```
+```{r semi_join}
+gapminder.part %>% 
+  semi_join(countryinfo, by="country") %>% 
+  knitr::kable()
+
+```
+```{r full_join}
+gapminder.part %>% 
+  full_join(countryinfo, by="country") %>% 
+  knitr::kable()
+```
 
 
