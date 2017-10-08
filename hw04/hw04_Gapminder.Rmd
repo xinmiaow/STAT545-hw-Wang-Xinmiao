@@ -65,7 +65,7 @@ library(geonames)
   - Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
 
 
-Here, I select all the countries in Americas and spread the life expectancy for each country in each year. And then, I plot the life expectancy in Canada aganist the life expectancy in United States. We can observe a positive linear relatinship between them along with an increasing trend.
+Here, I select all the countries in Americas and spread the life expectancy for each country in each year. And then, I plot the life expectancy in Canada against the life expectancy in United States. We can observe a positive linear relationship between them along with an increasing trend.
 
 ```{r reshaping}
 dat1 <- gapminder %>% 
@@ -124,7 +124,9 @@ knitr::kable(countryinfo)
 
 >left_join(x, y): Return all rows from x, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
 
-```{r left_join}
+We can see `left_join` always keep the observations in the position of x inside `left_join` function. 
+
+```{r left_join, warning=F}
 gapminder.part %>% 
   left_join(countryinfo, by="country") %>% 
   knitr::kable()
@@ -138,7 +140,8 @@ countryinfo %>%
 
 >inner_join(x, y): Return all rows from x where there are matching values in y, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.
 
-```{r inner_join}
+`inner_join` function keep the same observations in both datasets and combined the information for these observations. Here, we get the same result, no matter which dataset is put in front. 
+```{r inner_join, warning=F}
 gapminder.part %>% 
   inner_join(countryinfo, by="country") %>% 
   knitr::kable()
@@ -153,7 +156,8 @@ countryinfo %>%
 
 >anti_join(x, y): Return all rows from x where there are not matching values in y, keeping just columns from x. This is a filtering join.
 
-```{r anti_join}
+`anti_join` will keep the observations from the dataset in x position which is not in the dataset in y position.
+```{r anti_join, warning=F}
 gapminder.part %>% 
   anti_join(countryinfo, by="country")%>% 
   knitr::kable() 
@@ -168,7 +172,8 @@ countryinfo %>%
 
 >semi_join(x, y): Return all rows from x where there are matching values in y, keeping just columns from x. A semi join differs from an inner join because an inner join will return one row of x for each matching row of y, where a semi join will never duplicate rows of x. This is a filtering join.
 
-```{r semi_join}
+`semi_join` keep the same observations in both datasets, but only return the information from the dataset in x position.
+```{r semi_join, warning=F}
 gapminder.part %>% 
   semi_join(countryinfo, by="country") %>% 
   knitr::kable()
@@ -183,7 +188,8 @@ countryinfo %>%
 
 >full_join(x, y): Return all rows and all columns from both x and y. Where there are not matching values, returns NA for the one missing. This is a mutating join.
 
-```{r full_join}
+`full_join` return all the observations with their information from both dataset.
+```{r full_join, warning=F}
 gapminder.part %>% 
   full_join(countryinfo, by="country") %>% 
   knitr::kable()
@@ -192,11 +198,11 @@ gapminder.part %>%
 
 # Process Report
 
-Overall, this assignment is easy, except creating the dataset containing the country information. When creating the country information dataset, first, I tried to use the function `countrycode_data` in the package `countrycode`, but the information in it is limited, which only contains the country name, continent, iso. Hence, I decided to ues `GNcountryInfo` in `geonames`. I tried several times, the problem is we need to creat an account in the websites of geonames web data before we use the data in R, but it's good to learn it.
+Overall, this assignment is easy, except creating the dataset containing the country information. When creating the country information dataset, first, I tried to use the function `countrycode_data` in the package `countrycode`, but the information in it is limited, which only contains the country name, continent, iso. Hence, I decided to use `GNcountryInfo` in `geonames`. I tried several times, the problem is we need to create an account in the websites of geonames web data before we use the data in R, but it's good to learn it.
 
 # Reference
 
--[Methods for obtaining data online](http://cfss.uchicago.edu/webdata001_api.html)
+- [Methods for obtaining data online](http://cfss.uchicago.edu/webdata001_api.html)
 
 - [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html#inner_joinsuperheroes-publishers)
 
