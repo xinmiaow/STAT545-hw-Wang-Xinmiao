@@ -52,6 +52,7 @@ library(gapminder)
 library(devtools)
 library(ggthemes)
 library(countrycode)
+library(geonames)
 ```
 
 
@@ -65,9 +66,12 @@ library(countrycode)
   - Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
   
 ```{r reshaping}
-dat1 <- gapminder %>% 
+gapminder.part <- gapminder %>% 
   filter(continent == "Americas") %>% 
-  select(country, lifeExp, year) %>%
+  select(country, lifeExp, year, gdpPercap)
+
+dat1 <- gapminder.part %>% 
+  select(country, lifeExp, year) %>% 
   spread(country, lifeExp) %>% 
   as.tbl()
 
@@ -94,13 +98,21 @@ ggplot(dat1, aes(x=Canada, y=get("United States")))+
 
 I am going to use the data in `countrycode` to creat a new dataset which include the information of countries in North America. 
 
+```{r creat_dataset}
+countryinfo <- GNcountryInfo() %>% 
+  tbl_df %>%
+  filter(continent=="NA") %>% 
+  select(country=countryName, iso=isoAlpha3, capital=capital, lang=languages) %>%
+  mutate(country=as.character(country), iso=as.character(iso), capital=as.character(capital), lang=as.character(lang))
+
+knitr::kable(countryinfo)
+
+```
+
 ```{r join_merge}
-dat2 <- countrycode_data %>% 
-  filter(region=="Northern America") %>% 
-  select(country.name.en, iso2c, iso3n)
-
-knitr::kable(dat2)
-
+gapminder.part %>% 
+  left_join(countryinfo, by="country") %>% 
+  knitr::kable()
 
 ```
 
