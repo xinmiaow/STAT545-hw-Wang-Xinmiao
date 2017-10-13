@@ -11,7 +11,22 @@
  HW 02         |  *Spe. 26, 2017*  | :ballot_box_with_check:
  HW 03         |  *Oct. 03, 2017*  | :ballot_box_with_check:
  HW 04         |  *Oct. 10, 2017*  | :ballot_box_with_check:
- HW 05         |  *Oct. 20, 2017*  | 
+ HW 05         |  *Oct. 20, 2017*  | :ballot_box_with_check:
+
+
+## Homework 05: Factor and Figure Management & Repo Hygiene 
+
+* Requirement for Homework 05: click [here](http://stat545.com/hw05_factor-figure-boss-repo-hygiene.html)
+
+* hw05 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw05).
+
+* Files inside hw05:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/README.md)
+
+  2. [hw05_Gapminder.Rmd]
+
+  3. [hw05_Gapminder.md]
 
 
 ## Homework 04: Tidy data and joins 
@@ -60,7 +75,7 @@
 
 
 ***
-*(To Be Contiued)*
+
 
 
 

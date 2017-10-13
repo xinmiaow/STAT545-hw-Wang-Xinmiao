@@ -1,1 +1,27 @@
 
+# STAT545 Homework 05 
+
+_**Factor and Figure Management & Repo Hygiene**_
+
+:round_pushpin: Here is hw05 folder under [my STAT545 Homework Repo](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao). :octocat:
+
+
+## Files inside
+
+1. [hw05_Gapminder.Rmd]
+2. [hw05_Gapminder.md]
+
+
+## To-Dos List
+
+- [ ] Factor management
+- [ ] File I/O
+- [ ] Visualization design
+- [ ] Writing figures to file
+- [ ] Clean up your repo!
+- [ ] But I want to do more!
+- [ ] Report your process
+- [ ] Submit the assignment
+
+***
+*on Oct 12, 2017*
