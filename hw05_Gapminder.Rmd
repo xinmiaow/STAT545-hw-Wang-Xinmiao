@@ -1,0 +1,136 @@
+---
+title: "STAT545 HW05"
+author: "Xinmiao Wang"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+#Navigation 
+
+* The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao) 
+
+* Requirement for Homework 05: click [here](http://stat545.com/hw05_factor-figure-boss-repo-hygiene.html)
+
+* hw05 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw05).
+
+* Files inside hw05:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/README.md)
+  2. [hw05_Gapminder.Rmd]
+  3. [hw05_Gapminder.md]
+  
+  
+# Induction
+
+In this Homework, we still work on Gapminder dataset, and are going to manage the factors and the figure for this dataset. Before we move to the exploration, we are going to load all the packages we need.
+
+# Load Package
+
+Here, we load packages that we gonna use later.
+
+```{r load_library, warning=F}
+#load packages
+library(tidyverse)
+library(gapminder)
+library(devtools)
+library(forcats)
+library(ggthemes)
+```
+
+# Factor Management
+
+## Drop Oceania
+
+```{r drop_factor_levels}
+my_dat <- gapminder %>% 
+  filter(continent != "Oceania")
+
+
+levels(my_dat$continent)
+
+my_dat_dropped <- my_dat %>% 
+  droplevels()
+
+levels(my_dat_dropped$continent)
+
+```
+
+
+## Reorder the levels of `conitnent`
+
+```{r reorder_continent}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
+  knitr::kable()
+
+
+gapminder %>% 
+  mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE) ) %>% 
+  group_by(continent) %>% 
+  summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
+  knitr::kable()
+
+```
+
+
+## Reorder the levels of `country`
+
+```{r}
+# Reorder the levels of country based on the maximum populations of each country 
+gapminder$country %>% 
+  fct_reorder(gapminder$pop, max) %>% 
+  levels() %>% 
+  head()
+
+```
+
+## Effects of `arrange()`
+
+```{r}
+gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
+
+ggplot(gap_asia_2007, aes(x = pop, y = country)) + geom_point()
+
+gap_asia_2007 %>% 
+  ggplot(aes(x = pop, y = fct_reorder(country, pop, max))) +
+  geom_point()
+
+gap_asia_2007 %>% 
+  arrange(country, desc(pop)) %>% 
+  ggplot(aes(x = pop, y =country)) +
+  geom_point()
+
+gap_asia_2007 %>% 
+  mutate(country = fct_reorder(country, pop, max)) %>% 
+  arrange(country, desc(pop)) %>% 
+  ggplot(aes(x = pop, y =country)) +
+  geom_point()
+
+```
+
+
+
+# File I/O
+
+
+
+# Visualization Design
+
+
+
+# Writing Figures to File
+
+
+
+# Clean up your repo
+
+
+# Revalue a Factor
+
+
+# Report your Process
+
+
+# Reference
+
