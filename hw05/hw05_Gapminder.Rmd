@@ -113,9 +113,29 @@ gap_asia_2007 %>%
 
 # File I/O
 
+```{r write_file}
+gap_re_country <- gapminder %>% 
+  mutate(country=fct_reorder(country, pop, max) ) %>% 
+  group_by(country) %>% 
+  summarise(max_pop = max(pop))
+
+
+write_csv(gap_re_country, "gap_re_country.csv")
+
+temp <- read.csv("gap_re_country.csv")
+
+temp %>% 
+  head() %>% 
+  knitr::kable()
+
+```
 
 
 # Visualization Design
+
+```{r visualization_design}
+
+```
 
 
 

@@ -1,7 +1,7 @@
 STAT545 HW05
 ================
 Xinmiao Wang
-2017-10-12
+2017-10-18
 
 Navigation
 ==========
@@ -165,6 +165,31 @@ gap_asia_2007 %>%
 
 File I/O
 ========
+
+``` r
+gap_re_country <- gapminder %>% 
+  mutate(country=fct_reorder(country, pop, max) ) %>% 
+  group_by(country) %>% 
+  summarise(max_pop = max(pop))
+
+
+write_csv(gap_re_country, "gap_re_country.csv")
+
+temp <- read.csv("gap_re_country.csv")
+
+temp %>% 
+  head() %>% 
+  knitr::kable()
+```
+
+| country               |  max\_pop|
+|:----------------------|---------:|
+| Sao Tome and Principe |    199579|
+| Iceland               |    301931|
+| Djibouti              |    496374|
+| Equatorial Guinea     |    551201|
+| Bahrain               |    708573|
+| Comoros               |    710960|
 
 Visualization Design
 ====================
