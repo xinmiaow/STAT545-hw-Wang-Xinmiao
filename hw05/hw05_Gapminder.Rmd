@@ -154,21 +154,27 @@ p1 <- gapminder %>%
   filter(country%in%interest_country) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years")
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
   mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years (reoder)")
 
 p3 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
   arrange(country, lifeExp) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years (arrange)")
 
 multiplot(p1, p2, p3, cols=3)
 ```
@@ -215,18 +221,52 @@ str(temp2)
 gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=year))+
-  scale_x_log10()
+  scale_x_log10()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by year)")
 
 
 gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=pop))+
   scale_x_log10()+
-  scale_color_gradient(low="yellow", high="purple")
+  scale_color_gradient(low="yellow", high="purple")+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by pop)")
 
 ```
 
+```{r density_lifeExp}
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of Continent vs. LifeExp")
 
+
+ggplot(gapminder, aes(x=lifeExp, fill=continent))+
+  geom_density(alpha=0.6, lwd=0.65)+
+  facet_wrap(~continent)+
+  scale_fill_manual(values=continent_colors)+
+  theme_calc()+
+  ggtitle("The Density Plot of Continent vs. LifeExp")
+  
+```
+
+```{r histogram}
+ggplot(gapminder, aes(x=lifeExp))+
+  geom_histogram(binwidth = 1,col="red", aes(fill=..count..))+
+  scale_fill_gradient("count", low = "green", high = "red")+
+  theme_calc()+
+  ggtitle("The Histogram of LifeExp")
+
+ggplot(gapminder, aes(x=lifeExp))+
+  geom_histogram(binwidth = 1,col="red", aes(y=..density.., fill=..density..))+
+  scale_fill_gradient("density", low = "green", high = "red")+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The Histogram of LifeExp for each continent")
+
+```
 
 
 # Writing Figures to File
@@ -240,7 +280,9 @@ p <- gapminder %>%
   scale_x_log10(limits = c(230, 63000))+
   ylim(c(39, 100))+
   facet_wrap(~continent)+
-  scale_fill_manual(values = country_colors)
+  scale_fill_manual(values = country_colors)+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap in 2007 (adjust point size by pop)")
 
 ggsave("img.png", plot=p)
 ```
@@ -253,8 +295,22 @@ Display the figure we saved.
 
 # Clean up your repo
 
+check the tabke in the main README.md
 
 # Revalue a Factor
+
+```{r}
+gap_new <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(food=fct_recode(country, "Tim Hortons"="Canada", "Starbuck"="United States", "Taco"="Mexico")) %>% 
+  droplevels()
+
+knitr::kable(gap_new)
+
+levels(gap_new$country)
+levels(gap_new$food)
+
+```
 
 
 # Report your Process

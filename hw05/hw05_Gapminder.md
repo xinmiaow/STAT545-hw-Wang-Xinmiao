@@ -220,21 +220,27 @@ p1 <- gapminder %>%
   filter(country%in%interest_country) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years")
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
   mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years (reoder)")
 
 p3 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
   arrange(country, lifeExp) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp over years (arrange)")
 
 multiplot(p1, p2, p3, cols=3)
 ```
@@ -330,7 +336,9 @@ Visualization Design
 gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=year))+
-  scale_x_log10()
+  scale_x_log10()+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by year)")
 ```
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-1.png)
@@ -340,10 +348,53 @@ gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=pop))+
   scale_x_log10()+
-  scale_color_gradient(low="yellow", high="purple")
+  scale_color_gradient(low="yellow", high="purple")+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by pop)")
 ```
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-2.png)
+
+``` r
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.2, lwd=0.65)+
+  theme_calc()+
+  ggtitle("The Density Plot of Continent vs. LifeExp")
+```
+
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/density_lifeExp-1.png)
+
+``` r
+ggplot(gapminder, aes(x=lifeExp, fill=continent))+
+  geom_density(alpha=0.6, lwd=0.65)+
+  facet_wrap(~continent)+
+  scale_fill_manual(values=continent_colors)+
+  theme_calc()+
+  ggtitle("The Density Plot of Continent vs. LifeExp")
+```
+
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/density_lifeExp-2.png)
+
+``` r
+ggplot(gapminder, aes(x=lifeExp))+
+  geom_histogram(binwidth = 1,col="red", aes(fill=..count..))+
+  scale_fill_gradient("count", low = "green", high = "red")+
+  theme_calc()+
+  ggtitle("The Histogram of LifeExp")
+```
+
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/histogram-1.png)
+
+``` r
+ggplot(gapminder, aes(x=lifeExp))+
+  geom_histogram(binwidth = 1,col="red", aes(y=..density.., fill=..density..))+
+  scale_fill_gradient("density", low = "green", high = "red")+
+  facet_wrap(~continent)+
+  theme_calc()+
+  ggtitle("The Histogram of LifeExp for each continent")
+```
+
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/histogram-2.png)
 
 Writing Figures to File
 =======================
@@ -357,7 +408,9 @@ p <- gapminder %>%
   scale_x_log10(limits = c(230, 63000))+
   ylim(c(39, 100))+
   facet_wrap(~continent)+
-  scale_fill_manual(values = country_colors)
+  scale_fill_manual(values = country_colors)+
+  theme_calc()+
+  ggtitle("The Plot of LifeExp vs. gdpPercap in 2007 (adjust point size by pop)")
 
 ggsave("img.png", plot=p)
 ```
@@ -371,8 +424,70 @@ Display the figure we saved.
 Clean up your repo
 ==================
 
+check the tabke in the main README.md
+
 Revalue a Factor
 ================
+
+``` r
+gap_new <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(food=fct_recode(country, "Tim Hortons"="Canada", "Starbuck"="United States", "Taco"="Mexico")) %>% 
+  droplevels()
+
+knitr::kable(gap_new)
+```
+
+| country       | continent |  year|  lifeExp|        pop|  gdpPercap| food        |
+|:--------------|:----------|-----:|--------:|----------:|----------:|:------------|
+| Canada        | Americas  |  1952|   68.750|   14785584|  11367.161| Tim Hortons |
+| Canada        | Americas  |  1957|   69.960|   17010154|  12489.950| Tim Hortons |
+| Canada        | Americas  |  1962|   71.300|   18985849|  13462.486| Tim Hortons |
+| Canada        | Americas  |  1967|   72.130|   20819767|  16076.588| Tim Hortons |
+| Canada        | Americas  |  1972|   72.880|   22284500|  18970.571| Tim Hortons |
+| Canada        | Americas  |  1977|   74.210|   23796400|  22090.883| Tim Hortons |
+| Canada        | Americas  |  1982|   75.760|   25201900|  22898.792| Tim Hortons |
+| Canada        | Americas  |  1987|   76.860|   26549700|  26626.515| Tim Hortons |
+| Canada        | Americas  |  1992|   77.950|   28523502|  26342.884| Tim Hortons |
+| Canada        | Americas  |  1997|   78.610|   30305843|  28954.926| Tim Hortons |
+| Canada        | Americas  |  2002|   79.770|   31902268|  33328.965| Tim Hortons |
+| Canada        | Americas  |  2007|   80.653|   33390141|  36319.235| Tim Hortons |
+| Mexico        | Americas  |  1952|   50.789|   30144317|   3478.126| Taco        |
+| Mexico        | Americas  |  1957|   55.190|   35015548|   4131.547| Taco        |
+| Mexico        | Americas  |  1962|   58.299|   41121485|   4581.609| Taco        |
+| Mexico        | Americas  |  1967|   60.110|   47995559|   5754.734| Taco        |
+| Mexico        | Americas  |  1972|   62.361|   55984294|   6809.407| Taco        |
+| Mexico        | Americas  |  1977|   65.032|   63759976|   7674.929| Taco        |
+| Mexico        | Americas  |  1982|   67.405|   71640904|   9611.148| Taco        |
+| Mexico        | Americas  |  1987|   69.498|   80122492|   8688.156| Taco        |
+| Mexico        | Americas  |  1992|   71.455|   88111030|   9472.384| Taco        |
+| Mexico        | Americas  |  1997|   73.670|   95895146|   9767.298| Taco        |
+| Mexico        | Americas  |  2002|   74.902|  102479927|  10742.441| Taco        |
+| Mexico        | Americas  |  2007|   76.195|  108700891|  11977.575| Taco        |
+| United States | Americas  |  1952|   68.440|  157553000|  13990.482| Starbuck    |
+| United States | Americas  |  1957|   69.490|  171984000|  14847.127| Starbuck    |
+| United States | Americas  |  1962|   70.210|  186538000|  16173.146| Starbuck    |
+| United States | Americas  |  1967|   70.760|  198712000|  19530.366| Starbuck    |
+| United States | Americas  |  1972|   71.340|  209896000|  21806.036| Starbuck    |
+| United States | Americas  |  1977|   73.380|  220239000|  24072.632| Starbuck    |
+| United States | Americas  |  1982|   74.650|  232187835|  25009.559| Starbuck    |
+| United States | Americas  |  1987|   75.020|  242803533|  29884.350| Starbuck    |
+| United States | Americas  |  1992|   76.090|  256894189|  32003.932| Starbuck    |
+| United States | Americas  |  1997|   76.810|  272911760|  35767.433| Starbuck    |
+| United States | Americas  |  2002|   77.310|  287675526|  39097.100| Starbuck    |
+| United States | Americas  |  2007|   78.242|  301139947|  42951.653| Starbuck    |
+
+``` r
+levels(gap_new$country)
+```
+
+    ## [1] "Canada"        "Mexico"        "United States"
+
+``` r
+levels(gap_new$food)
+```
+
+    ## [1] "Tim Hortons" "Taco"        "Starbuck"
 
 Report your Process
 ===================
