@@ -15,8 +15,8 @@ Navigation
 -   Files inside hw05:
 
 1.  [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/README.md)
-2.  \[hw05\_Gapminder.Rmd\]
-3.  \[hw05\_Gapminder.md\]
+2.  [hw05\_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.Rmd)
+3.  [hw05\_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)
 
 Induction
 =========
@@ -50,6 +50,7 @@ library(gapminder)
 library(devtools)
 library(forcats)
 library(ggthemes)
+library(grid)
 ```
 
 Factor Management
@@ -57,6 +58,10 @@ Factor Management
 
 Drop Oceania
 ------------
+
+Here, I drop all the observations in Oceania and create a new dataset called `my_dat`. By `levels(my_dat_continent)`, I found there is still five levels in total which means Oceania still is one of levels of continent. I use `droplevels()` to drop the level which no longer exist in the new dataset.
+
+Hence, when we filter out all the observations in a category, the levels will not change automatically. We have to drop the useless level by hand.
 
 ``` r
 my_dat <- gapminder %>% 
@@ -79,6 +84,10 @@ levels(my_dat_dropped$continent)
 
 Reorder the levels of `conitnent`
 ---------------------------------
+
+Here, I reorder the levels of continent according to the mean of gdpPercap over years in each continent.
+
+I create a table which summarize the mean of gdpPErcap in each continent, and we can compare the reordered levels of continent with the mean of gdpPercap.
 
 ``` r
 gapminder %>% 
@@ -106,6 +115,8 @@ gapminder$continent %>%
 Reorder the levels of `country`
 -------------------------------
 
+Here, I reorder the levels of country accroding to the maximum populations of each country.
+
 ``` r
 # Reorder the levels of country based on the maximum populations of each country 
 gapminder$country %>% 
@@ -120,12 +131,14 @@ gapminder$country %>%
 Effects of `arrange()`
 ----------------------
 
+First, I try to check the difference between arrange and reorder in tables. By the difference of two tables below, we can see that reorder will not change the order of observations in the data, but arrange will sort all the observations based on our interest.
+
 ``` r
 interest_country <- c("United States", "Canada", "Mexico")
 
 gapminder %>% 
   filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  mutate(country = fct_reorder(country, lifeExp, .desc=TRUE)) %>% 
   knitr::kable()
 ```
 
@@ -170,50 +183,54 @@ gapminder %>%
 
 ``` r
 gapminder %>% 
-  filter(country%in%interest_country) %>% 
-  group_by(country, year) %>% 
-  arrange(country, lifeExp) %>% 
+  filter(country%in%interest_country) %>%
+  group_by(country) %>% 
+  arrange(desc(lifeExp)) %>% 
   knitr::kable()
 ```
 
 | country       | continent |  year|  lifeExp|        pop|  gdpPercap|
 |:--------------|:----------|-----:|--------:|----------:|----------:|
-| Canada        | Americas  |  1952|   68.750|   14785584|  11367.161|
-| Canada        | Americas  |  1957|   69.960|   17010154|  12489.950|
-| Canada        | Americas  |  1962|   71.300|   18985849|  13462.486|
-| Canada        | Americas  |  1967|   72.130|   20819767|  16076.588|
-| Canada        | Americas  |  1972|   72.880|   22284500|  18970.571|
-| Canada        | Americas  |  1977|   74.210|   23796400|  22090.883|
-| Canada        | Americas  |  1982|   75.760|   25201900|  22898.792|
-| Canada        | Americas  |  1987|   76.860|   26549700|  26626.515|
-| Canada        | Americas  |  1992|   77.950|   28523502|  26342.884|
-| Canada        | Americas  |  1997|   78.610|   30305843|  28954.926|
-| Canada        | Americas  |  2002|   79.770|   31902268|  33328.965|
 | Canada        | Americas  |  2007|   80.653|   33390141|  36319.235|
-| Mexico        | Americas  |  1952|   50.789|   30144317|   3478.126|
-| Mexico        | Americas  |  1957|   55.190|   35015548|   4131.547|
-| Mexico        | Americas  |  1962|   58.299|   41121485|   4581.609|
-| Mexico        | Americas  |  1967|   60.110|   47995559|   5754.734|
-| Mexico        | Americas  |  1972|   62.361|   55984294|   6809.407|
-| Mexico        | Americas  |  1977|   65.032|   63759976|   7674.929|
-| Mexico        | Americas  |  1982|   67.405|   71640904|   9611.148|
-| Mexico        | Americas  |  1987|   69.498|   80122492|   8688.156|
-| Mexico        | Americas  |  1992|   71.455|   88111030|   9472.384|
-| Mexico        | Americas  |  1997|   73.670|   95895146|   9767.298|
-| Mexico        | Americas  |  2002|   74.902|  102479927|  10742.441|
-| Mexico        | Americas  |  2007|   76.195|  108700891|  11977.575|
-| United States | Americas  |  1952|   68.440|  157553000|  13990.482|
-| United States | Americas  |  1957|   69.490|  171984000|  14847.127|
-| United States | Americas  |  1962|   70.210|  186538000|  16173.146|
-| United States | Americas  |  1967|   70.760|  198712000|  19530.366|
-| United States | Americas  |  1972|   71.340|  209896000|  21806.036|
-| United States | Americas  |  1977|   73.380|  220239000|  24072.632|
-| United States | Americas  |  1982|   74.650|  232187835|  25009.559|
-| United States | Americas  |  1987|   75.020|  242803533|  29884.350|
-| United States | Americas  |  1992|   76.090|  256894189|  32003.932|
-| United States | Americas  |  1997|   76.810|  272911760|  35767.433|
-| United States | Americas  |  2002|   77.310|  287675526|  39097.100|
+| Canada        | Americas  |  2002|   79.770|   31902268|  33328.965|
+| Canada        | Americas  |  1997|   78.610|   30305843|  28954.926|
 | United States | Americas  |  2007|   78.242|  301139947|  42951.653|
+| Canada        | Americas  |  1992|   77.950|   28523502|  26342.884|
+| United States | Americas  |  2002|   77.310|  287675526|  39097.100|
+| Canada        | Americas  |  1987|   76.860|   26549700|  26626.515|
+| United States | Americas  |  1997|   76.810|  272911760|  35767.433|
+| Mexico        | Americas  |  2007|   76.195|  108700891|  11977.575|
+| United States | Americas  |  1992|   76.090|  256894189|  32003.932|
+| Canada        | Americas  |  1982|   75.760|   25201900|  22898.792|
+| United States | Americas  |  1987|   75.020|  242803533|  29884.350|
+| Mexico        | Americas  |  2002|   74.902|  102479927|  10742.441|
+| United States | Americas  |  1982|   74.650|  232187835|  25009.559|
+| Canada        | Americas  |  1977|   74.210|   23796400|  22090.883|
+| Mexico        | Americas  |  1997|   73.670|   95895146|   9767.298|
+| United States | Americas  |  1977|   73.380|  220239000|  24072.632|
+| Canada        | Americas  |  1972|   72.880|   22284500|  18970.571|
+| Canada        | Americas  |  1967|   72.130|   20819767|  16076.588|
+| Mexico        | Americas  |  1992|   71.455|   88111030|   9472.384|
+| United States | Americas  |  1972|   71.340|  209896000|  21806.036|
+| Canada        | Americas  |  1962|   71.300|   18985849|  13462.486|
+| United States | Americas  |  1967|   70.760|  198712000|  19530.366|
+| United States | Americas  |  1962|   70.210|  186538000|  16173.146|
+| Canada        | Americas  |  1957|   69.960|   17010154|  12489.950|
+| Mexico        | Americas  |  1987|   69.498|   80122492|   8688.156|
+| United States | Americas  |  1957|   69.490|  171984000|  14847.127|
+| Canada        | Americas  |  1952|   68.750|   14785584|  11367.161|
+| United States | Americas  |  1952|   68.440|  157553000|  13990.482|
+| Mexico        | Americas  |  1982|   67.405|   71640904|   9611.148|
+| Mexico        | Americas  |  1977|   65.032|   63759976|   7674.929|
+| Mexico        | Americas  |  1972|   62.361|   55984294|   6809.407|
+| Mexico        | Americas  |  1967|   60.110|   47995559|   5754.734|
+| Mexico        | Americas  |  1962|   58.299|   41121485|   4581.609|
+| Mexico        | Americas  |  1957|   55.190|   35015548|   4131.547|
+| Mexico        | Americas  |  1952|   50.789|   30144317|   3478.126|
+
+Secondly, I try to figure out the different effects between these two functions in figures. I create three plots, the first one created by using the original data, the second one created by reordered data, and the last one created after arranging the data.
+
+By the change of colors for the three countries, we can see that the effect of reorder works on plot, but the arrange does not change the plot.
 
 ``` r
 p1 <- gapminder %>%
@@ -226,7 +243,7 @@ p1 <- gapminder %>%
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  mutate(country = fct_reorder(country, lifeExp,.desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()+
@@ -235,7 +252,7 @@ p2 <- gapminder %>%
 
 p3 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
-  arrange(country, lifeExp) %>% 
+  arrange(desc(lifeExp)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()+
@@ -245,18 +262,20 @@ p3 <- gapminder %>%
 multiplot(p1, p2, p3, cols=3)
 ```
 
-    ## Loading required package: grid
-
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 File I/O
 ========
 
+Here, I reorder the levels of country and crest a new dataset. I save it locally in two different way.
+
+First, I write it into a .csv file by `write_csv`, and then read it by `read_csv`. And then, I use `saveRDS` to save the dataset as a .rds file.
+
+By `write_csv`, the reordered levels of country were not saved. However, `saveRDS` can do so.
+
 ``` r
 gap_re_country <- gapminder %>% 
-  mutate(country=fct_reorder(country, pop, max) ) %>% 
-  group_by(country) %>% 
-  summarise(max_pop = max(pop))
+  mutate(country=fct_reorder(country, pop, max) )
 
 
 write_csv(gap_re_country, "gap_re_country.csv")
@@ -267,7 +286,11 @@ temp <- read_csv("gap_re_country.csv")
     ## Parsed with column specification:
     ## cols(
     ##   country = col_character(),
-    ##   max_pop = col_integer()
+    ##   continent = col_character(),
+    ##   year = col_integer(),
+    ##   lifeExp = col_double(),
+    ##   pop = col_integer(),
+    ##   gdpPercap = col_double()
     ## )
 
 ``` r
@@ -276,31 +299,21 @@ temp %>%
   knitr::kable()
 ```
 
-| country               |  max\_pop|
-|:----------------------|---------:|
-| Sao Tome and Principe |    199579|
-| Iceland               |    301931|
-| Djibouti              |    496374|
-| Equatorial Guinea     |    551201|
-| Bahrain               |    708573|
-| Comoros               |    710960|
+| country     | continent |  year|  lifeExp|       pop|  gdpPercap|
+|:------------|:----------|-----:|--------:|---------:|----------:|
+| Afghanistan | Asia      |  1952|   28.801|   8425333|   779.4453|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
+| Afghanistan | Asia      |  1962|   31.997|  10267083|   853.1007|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
+| Afghanistan | Asia      |  1972|   36.088|  13079460|   739.9811|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
 
 ``` r
-str(temp)
+head(levels(as.factor(temp$country)))
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    142 obs. of  2 variables:
-    ##  $ country: chr  "Sao Tome and Principe" "Iceland" "Djibouti" "Equatorial Guinea" ...
-    ##  $ max_pop: int  199579 301931 496374 551201 708573 710960 720230 798094 1133066 1191336 ...
-    ##  - attr(*, "spec")=List of 2
-    ##   ..$ cols   :List of 2
-    ##   .. ..$ country: list()
-    ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-    ##   .. ..$ max_pop: list()
-    ##   .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
-    ##   ..$ default: list()
-    ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
-    ##   ..- attr(*, "class")= chr "col_spec"
+    ## [1] "Afghanistan" "Albania"     "Algeria"     "Angola"      "Argentina"  
+    ## [6] "Australia"
 
 ``` r
 saveRDS(gap_re_country, "gap_re_country.rds")
@@ -312,48 +325,26 @@ temp2 %>%
   knitr::kable()
 ```
 
-| country               |  max\_pop|
-|:----------------------|---------:|
-| Sao Tome and Principe |    199579|
-| Iceland               |    301931|
-| Djibouti              |    496374|
-| Equatorial Guinea     |    551201|
-| Bahrain               |    708573|
-| Comoros               |    710960|
+| country     | continent |  year|  lifeExp|       pop|  gdpPercap|
+|:------------|:----------|-----:|--------:|---------:|----------:|
+| Afghanistan | Asia      |  1952|   28.801|   8425333|   779.4453|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
+| Afghanistan | Asia      |  1962|   31.997|  10267083|   853.1007|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
+| Afghanistan | Asia      |  1972|   36.088|  13079460|   739.9811|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
 
 ``` r
-str(temp2)
+head(levels(temp2$country))
 ```
 
-    ## Classes 'tbl_df', 'tbl' and 'data.frame':    142 obs. of  2 variables:
-    ##  $ country: Factor w/ 142 levels "Sao Tome and Principe",..: 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ max_pop: int  199579 301931 496374 551201 708573 710960 720230 798094 1133066 1191336 ...
+    ## [1] "Sao Tome and Principe" "Iceland"               "Djibouti"             
+    ## [4] "Equatorial Guinea"     "Bahrain"               "Comoros"
 
 Visualization Design
 ====================
 
-``` r
-gapminder %>%
-  ggplot(aes(x=gdpPercap,y=lifeExp))+
-  geom_point(aes(colour=year))+
-  scale_x_log10()+
-  theme_calc()+
-  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by year)")
-```
-
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-1.png)
-
-``` r
-gapminder %>%
-  ggplot(aes(x=gdpPercap,y=lifeExp))+
-  geom_point(aes(colour=pop))+
-  scale_x_log10()+
-  scale_color_gradient(low="yellow", high="purple")+
-  theme_calc()+
-  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by pop)")
-```
-
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-2.png)
+Here is a density plot of lifeExp in each continent I created in HW02. The color changed when the densities overlap. Hence, I separate them into five plots and use `scale_fill_manual()` to fill continent color into the densities.
 
 ``` r
 ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
@@ -374,6 +365,8 @@ ggplot(gapminder, aes(x=lifeExp, fill=continent))+
 ```
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/density_lifeExp-2.png)
+
+Here is the histogram of lifeExp I created in HW02. To make it clear, I also separate them into five plots according the continents, and use `..density..` to translate the count to the percentage.
 
 ``` r
 ggplot(gapminder, aes(x=lifeExp))+
@@ -398,6 +391,8 @@ ggplot(gapminder, aes(x=lifeExp))+
 
 Writing Figures to File
 =======================
+
+Here is The plot of lifeExp vs. gdpPercap in 2007. I adjust the sie of points by the population in each country.
 
 ``` r
 p <- gapminder %>% 
@@ -424,10 +419,12 @@ Display the figure we saved.
 Clean up your repo
 ==================
 
-check the tabke in the main README.md
+check the table in the main README.md
 
 Revalue a Factor
 ================
+
+Here, I create a new factor called food, and map the levels of country into food.
 
 ``` r
 gap_new <- gapminder %>% 
@@ -492,7 +489,15 @@ levels(gap_new$food)
 Report your Process
 ===================
 
+This assignment requires a lot of creative ideas about exploring dataset. However, most of functions have been introduced in class, and some of them can be found in the notes. Overall, it's not to hard to finish it.
+
+I spend a lot of time on organize the display of my figures and find the difference between arrange and reorder.
+
 Reference
 =========
 
 -   [Taking control of qualitative colors in ggplot2](http://stat545.com/block019_enforce-color-scheme.html)
+
+-   [Multiple plots on a page](http://stat545.com/block020_multiple-plots-on-a-page.html)
+
+-   [Getting data in and out of R](http://stat545.com/block026_file-out-in.html)

@@ -16,8 +16,8 @@ output: github_document
 * Files inside hw05:
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/README.md)
-  2. [hw05_Gapminder.Rmd]
-  3. [hw05_Gapminder.md]
+  2. [hw05_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.Rmd)
+  3. [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)
   
   
 # Induction
@@ -35,6 +35,7 @@ library(gapminder)
 library(devtools)
 library(forcats)
 library(ggthemes)
+library(grid)
 ```
 
 ```{r multiplot_function, echo=FALSE}
@@ -89,6 +90,10 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
 ## Drop Oceania
 
+Here, I drop all the observations in Oceania and create a new dataset called `my_dat`. By `levels(my_dat_continent)`, I found there is still five levels in total which means Oceania still is one of levels of continent. I use `droplevels()` to drop the level which no longer exist in the new dataset.
+
+Hence, when we filter out all the observations in a category, the levels will not change automatically. We have to drop the useless level by hand. 
+
 ```{r drop_factor_levels}
 my_dat <- gapminder %>% 
   filter(continent != "Oceania")
@@ -106,6 +111,10 @@ levels(my_dat_dropped$continent)
 
 ## Reorder the levels of `conitnent`
 
+Here, I reorder the levels of continent according to the mean of gdpPercap over years in each continent. 
+
+I create a table which summarize the mean of gdpPErcap in each continent, and we can compare the reordered levels of continent with the mean of gdpPercap.
+
 ```{r reorder_continent}
 gapminder %>% 
   group_by(continent) %>% 
@@ -121,6 +130,8 @@ gapminder$continent %>%
 
 ## Reorder the levels of `country`
 
+Here, I reorder the levels of country accroding to the maximum populations of each country. 
+
 ```{r}
 # Reorder the levels of country based on the maximum populations of each country 
 gapminder$country %>% 
@@ -132,22 +143,28 @@ gapminder$country %>%
 
 ## Effects of `arrange()`
 
+First, I try to check the difference between arrange and reorder in tables. By the difference of two tables below, we can see that reorder will not change the order of observations in the data, but arrange will sort all the observations based on our interest.
+
 ```{r effect_arrange}
 
 interest_country <- c("United States", "Canada", "Mexico")
 
 gapminder %>% 
   filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  mutate(country = fct_reorder(country, lifeExp, .desc=TRUE)) %>% 
   knitr::kable()
 
 gapminder %>% 
-  filter(country%in%interest_country) %>% 
-  group_by(country, year) %>% 
-  arrange(country, lifeExp) %>% 
+  filter(country%in%interest_country) %>%
+  group_by(country) %>% 
+  arrange(desc(lifeExp)) %>% 
   knitr::kable()
 
 ```
+
+Secondly, I try to figure out the different effects between these two functions in figures. I create three plots, the first one created by using the original data, the second one created by reordered data, and the last one created after arranging the data.
+
+By the change of colors for the three countries, we can see that the effect of reorder works on plot, but the arrange does not change the plot.
 
 ```{r fig.height=5, fig.width=12}
 p1 <- gapminder %>%
@@ -160,7 +177,7 @@ p1 <- gapminder %>%
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  mutate(country = fct_reorder(country, lifeExp,.desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()+
@@ -169,7 +186,7 @@ p2 <- gapminder %>%
 
 p3 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
-  arrange(country, lifeExp) %>% 
+  arrange(desc(lifeExp)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()+
@@ -182,11 +199,15 @@ multiplot(p1, p2, p3, cols=3)
 
 # File I/O
 
+Here, I reorder the levels of country and crest a new dataset. I save it locally in two different way. 
+
+First, I write it into a .csv file by `write_csv`, and then read it by `read_csv`. And then, I use `saveRDS` to save the dataset as a .rds file.
+
+By `write_csv`, the reordered levels of country were not saved. However, `saveRDS` can do so.
+
 ```{r write_file, warning=FALSE}
 gap_re_country <- gapminder %>% 
-  mutate(country=fct_reorder(country, pop, max) ) %>% 
-  group_by(country) %>% 
-  summarise(max_pop = max(pop))
+  mutate(country=fct_reorder(country, pop, max) )
 
 
 write_csv(gap_re_country, "gap_re_country.csv")
@@ -197,7 +218,7 @@ temp %>%
   head() %>% 
   knitr::kable()
 
-str(temp)
+head(levels(as.factor(temp$country)))
 
 ```
 
@@ -211,30 +232,13 @@ temp2 %>%
   head() %>% 
   knitr::kable()
 
-str(temp2)
+head(levels(temp2$country))
 
 ```
 
 # Visualization Design
 
-```{r visualization_design}
-gapminder %>%
-  ggplot(aes(x=gdpPercap,y=lifeExp))+
-  geom_point(aes(colour=year))+
-  scale_x_log10()+
-  theme_calc()+
-  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by year)")
-
-
-gapminder %>%
-  ggplot(aes(x=gdpPercap,y=lifeExp))+
-  geom_point(aes(colour=pop))+
-  scale_x_log10()+
-  scale_color_gradient(low="yellow", high="purple")+
-  theme_calc()+
-  ggtitle("The Plot of LifeExp vs. gdpPercap (adjust color by pop)")
-
-```
+Here is a density plot of lifeExp in each continent I created in HW02. The color changed when the densities overlap. Hence, I separate them into five plots and use `scale_fill_manual()` to fill continent color into the densities.
 
 ```{r density_lifeExp}
 ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
@@ -251,6 +255,9 @@ ggplot(gapminder, aes(x=lifeExp, fill=continent))+
   ggtitle("The Density Plot of Continent vs. LifeExp")
   
 ```
+
+
+Here is the histogram of lifeExp I created in HW02. To make it clear, I also separate them into five plots according the continents, and use `..density.. ` to translate the count to the percentage.
 
 ```{r histogram}
 ggplot(gapminder, aes(x=lifeExp))+
@@ -270,6 +277,8 @@ ggplot(gapminder, aes(x=lifeExp))+
 
 
 # Writing Figures to File
+
+Here is The plot of lifeExp vs. gdpPercap in 2007. I adjust the sie of points by the population in each country.
 
 ```{r write_figure}
 p <- gapminder %>% 
@@ -295,9 +304,11 @@ Display the figure we saved.
 
 # Clean up your repo
 
-check the tabke in the main README.md
+check the table in the main README.md
 
 # Revalue a Factor
+
+Here, I create a new factor called food, and map the levels of country into food.
 
 ```{r}
 gap_new <- gapminder %>% 
@@ -315,7 +326,14 @@ levels(gap_new$food)
 
 # Report your Process
 
+This assignment requires a lot of creative ideas about exploring dataset. However, most of functions have been introduced in class, and some of them can be found in the notes. Overall, it's not to hard to finish it. 
+
+I spend a lot of time on organize the display of my figures and find the difference between arrange and reorder.
 
 # Reference
 
 - [Taking control of qualitative colors in ggplot2](http://stat545.com/block019_enforce-color-scheme.html)
+
+- [Multiple plots on a page](http://stat545.com/block020_multiple-plots-on-a-page.html)
+
+- [Getting data in and out of R](http://stat545.com/block026_file-out-in.html)
