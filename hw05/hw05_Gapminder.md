@@ -208,7 +208,7 @@ p <- gapminder %>%
   facet_wrap(~continent)+
   scale_fill_manual(values = country_colors)
 
-ggsave("imp.png", plot=p)
+ggsave("img.png", plot=p)
 ```
 
     ## Saving 7 x 5 in image
