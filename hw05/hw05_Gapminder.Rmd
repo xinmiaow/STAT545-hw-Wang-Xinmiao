@@ -107,11 +107,6 @@ gap_asia_2007 %>%
   ggplot(aes(x = pop, y =country)) +
   geom_point()
 
-gap_asia_2007_reorder <- gap_asia_2007 %>% 
-  mutate(country = fct_reorder(country, pop, max))
-
-levels(gap_asia_2007_reorder$country)
-
 ```
 
 
@@ -165,7 +160,7 @@ ggsave("img.png", plot=p)
 
 Display the figure we saved. 
 
-![The Plot of Life Expectancy vs GDP per capita in 2007](hw05/img.png)
+![The Plot of Life Expectancy vs GDP per capita in 2007](img.png)
 
 
 # Clean up your repo
