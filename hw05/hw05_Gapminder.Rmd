@@ -278,7 +278,7 @@ ggplot(gapminder, aes(x=lifeExp))+
 
 # Writing Figures to File
 
-Here is The plot of lifeExp vs. gdpPercap in 2007. I adjust the sie of points by the population in each country.
+Here is the plot of lifeExp vs. gdpPercap in 2007. I adjust the size of points by the population in each country.
 
 ```{r write_figure}
 p <- gapminder %>% 
@@ -328,7 +328,7 @@ levels(gap_new$food)
 
 This assignment requires a lot of creative ideas about exploring dataset. However, most of functions have been introduced in class, and some of them can be found in the notes. Overall, it's not to hard to finish it. 
 
-I spend a lot of time on organize the display of my figures and find the difference between arrange and reorder.
+I spend a lot of time on organize the display of my figures and find the difference between arrange and reorder. Excellent experience in STAT545A, and hope can grab more about R from STAT547M
 
 # Reference
 
