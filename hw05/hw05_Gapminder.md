@@ -215,7 +215,7 @@ ggsave("img.png", plot=p)
 
 Display the figure we saved.
 
-![The Plot of Life Expectancy vs GDP per capita in 2007](/img.png)
+![The Plot of Life Expectancy vs GDP per capita in 2007](hw05/img.png)
 
 Clean up your repo
 ==================
