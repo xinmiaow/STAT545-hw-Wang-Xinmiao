@@ -2,7 +2,9 @@
 title: "STAT545 HW05"
 author: "Xinmiao Wang"
 date: "`r format(Sys.Date())`"
-output: github_document
+output: 
+  github_document:
+    self_contained: no
 ---
 
 #Navigation 
@@ -65,7 +67,7 @@ gapminder %>%
   knitr::kable()
 
 
-gapminder %>% 
+mydat <- gapminder %>% 
   mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE) ) %>% 
   group_by(continent) %>% 
   summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
