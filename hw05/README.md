@@ -21,7 +21,7 @@ _**Factor and Figure Management & Repo Hygiene**_
 - [X] Clean up your repo!
 - [X] But I want to do more!
 - [X] Report your process
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ***
 *on Oct 12, 2017*
