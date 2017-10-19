@@ -97,7 +97,7 @@ gapminder %>%
 
 ``` r
 gapminder %>% 
-  mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE) ) %>% 
+  mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE)) %>% 
   group_by(continent) %>% 
   summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
   knitr::kable()
@@ -194,6 +194,23 @@ temp %>%
 Visualization Design
 ====================
 
+``` r
+gap_with_colors <-
+  data.frame(gapminder,
+             cc = I(country_colors[match(gapminder$country,
+                                         names(country_colors))]))
+
+# bubble plot, focus just on Africa and Europe in 2007
+keepers <- with(gap_with_colors,
+                continent %in% c("Africa", "Europe") & year == 2007)
+plot(lifeExp ~ gdpPercap, gap_with_colors,
+     subset = keepers, log = "x", pch = 21,
+     cex = sqrt(gap_with_colors$pop[keepers]/pi)/1500,
+     bg = gap_with_colors$cc[keepers])
+```
+
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-1.png)
+
 Writing Figures to File
 =======================
 
@@ -208,10 +225,10 @@ p <- gapminder %>%
   facet_wrap(~continent)+
   scale_fill_manual(values = country_colors)
 
-ggsave("img.png", plot=p)
+ggsave("img.png", plot=p, scale=0.8)
 ```
 
-    ## Saving 7 x 5 in image
+    ## Saving 5.6 x 4 in image
 
 Display the figure we saved.
 
