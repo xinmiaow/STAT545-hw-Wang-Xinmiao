@@ -37,6 +37,54 @@ library(forcats)
 library(ggthemes)
 ```
 
+```{r multiplot_function}
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
 # Factor Management
 
 ## Drop Oceania
@@ -64,12 +112,9 @@ gapminder %>%
   summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
   knitr::kable()
 
-
-gapminder %>% 
-  mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE)) %>% 
-  group_by(continent) %>% 
-  summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
-  knitr::kable()
+gapminder$continent %>% 
+  fct_reorder(gapminder$gdpPercap, mean, .desc=TRUE) %>% 
+  levels()
 
 ```
 
@@ -87,33 +132,51 @@ gapminder$country %>%
 
 ## Effects of `arrange()`
 
-```{r}
-gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
+```{r effect_arrange}
 
-ggplot(gap_asia_2007, aes(x = pop, y = country)) + geom_point()
+interest_country <- c("United States", "Canada", "Mexico")
 
-gap_asia_2007 %>% 
-  ggplot(aes(x = pop, y = fct_reorder(country, pop, max))) +
-  geom_point()
+gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  knitr::kable()
 
-gap_asia_2007 %>% 
-  arrange(country, desc(pop)) %>% 
-  ggplot(aes(x = pop, y =country)) +
-  geom_point()
-
-gap_asia_2007 %>% 
-  mutate(country = fct_reorder(country, pop, max)) %>% 
-  arrange(country, desc(pop)) %>% 
-  ggplot(aes(x = pop, y =country)) +
-  geom_point()
+gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  group_by(country, year) %>% 
+  arrange(country, lifeExp) %>% 
+  knitr::kable()
 
 ```
 
+```{r fig.height=5, fig.width=12}
+gapminder %>%
+  filter(country%in%interest_country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+p1 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+p2 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  arrange(country, lifeExp) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+multiplot(p1, p2, col=2)
+```
 
 
 # File I/O
 
-```{r write_file}
+```{r write_file, warning=FALSE}
 gap_re_country <- gapminder %>% 
   mutate(country=fct_reorder(country, pop, max) ) %>% 
   group_by(country) %>% 
@@ -122,14 +185,29 @@ gap_re_country <- gapminder %>%
 
 write_csv(gap_re_country, "gap_re_country.csv")
 
-temp <- read.csv("gap_re_country.csv")
+temp <- read_csv("gap_re_country.csv")
 
 temp %>% 
   head() %>% 
   knitr::kable()
 
+str(temp)
+
 ```
 
+
+```{r saveRDS}
+saveRDS(gap_re_country, "gap_re_country.rds")
+
+temp2 <- readRDS("gap_re_country.rds")
+
+temp2 %>% 
+  head() %>% 
+  knitr::kable()
+
+str(temp2)
+
+```
 
 # Visualization Design
 
@@ -144,12 +222,10 @@ gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=pop))+
   scale_x_log10()+
-  scale_color_gradient(low="green", high="red")
+  scale_color_gradient(low="yellow", high="purple")
 
 ```
-```{r interest_country}
 
-```
 
 
 
@@ -166,7 +242,7 @@ p <- gapminder %>%
   facet_wrap(~continent)+
   scale_fill_manual(values = country_colors)
 
-ggsave("img.png", plot=p, scale=0.8)
+ggsave("img.png", plot=p)
 ```
 
 

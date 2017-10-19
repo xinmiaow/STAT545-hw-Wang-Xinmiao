@@ -52,6 +52,54 @@ library(forcats)
 library(ggthemes)
 ```
 
+``` r
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
 Factor Management
 =================
 
@@ -96,20 +144,12 @@ gapminder %>%
 | Oceania   |        18621.609|
 
 ``` r
-gapminder %>% 
-  mutate(continent=fct_reorder(continent, gdpPercap, mean, .desc=TRUE)) %>% 
-  group_by(continent) %>% 
-  summarise(mean_gdpPercap = mean(gdpPercap, na.rm=TRUE)) %>% 
-  knitr::kable()
+gapminder$continent %>% 
+  fct_reorder(gapminder$gdpPercap, mean, .desc=TRUE) %>% 
+  levels()
 ```
 
-| continent |  mean\_gdpPercap|
-|:----------|----------------:|
-| Oceania   |        18621.609|
-| Europe    |        14469.476|
-| Asia      |         7902.150|
-| Americas  |         7136.110|
-| Africa    |         2193.755|
+    ## [1] "Oceania"  "Europe"   "Asia"     "Americas" "Africa"
 
 Reorder the levels of `country`
 -------------------------------
@@ -129,39 +169,133 @@ Effects of `arrange()`
 ----------------------
 
 ``` r
-gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
+interest_country <- c("United States", "Canada", "Mexico")
 
-ggplot(gap_asia_2007, aes(x = pop, y = country)) + geom_point()
+gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  knitr::kable()
+```
+
+| country       | continent |  year|  lifeExp|        pop|  gdpPercap|
+|:--------------|:----------|-----:|--------:|----------:|----------:|
+| Canada        | Americas  |  1952|   68.750|   14785584|  11367.161|
+| Canada        | Americas  |  1957|   69.960|   17010154|  12489.950|
+| Canada        | Americas  |  1962|   71.300|   18985849|  13462.486|
+| Canada        | Americas  |  1967|   72.130|   20819767|  16076.588|
+| Canada        | Americas  |  1972|   72.880|   22284500|  18970.571|
+| Canada        | Americas  |  1977|   74.210|   23796400|  22090.883|
+| Canada        | Americas  |  1982|   75.760|   25201900|  22898.792|
+| Canada        | Americas  |  1987|   76.860|   26549700|  26626.515|
+| Canada        | Americas  |  1992|   77.950|   28523502|  26342.884|
+| Canada        | Americas  |  1997|   78.610|   30305843|  28954.926|
+| Canada        | Americas  |  2002|   79.770|   31902268|  33328.965|
+| Canada        | Americas  |  2007|   80.653|   33390141|  36319.235|
+| Mexico        | Americas  |  1952|   50.789|   30144317|   3478.126|
+| Mexico        | Americas  |  1957|   55.190|   35015548|   4131.547|
+| Mexico        | Americas  |  1962|   58.299|   41121485|   4581.609|
+| Mexico        | Americas  |  1967|   60.110|   47995559|   5754.734|
+| Mexico        | Americas  |  1972|   62.361|   55984294|   6809.407|
+| Mexico        | Americas  |  1977|   65.032|   63759976|   7674.929|
+| Mexico        | Americas  |  1982|   67.405|   71640904|   9611.148|
+| Mexico        | Americas  |  1987|   69.498|   80122492|   8688.156|
+| Mexico        | Americas  |  1992|   71.455|   88111030|   9472.384|
+| Mexico        | Americas  |  1997|   73.670|   95895146|   9767.298|
+| Mexico        | Americas  |  2002|   74.902|  102479927|  10742.441|
+| Mexico        | Americas  |  2007|   76.195|  108700891|  11977.575|
+| United States | Americas  |  1952|   68.440|  157553000|  13990.482|
+| United States | Americas  |  1957|   69.490|  171984000|  14847.127|
+| United States | Americas  |  1962|   70.210|  186538000|  16173.146|
+| United States | Americas  |  1967|   70.760|  198712000|  19530.366|
+| United States | Americas  |  1972|   71.340|  209896000|  21806.036|
+| United States | Americas  |  1977|   73.380|  220239000|  24072.632|
+| United States | Americas  |  1982|   74.650|  232187835|  25009.559|
+| United States | Americas  |  1987|   75.020|  242803533|  29884.350|
+| United States | Americas  |  1992|   76.090|  256894189|  32003.932|
+| United States | Americas  |  1997|   76.810|  272911760|  35767.433|
+| United States | Americas  |  2002|   77.310|  287675526|  39097.100|
+| United States | Americas  |  2007|   78.242|  301139947|  42951.653|
+
+``` r
+gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  group_by(country, year) %>% 
+  arrange(country, lifeExp) %>% 
+  knitr::kable()
+```
+
+| country       | continent |  year|  lifeExp|        pop|  gdpPercap|
+|:--------------|:----------|-----:|--------:|----------:|----------:|
+| Canada        | Americas  |  1952|   68.750|   14785584|  11367.161|
+| Canada        | Americas  |  1957|   69.960|   17010154|  12489.950|
+| Canada        | Americas  |  1962|   71.300|   18985849|  13462.486|
+| Canada        | Americas  |  1967|   72.130|   20819767|  16076.588|
+| Canada        | Americas  |  1972|   72.880|   22284500|  18970.571|
+| Canada        | Americas  |  1977|   74.210|   23796400|  22090.883|
+| Canada        | Americas  |  1982|   75.760|   25201900|  22898.792|
+| Canada        | Americas  |  1987|   76.860|   26549700|  26626.515|
+| Canada        | Americas  |  1992|   77.950|   28523502|  26342.884|
+| Canada        | Americas  |  1997|   78.610|   30305843|  28954.926|
+| Canada        | Americas  |  2002|   79.770|   31902268|  33328.965|
+| Canada        | Americas  |  2007|   80.653|   33390141|  36319.235|
+| Mexico        | Americas  |  1952|   50.789|   30144317|   3478.126|
+| Mexico        | Americas  |  1957|   55.190|   35015548|   4131.547|
+| Mexico        | Americas  |  1962|   58.299|   41121485|   4581.609|
+| Mexico        | Americas  |  1967|   60.110|   47995559|   5754.734|
+| Mexico        | Americas  |  1972|   62.361|   55984294|   6809.407|
+| Mexico        | Americas  |  1977|   65.032|   63759976|   7674.929|
+| Mexico        | Americas  |  1982|   67.405|   71640904|   9611.148|
+| Mexico        | Americas  |  1987|   69.498|   80122492|   8688.156|
+| Mexico        | Americas  |  1992|   71.455|   88111030|   9472.384|
+| Mexico        | Americas  |  1997|   73.670|   95895146|   9767.298|
+| Mexico        | Americas  |  2002|   74.902|  102479927|  10742.441|
+| Mexico        | Americas  |  2007|   76.195|  108700891|  11977.575|
+| United States | Americas  |  1952|   68.440|  157553000|  13990.482|
+| United States | Americas  |  1957|   69.490|  171984000|  14847.127|
+| United States | Americas  |  1962|   70.210|  186538000|  16173.146|
+| United States | Americas  |  1967|   70.760|  198712000|  19530.366|
+| United States | Americas  |  1972|   71.340|  209896000|  21806.036|
+| United States | Americas  |  1977|   73.380|  220239000|  24072.632|
+| United States | Americas  |  1982|   74.650|  232187835|  25009.559|
+| United States | Americas  |  1987|   75.020|  242803533|  29884.350|
+| United States | Americas  |  1992|   76.090|  256894189|  32003.932|
+| United States | Americas  |  1997|   76.810|  272911760|  35767.433|
+| United States | Americas  |  2002|   77.310|  287675526|  39097.100|
+| United States | Americas  |  2007|   78.242|  301139947|  42951.653|
+
+``` r
+gapminder %>%
+  filter(country%in%interest_country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
 ```
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 ``` r
-gap_asia_2007 %>% 
-  ggplot(aes(x = pop, y = fct_reorder(country, pop, max))) +
+p1 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
   geom_point()
+
+p2 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
+  arrange(country, lifeExp) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+multiplot(p1, p2, col=2)
 ```
+
+    ## Loading required package: grid
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-2.png)
 
-``` r
-gap_asia_2007 %>% 
-  arrange(country, desc(pop)) %>% 
-  ggplot(aes(x = pop, y =country)) +
-  geom_point()
-```
-
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-3.png)
-
-``` r
-gap_asia_2007 %>% 
-  mutate(country = fct_reorder(country, pop, max)) %>% 
-  arrange(country, desc(pop)) %>% 
-  ggplot(aes(x = pop, y =country)) +
-  geom_point()
-```
-
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-4.png)
+    ## [1] 2
 
 File I/O
 ========
@@ -175,8 +309,16 @@ gap_re_country <- gapminder %>%
 
 write_csv(gap_re_country, "gap_re_country.csv")
 
-temp <- read.csv("gap_re_country.csv")
+temp <- read_csv("gap_re_country.csv")
+```
 
+    ## Parsed with column specification:
+    ## cols(
+    ##   country = col_character(),
+    ##   max_pop = col_integer()
+    ## )
+
+``` r
 temp %>% 
   head() %>% 
   knitr::kable()
@@ -190,6 +332,50 @@ temp %>%
 | Equatorial Guinea     |    551201|
 | Bahrain               |    708573|
 | Comoros               |    710960|
+
+``` r
+str(temp)
+```
+
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    142 obs. of  2 variables:
+    ##  $ country: chr  "Sao Tome and Principe" "Iceland" "Djibouti" "Equatorial Guinea" ...
+    ##  $ max_pop: int  199579 301931 496374 551201 708573 710960 720230 798094 1133066 1191336 ...
+    ##  - attr(*, "spec")=List of 2
+    ##   ..$ cols   :List of 2
+    ##   .. ..$ country: list()
+    ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+    ##   .. ..$ max_pop: list()
+    ##   .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+    ##   ..$ default: list()
+    ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+    ##   ..- attr(*, "class")= chr "col_spec"
+
+``` r
+saveRDS(gap_re_country, "gap_re_country.rds")
+
+temp2 <- readRDS("gap_re_country.rds")
+
+temp2 %>% 
+  head() %>% 
+  knitr::kable()
+```
+
+| country               |  max\_pop|
+|:----------------------|---------:|
+| Sao Tome and Principe |    199579|
+| Iceland               |    301931|
+| Djibouti              |    496374|
+| Equatorial Guinea     |    551201|
+| Bahrain               |    708573|
+| Comoros               |    710960|
+
+``` r
+str(temp2)
+```
+
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    142 obs. of  2 variables:
+    ##  $ country: Factor w/ 142 levels "Sao Tome and Principe",..: 1 2 3 4 5 6 7 8 9 10 ...
+    ##  $ max_pop: int  199579 301931 496374 551201 708573 710960 720230 798094 1133066 1191336 ...
 
 Visualization Design
 ====================
@@ -208,7 +394,7 @@ gapminder %>%
   ggplot(aes(x=gdpPercap,y=lifeExp))+
   geom_point(aes(colour=pop))+
   scale_x_log10()+
-  scale_color_gradient(low="green", high="red")
+  scale_color_gradient(low="yellow", high="purple")
 ```
 
 ![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/visualization_design-2.png)
@@ -227,10 +413,10 @@ p <- gapminder %>%
   facet_wrap(~continent)+
   scale_fill_manual(values = country_colors)
 
-ggsave("img.png", plot=p, scale=0.8)
+ggsave("img.png", plot=p)
 ```
 
-    ## Saving 5.6 x 4 in image
+    ## Saving 7 x 5 in image
 
 Display the figure we saved.
 
