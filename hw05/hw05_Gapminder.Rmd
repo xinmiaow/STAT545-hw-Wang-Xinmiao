@@ -37,7 +37,7 @@ library(forcats)
 library(ggthemes)
 ```
 
-```{r multiplot_function}
+```{r multiplot_function, echo=FALSE}
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
@@ -150,27 +150,27 @@ gapminder %>%
 ```
 
 ```{r fig.height=5, fig.width=12}
-gapminder %>%
+p1 <- gapminder %>%
   filter(country%in%interest_country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_line()+
-  geom_point()
-
-p1 <- gapminder %>% 
-  filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+p3 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
   arrange(country, lifeExp) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()
 
-multiplot(p1, p2, col=2)
+multiplot(p1, p2, p3, cols=2)
 ```
 
 

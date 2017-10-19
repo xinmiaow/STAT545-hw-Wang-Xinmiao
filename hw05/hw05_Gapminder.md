@@ -52,54 +52,6 @@ library(forcats)
 library(ggthemes)
 ```
 
-``` r
-# Multiple plot function
-#
-# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
-# - cols:   Number of columns in layout
-# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
-#
-# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
-# then plot 1 will go in the upper left, 2 will go in the upper right, and
-# 3 will go all the way across the bottom.
-#
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  require(grid)
-
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-
-  numPlots = length(plots)
-
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                    ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-
- if (numPlots==1) {
-    print(plots[[1]])
-
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-```
-
 Factor Management
 =================
 
@@ -264,38 +216,32 @@ gapminder %>%
 | United States | Americas  |  2007|   78.242|  301139947|  42951.653|
 
 ``` r
-gapminder %>%
+p1 <- gapminder %>%
   filter(country%in%interest_country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_line()+
-  geom_point()
-```
-
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
-
-``` r
-p1 <- gapminder %>% 
-  filter(country%in%interest_country) %>% 
-  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()
 
 p2 <- gapminder %>% 
   filter(country%in%interest_country) %>% 
+  mutate(country = fct_reorder(country, lifeExp, max, .desc=TRUE)) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_line()+
+  geom_point()
+
+p3 <- gapminder %>% 
+  filter(country%in%interest_country) %>% 
   arrange(country, lifeExp) %>% 
   ggplot(aes(x=year, y=lifeExp, color=country))+
   geom_line()+
   geom_point()
 
-multiplot(p1, p2, col=2)
+multiplot(p1, p2, p3, cols=2)
 ```
 
     ## Loading required package: grid
 
-![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-2.png)
-
-    ## [1] 2
+![](hw05_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 File I/O
 ========
