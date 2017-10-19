@@ -6,13 +6,13 @@
 
 ## To-Dos List
 
-  *Homework*   |  *.md File*       | *Check*                 
--------------- | ------------------|-------------------------|
- HW 01         |  [hw01_Gapminder.md](https://github.com/xinmiaow/STAT545_hw01_Wang_Xinmiao/blob/master/hw01_gapminder.md)                 | :ballot_box_with_check: |
- HW 02         |  [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)                 | :ballot_box_with_check: |
- HW 03         | [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)                  | :ballot_box_with_check: |
- HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: |
- HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: |
+  *Homework*   |  *.md File*       | *Check*                 |*Content*
+-------------- | ------------------|-------------------------|----------------
+ HW 01         |  [hw01_Gapminder.md](https://github.com/xinmiaow/STAT545_hw01_Wang_Xinmiao/blob/master/hw01_gapminder.md)                 |  :ballot_box_with_check: | R Markdown syntax
+ HW 02         |  [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)                 | :ballot_box_with_check: | Functions in ggplot
+ HW 03         | [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)                  | :ballot_box_with_check: | Functions in dplyr
+ HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: | Reshaping, Join and Merge
+ HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
                
 
 
