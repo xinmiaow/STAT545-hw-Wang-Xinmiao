@@ -197,6 +197,26 @@ Visualization Design
 Writing Figures to File
 =======================
 
+``` r
+p <- gapminder %>% 
+  filter(year==2007, continent!="Oceania") %>% 
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+  geom_point(aes(size=pop, fill=country), pch=21, show.legend = F)+
+  scale_size_continuous(range = c(1,40))+
+  scale_x_log10(limits = c(230, 63000))+
+  ylim(c(39, 100))+
+  facet_wrap(~continent)+
+  scale_fill_manual(values = country_colors)
+
+ggsave("imp.png", plot=p)
+```
+
+    ## Saving 7 x 5 in image
+
+Display the figure we saved.
+
+![The Plot of Life Expectancy vs GDP per capita in 2007](img.png)
+
 Clean up your repo
 ==================
 
@@ -208,3 +228,5 @@ Report your Process
 
 Reference
 =========
+
+-   [Taking control of qualitative colors in ggplot2](http://stat545.com/block019_enforce-color-scheme.html)
