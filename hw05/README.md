@@ -8,19 +8,19 @@ _**Factor and Figure Management & Repo Hygiene**_
 
 ## Files inside
 
-1. [hw05_Gapminder.Rmd]
-2. [hw05_Gapminder.md]
+1. [hw05_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.Rmd)
+2. [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)
 
 
 ## To-Dos List
 
-- [ ] Factor management
-- [ ] File I/O
-- [ ] Visualization design
-- [ ] Writing figures to file
-- [ ] Clean up your repo!
-- [ ] But I want to do more!
-- [ ] Report your process
+- [X] Factor management
+- [X] File I/O
+- [X] Visualization design
+- [X] Writing figures to file
+- [X] Clean up your repo!
+- [X] But I want to do more!
+- [X] Report your process
 - [ ] Submit the assignment
 
 ***

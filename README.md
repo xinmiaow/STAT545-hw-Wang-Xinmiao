@@ -6,12 +6,14 @@
 
 ## To-Dos List
 
-  *Homework*   |   **Due Date**    | *Check*
--------------- | ------------------|-------------------------
- HW 02         |  *Spe. 26, 2017*  | :ballot_box_with_check:
- HW 03         |  *Oct. 03, 2017*  | :ballot_box_with_check:
- HW 04         |  *Oct. 10, 2017*  | :ballot_box_with_check:
- HW 05         |  *Oct. 20, 2017*  | :ballot_box_with_check:
+  *Homework*   |  *.md File*       | *Check*                 
+-------------- | ------------------|-------------------------|
+ HW 01         |  https://github.com/xinmiaow/STAT545_hw01_Wang_Xinmiao/blob/master/hw01_gapminder.md                 | :ballot_box_with_check: |
+ HW 02         |  [hw02_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw02/hw02_Gapminder.md)                 | :ballot_box_with_check: |
+ HW 03         | [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)                  | :ballot_box_with_check: |
+ HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: |
+ HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: |
+               
 
 
 ## Homework 05: Factor and Figure Management & Repo Hygiene 
@@ -24,9 +26,9 @@
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/README.md)
 
-  2. [hw05_Gapminder.Rmd]
+  2. [hw05_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.Rmd)
 
-  3. [hw05_Gapminder.md]
+  3. [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)
 
 
 ## Homework 04: Tidy data and joins 
