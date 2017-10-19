@@ -236,7 +236,7 @@ p3 <- gapminder %>%
   geom_line()+
   geom_point()
 
-multiplot(p1, p2, p3, cols=2)
+multiplot(p1, p2, p3, cols=3)
 ```
 
     ## Loading required package: grid
