@@ -1,0 +1,113 @@
+---
+title: "STAT545 HW06"
+author: "Xinmiao Wang"
+date: "November 4, 2017"
+output: github_document
+---
+
+# Navigation 
+
+* The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao) 
+
+* Requirement for Homework 05: click [here](http://stat545.com/hw06_data-wrangling-conclusion.html)
+
+* hw05 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw06).
+
+* Files inside hw06:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/README.md)
+  2. [hw06_xw.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.Rmd)
+  3. [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)
+  
+
+# Introduction 
+
+## Load package
+
+```{r load_package}
+library(tidyverse)
+library(stringr)
+library(gapminder)
+
+```
+
+
+# Character data
+
+## 14.2.5 Exercises
+
+###  1. In code that doesn¡¯t use stringr, you¡¯ll often see paste() and paste0(). What¡¯s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
+
+**ANS:**
+1. Differences
+
+   * `paste(...)` separate each inputs with a space automatically; `paste0(...)` can not do that, but it works more efficient when you want to combine inputs as one character.
+   * In `paste(...)`, you can control how the inputs are separated by arguement `sep=...`; `paste0(...)` can not do that
+
+2. Equivalent function in Stringr
+
+   * `paste(...)` has the same result as `str_c(..., sep=" ")`
+   * `paste0(...)` has the same result as `str_c(...)`
+
+3. Handling of `NA`
+  * `paste(...)` and `paste0(...)` treat `NA` as a character
+  * `str_c(...)` will return `NA` if any input is `NA` inside of this function
+  * You can use `str_replace_na()` inside the function `str_c(...)` so that the input `NA` can be treated as a character
+  
+```{r p1_q1}
+string <- c("This is my", "repo for HW06")
+
+# Combine Multiple inputs
+paste(string[1], string[2])
+
+str_c(string[1], string[2],  sep = " ")
+
+paste0(string[1], string[2])
+
+str_c(string[1], string[2])
+
+# Combine Multiple elemnts in a vectorized input
+paste(string, collapse = " ")
+
+paste0(string, collapse = " ")
+
+str_c(string, collapse = " ")
+
+# with input NA
+
+string2 <- c("This is my", NA, "?")
+
+paste(string2, collapse = " ")
+
+paste0(string2, collapse = " ")
+
+str_c(string2, collapse = " ")
+
+str_c(str_replace_na(string2), collapse = " ")
+
+```
+
+
+### 2. In your own words, describe the difference between the sep and collapse arguments to str_c().
+
+```{r p1_q2}
+str_c(string, collapse=" ")
+
+
+```
+
+
+### 3. Use str_length() and str_sub() to extract the middle character from a string. What will you do if the string has an even number of characters?
+
+### 4. What does str_wrap() do? When might you want to use it?
+
+### 5. What does str_trim() do? What¡¯s the opposite of str_trim()?
+
+### 6. Write a function that turns (e.g.) a vector c("a", "b", "c") into the string a, b, and c. Think carefully about what it should do if given a vector of length 0, 1, or 2.
+
+
+
+
+# Writing functions
+
+
