@@ -13,7 +13,22 @@
  HW 03         | [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)                  | :ballot_box_with_check: | Functions in dplyr
  HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: | Reshaping, Join and Merge
  HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
+ HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | ???
                
+
+## Homework 05: Factor and Figure Management & Repo Hygiene 
+
+* Requirement for Homework 06: click [here](http://stat545.com/hw06_data-wrangling-conclusion.html)
+
+* hw06 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw06).
+
+* Files inside hw05:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/README.md)
+
+  2. [hw06_xw.Rmd]
+
+  3. [hw06_xw.md]
 
 
 ## Homework 05: Factor and Figure Management & Repo Hygiene 
