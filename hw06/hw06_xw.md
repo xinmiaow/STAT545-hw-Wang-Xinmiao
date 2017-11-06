@@ -25,6 +25,7 @@ Load package
 ------------
 
 ``` r
+suppressPackageStartupMessages(library(dplyr))
 library(tidyverse)
 ```
 
@@ -33,7 +34,6 @@ library(tidyverse)
     ## Loading tidyverse: tidyr
     ## Loading tidyverse: readr
     ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
 
     ## Conflicts with tidy packages ----------------------------------------------
 
@@ -42,6 +42,7 @@ library(tidyverse)
 
 ``` r
 library(stringr)
+library(broom)
 library(gapminder)
 ```
 
@@ -321,3 +322,10 @@ str_xw(my.vec2)
 
 Writing functions
 =================
+
+``` r
+lm_gm <- function(mydat, offset=1952){
+  fit <- lm(log(lifeExp) ~ I(year-offset)*gdpPercap, data=mydat)
+  coef(fit)
+}
+```

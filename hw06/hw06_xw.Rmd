@@ -26,8 +26,10 @@ output: github_document
 
 
 ```{r load_package, warning=FALSE}
+suppressPackageStartupMessages(library(dplyr))
 library(tidyverse)
 library(stringr)
+library(broom)
 library(gapminder)
 ```
 
@@ -226,6 +228,15 @@ str_xw(my.vec2)
 
 
 # Writing functions
+
+```{r p2}
+lm_gm <- function(mydat, offset=1952){
+  fit <- lm(log(lifeExp) ~ I(year-offset)*gdpPercap, data=mydat)
+  coef(fit)
+}
+
+
+```
 
 
 
