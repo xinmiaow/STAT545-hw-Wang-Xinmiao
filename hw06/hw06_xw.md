@@ -8,9 +8,9 @@ Navigation
 
 -   The main repo for homework: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao)
 
--   Requirement for Homework 05: click [here](http://stat545.com/hw06_data-wrangling-conclusion.html)
+-   Requirement for Homework 06: click [here](http://stat545.com/hw06_data-wrangling-conclusion.html)
 
--   hw05 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw06).
+-   hw06 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw06).
 
 -   Files inside hw06:
 
@@ -53,20 +53,18 @@ Character data
 
 #### 1. In code that doesn’t use stringr, you’ll often see paste() and paste0(). What’s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
 
-**ANS:**
-
-Differences
+**Differences**
 
 -   `paste(...)` separate each inputs with a space automatically; `paste0(...)` can not do that, but it works more efficient when you want to combine inputs as one character.
 -   In `paste(...)`, you can control how the inputs are separated by argument `sep=...`; `paste0(...)` can not do that.
 -   For, vectored inputs, `paste(...)` and `paste0(...)` have the same result by using the same argument `collapse = " "` inside each function.
 
-Equivalent function in Stringr
+**Equivalent function in Stringr**
 
 -   For multiple non-vectored inputs, `paste(...)` has the same result as `str_c(..., sep=" ")`; `paste0(...)` has the same result as `str_c(...)`
 -   For vectored inputs, `paste(...)`, `paste0(...)` and `str_c(...)` have the same result by setting the argument `collapse = " "`.
 
-Handling of `NA`
+**Handling of `NA`**
 
 -   `paste(...)` and `paste0(...)` treat `NA` as a character
 -   `str_c(...)` will return `NA` if any input is `NA` inside of this function
@@ -148,9 +146,7 @@ str_c(str_replace_na(string2), collapse = " ")
 
 #### 2. In your own words, describe the difference between the sep and collapse arguments to str\_c().
 
-**ANS**
-
-Difference
+**Difference**
 
 -   the argument `sep = ...` is used to combine multiple inputs with length 1
 
@@ -169,8 +165,6 @@ str_c(string, collapse=" ")
     ## [1] "This is my repo for HW06"
 
 #### 3. Use str\_length() and str\_sub() to extract the middle character from a string. What will you do if the string has an even number of characters?
-
-**ANS**
 
 -   For a string with odd number of characters, I divide the length of the string by 2 and round it to integer. Then, I return the middle character
 
@@ -197,8 +191,6 @@ str_sub(string4, l4, l4 + 1)
     ## [1] "T5"
 
 #### 4. What does str\_wrap() do? When might you want to use it?
-
-**ANS**
 
 -   `str_wrap()`, in my view, divides the input into several subsets with a specific width which is defined by argument `width = ...`, and then insert the `\n` at the end of each subsets so that each subset will be displayed staring with a line.
 
@@ -228,8 +220,6 @@ cat(str_wrap(string5, width = 20), "\n")
     ## in part I.
 
 #### 5. What does str\_trim() do? What’s the opposite of str\_trim()?
-
-**ANS**
 
 -   `str_trim()` will trim white space from the start and end of a string. You can choose the side on which to remove white space by the argument `side = "..."`
 
