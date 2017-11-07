@@ -230,11 +230,22 @@ str_xw(my.vec2)
 # Writing functions
 
 ```{r p2}
-lm_gm <- function(mydat, offset=1952){
-  fit <- lm(log(lifeExp) ~ I(year-offset)*gdpPercap, data=mydat)
-  coef(fit)
+lm_ly <- function(mydat, inyear=2007, offset=1952){
+  dat_train <- mydat %>% filter(year!=inyear)
+  dat_test <- mydat %>% filter(year==inyear)
+  fit <- lm(lifeExp ~ I(year-offset) + I(year-offset)^2, data=dat_train)
+  pred_value <- predict(fit, dat_test[, c("year")])
+  pred_error <- pred_value - dat_test$lifeExp
+  setNames(data.frame(t(c(pred_value, pred_error))), c("Predicted Value", "Predicted Error") )
 }
 
+lm_ly(gapminder %>% filter(country == "Zimbabwe"))
+
+my_pred <- gapminder %>% 
+  group_by(country, continent) %>% 
+  do(lm_ly(.))
+
+knitr::kable(my_pred)
 
 ```
 
