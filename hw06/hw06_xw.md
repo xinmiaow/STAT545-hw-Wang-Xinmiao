@@ -330,7 +330,7 @@ str_xw(my.vec2)
 14.3.1.1 Exercises: Matching patterns with regular expressions
 --------------------------------------------------------------
 
-#### 1. Explain why each of these strings don鈥檛 match a : "", "\\", "\\".
+#### 1. Explain why each of these strings don't match a : "", "\\", "\\".
 
 We use strings to represent regular expressions, and  is also used as an escape symbol in strings.
 
