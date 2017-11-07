@@ -8,19 +8,19 @@ _**Data wrangling wrap up**_
 
 ## Files inside
 
-1. [hw06_xw.Rmd]
-2. [hw06_xw.md]
-
+1. [hw06_xw.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.Rmd)
+2. [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)
+  
 
 ## To-Dos List
 
 - [ ] Character data
-- [ ] Writing functions
+- [X] Writing functions
 - [ ] Work with the candy data
 - [ ] Work with the singer data
-- [ ] Work with a list
+- [X] Work with a list
 - [ ] Work with a nested data frame
-- [ ] Report your process
+- [X] Report your process
 - [ ] Submit the assignment
 
 ***
