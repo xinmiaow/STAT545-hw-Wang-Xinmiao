@@ -22,8 +22,9 @@ output: github_document
 
 # Introduction 
 
-## Load package
+In this assignment, we practice some function about dealing with strings and lists, and also writing functions.  
 
+## Load package
 
 ```{r load_package, warning=FALSE}
 suppressPackageStartupMessages(library(dplyr))
@@ -31,6 +32,11 @@ library(tidyverse)
 library(stringr)
 library(broom)
 library(gapminder)
+library(singer)
+library(repurrrsive)
+library(purrr)
+library(listviewer)
+library(tibble)
 ```
 
 
@@ -38,7 +44,7 @@ library(gapminder)
 
 ## 14.2.5 Exercises
 
-####  1. In code that doesn¡¯t use stringr, you¡¯ll often see paste() and paste0(). What¡¯s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
+####  1. In code that doesn't use stringr, you'll often see paste() and paste0(). What's the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
 
 **Differences**
 
@@ -154,7 +160,7 @@ cat(str_wrap(string5, width = 20), "\n")
 
 
 
-#### 5. What does str_trim() do? What¡¯s the opposite of str_trim()?
+#### 5. What does str_trim() do? What's the opposite of str_trim()?
 
 * `str_trim()` will trim white space from the start and end of a string. You can choose the side on which to remove white space by the argument `side = "..."`
 
@@ -229,7 +235,7 @@ str_xw(my.vec2)
 
 # Writing functions
 
-```{r p2}
+```{r p2, warning=FALSE}
 lm_ly <- function(mydat, inyear=2007, offset=1952){
   dat_train <- mydat %>% filter(year!=inyear)
   dat_test <- mydat %>% filter(year==inyear)
@@ -245,9 +251,264 @@ my_pred <- gapminder %>%
   group_by(country, continent) %>% 
   do(lm_ly(.))
 
-knitr::kable(my_pred)
+knitr::kable(head(my_pred))
+
+```
+
+# Working with a list
+
+I choose the lesson, [Simplifying data from a list of GitHub users](https://jennybc.github.io/purrr-tutorial/ls02_map-extraction-advanced.html), for [purrr toturial](https://jennybc.github.io/purrr-tutorial/index.html). 
+
+## Exercises: Get several GitHub users
+
+#### 1. Read the documentation on str(). What does max.level control? Do str(gh_users, max.level = i) for i in 0,1, and 2.
+
+**max.level**
+
+* The argument, `max.level`, determine the maximum level of nested structures being displayed.
+
+* `max.level = 0`: display how many lists are there in the nested list.
+
+* `max.level = 1`: display not only the number of lists in the nested list, but also the number of variables in each sub-list.
+
+* `max.level = 2`: display the first two levels of the nested list, and also list the variables in each sub-list. Because the output is too long when we set max.level as 2, I only display the first sub-list, which is similar to the output when max.level is 2.
+
+
+```{r p5_q1} 
+str(gh_users, max.level = 0)
+
+str(gh_users, max.level = 1)
+
+str(gh_users[[1]])
+```
+
+#### 2. What does the list.len argument of str() control? What is it's default value? Call str() on gh_users and then on a single component of gh_users with list.len set to a value much smaller than the default.
+
+**list.len**
+
+* The argument, `list.len`, determine the maximum number of list elements to display within a level
+
+* The default value seems to be the maximum number of list elements.
+
+```{r p5_q2}
+str(gh_users[[1]], list.len = 2)
+
+```
+
+
+#### 3. Call str() on gh_users, specifying both max.level and list.len.
+
+```{r p5_q3}
+str(gh_users, max.level = 1, list.len = 3)
+
+str(gh_users, max.level = 2, list.len = 3)
+```
+
+#### 4. Recall the list and vector indexing techniques. Inspect elements 1, 2, 6, 18, 21, and 24 of the list component for the 5th GitHub user. One of these should be the URL for the user's profile on GitHub.com. Go there and compare info you see there with the info you just extracted from gh_users.
+
+```{r p5_q4}
+user5 <-gh_users[[5]]
+
+user5[c(1, 2, 6, 18, 21, 24)]
+
+gh_users[[5]]$html_url
+
+```
+
+#### 5. Consider the interactive view of gh_users here. Or, optionally, install the listviewer package via  install.packages("listviewer") and call jsonedit(gh_users) to run this widget locally. Can you find the same info you extracted in the previous exercise? The same info you see in user's GitHub.com profile?
+
+I check the list 5 and find the user's in list 5 is different from what I extracted by `gh_users[[5]]`. However, the list 4 is the same as what I extracted in last question. 
+
+Because `jsonedit()` is a html format, I did not display the result here.
+
+```{r p5_q5, eval=FALSE}
+jsonedit(gh_users)
 
 ```
 
 
 
+## Exercises: Name and position shortcuts
+
+#### 1. Use names() to inspect the names of the list elements associated with a single user. What is the index or position of the created_at element? Use the character and position shortcuts to extract the created_at elements for all 6 users.
+
+By using `names()`, I find the position of `created_at` is 29, and then I use `map()` to extract them for the list. 
+
+```{r p5_q6}
+names(gh_users[[1]])
+
+map(gh_users, 29)
+
+map(gh_users, "created_at")
+
+```
+
+
+
+#### 2. What happens if you use the character shortcut with a string that does not appear in the lists' names?
+
+`NULL` will be returned for each user.
+
+```{r p5_q7}
+map(gh_users, "Gender")
+
+```
+
+#### 3. What happens if you use the position shortcut with a number greater than the length of the lists?
+
+The output is the same as what is returned when you use a non-defined character. `NULL` will be returned for each user.
+
+```{r p5_q8}
+map(gh_users, 50)
+```
+
+
+#### 4. What if these shortcuts did not exist? Write a function that takes a list and a string as input and returns the list element that bears the name in the string. Apply this to gh_users via map(). Do you get the same result as with the shortcut? Reflect on code length and readability.
+
+I create a function, `name_list`. The function takes mylist and mystring (="location") as input, and return the element called location in mylist. 
+
+When I apply the function to gh_users, I get the same result as with the shortcut.
+
+```{r p5_q9}
+name_list <- function(mylist, mystring="location"){
+  mylist[[mystring]]
+}
+
+map(gh_users, name_list)
+
+```
+
+
+#### 5. Write another function that takes a list and an integer as input and returns the list element at that position. Apply this to gh_users via map(). How does this result and process compare with the shortcut?
+
+I create a function, `int_list`. The function takes mylist and integer (= 21) as input, and return the 21th element in mylist. 
+
+When I apply the function to gh_users, I get the same result as with the shortcut.
+
+```{r p5_q10}
+int_list <- function(mylist, myint=21){
+  mylist[[myint]]
+}
+
+map(gh_users, int_list)
+```
+
+## Exercises: Type-specific map
+
+#### 1. For each user, the second element is named id". This is the user's GitHub id number, where it seems like the person with an id of, say, 10 was the 10th person to sign up for GitHub. At least, it's something like that! Use a type-specific form of map() and an extraction shortcut to extract the ids of these 6 users.
+
+```{r p5_q11}
+map_int(gh_users, "id")
+
+```
+
+
+#### 2. Use your list inspection strategies to find the list element that is logical. There is one! Use a type-specific form of  map() and an extraction shortcut to extract this for all 6 users.
+
+By `str()`, I find site_admin is logical.
+
+```{r p5_q12}
+str(gh_users[[1]])
+
+map_lgl(gh_users, "site_admin")
+
+```
+
+
+#### 3. Use your list inspection strategies to find elements other than id that are numbers. Practice extracting them.
+
+By `str()`, I find that public_repos, public_gists, followers, and following are also integer. 
+
+```{r p5_q13}
+map_int(gh_users, "public_repos")
+map_int(gh_users, "public_gists")
+map_int(gh_users, "followers")
+map_int(gh_users, "following")
+```
+
+## Exercises: Extract multiple values
+
+#### 1. Use your list inspection skills to determine the position of the elements named "login", "name", "id", and "location". Map  [ or magrittr::extract() over users, requesting these four elements by position instead of name
+
+By `names(gh_users[[1]])` I used before, I find the positions of these four elements are 1, 18, 2, 21.
+
+```{r p5_q14}
+map(gh_users, `[`, c(1, 18, 2, 21))
+
+```
+
+## Exercises: Data frame output
+
+#### 1. Use map_df() to create a data frame with one row per user and variables for "name¡±, "following¡±, and "created_at¡±. What type are the variables?
+
+```{r p5_q15} 
+map_df(gh_users, `[`, c("name", "following", "created_at"))
+```
+
+
+## Exercises: Repositories for each user
+
+Use str(), [, and [[ to explore this list, possibly in addition to the interactive list viewer.
+
+#### 1. How many elements does gh_repos have? How many elements does each of those elements have?
+
+* gh_repos has 6 elements.
+
+* Five of the elements under gh_repos have 30 elements for each, and the rest one has 26 elements.
+
+```{r p5_q16}
+str(gh_repos, max.level = 1)
+
+# jsonedit(gh_repos)
+```
+
+#### 2. Extract a list with all the info for one repo for one user. Use str() on it. Maybe print the whole thing to screen. How many elements does this list have and what are their names? Do the same for at least one other repo from a different user and get an rough sense for whether these repo-specific lists tend to look similar.
+
+I choose the second user from the first repo. There are 68 elements in the list. The names of those are listed below by `names()`
+
+In addition, I choose the fifth user from the sixth repo. There are also 68 elements in the list. the names of those are the same as them in the first repo. 
+
+```{r p5_q17}
+repo1<- gh_repos[[1]]
+
+repo1[[2]]
+
+str(repo1[[2]], list.len = 3)
+
+names(repo1[[2]])
+
+repo2 <- gh_repos[[6]]
+
+str(repo2[[5]], list.len = 3)
+
+names(repo2[[5]])
+```
+
+
+#### 3. What are three pieces of repo information that strike you as the most useful? I.e. if you were going to make a data frame of repositories, what might the variables be?
+
+```{r p5_q18}
+map_df(gh_repos[[1]], magrittr::extract, c("name", "id","private", "fork", "url"))
+
+```
+
+
+## Exercises: Vector input to extraction shortcuts
+
+#### 1. Each repository carries information about its owner in a list. Use map_chr() and the position indexing shortcut with vector input to get an atomic character vector of the 6 GitHub usernames for our 6 users: "gaborcsardi", "jennybc", etc. You will need to use your list inspection skills to figure out where this info lives. 
+
+```{r p5_q19}
+map_chr(gh_repos, c(1, 4, 1))
+```
+
+# Report Your Process
+
+I select three tasks, including Character data, Writing functions and Work with a list. However, I only complete the last two tasks. I do partial of the first tasks. I would like to practice all six tasks by myself later. 
+
+# Reference
+
+- [R for Data Science: Strings](http://r4ds.had.co.nz/strings.html)
+
+- [Linear regression of life expectancy on year](http://stat545.com/block012_function-regress-lifeexp-on-year.html)
+
+- [Split-Apply-Combine](http://stat545.com/block024_group-nest-split-map.html)
