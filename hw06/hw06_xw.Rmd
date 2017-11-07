@@ -439,7 +439,7 @@ map(gh_users, `[`, c(1, 18, 2, 21))
 
 ## Exercises: Data frame output
 
-#### 1. Use map_df() to create a data frame with one row per user and variables for "name¡±, "following¡±, and "created_at¡±. What type are the variables?
+#### 1. Use map_df() to create a data frame with one row per user and variables for "name", "following", and "created_at". What type are the variables?
 
 ```{r p5_q15} 
 map_df(gh_users, `[`, c("name", "following", "created_at"))
