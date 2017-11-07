@@ -16,7 +16,7 @@
  HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | ???
                
 
-## Homework 05: Factor and Figure Management & Repo Hygiene 
+## Homework 06: Data wrangling wrap up
 
 * Requirement for Homework 06: click [here](http://stat545.com/hw06_data-wrangling-conclusion.html)
 
@@ -26,9 +26,10 @@
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/README.md)
 
-  2. [hw06_xw.Rmd]
-
-  3. [hw06_xw.md]
+  2. [hw06_xw.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.Rmd)
+  
+  3. [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)
+  
 
 
 ## Homework 05: Factor and Figure Management & Repo Hygiene 
