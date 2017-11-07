@@ -13,7 +13,7 @@
  HW 03         | [hw03_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw03/hw03_Gapminder.md)                  | :ballot_box_with_check: | Functions in dplyr
  HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: | Reshaping, Join and Merge
  HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
- HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | ???
+ HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | Strings, Functions and Lists
                
 
 ## Homework 06: Data wrangling wrap up
@@ -22,7 +22,7 @@
 
 * hw06 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw06).
 
-* Files inside hw05:
+* Files inside hw06:
 
   1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/README.md)
 

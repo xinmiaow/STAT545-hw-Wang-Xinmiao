@@ -14,14 +14,14 @@ _**Data wrangling wrap up**_
 
 ## To-Dos List
 
-- [ ] Character data
+- [X] Character data
 - [X] Writing functions
 - [ ] Work with the candy data
 - [ ] Work with the singer data
 - [X] Work with a list
 - [ ] Work with a nested data frame
 - [X] Report your process
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ***
 *on Nov 04, 2017*
