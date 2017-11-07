@@ -42,7 +42,7 @@ library(tibble)
 
 # Character data
 
-## 14.2.5 Exercises
+## 14.2.5 Exercises: String basics
 
 ####  1. In code that doesn't use stringr, you'll often see paste() and paste0(). What's the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
 
@@ -230,13 +230,69 @@ my.vec2 <- c("A")
 str_xw(my.vec2)
 ```
 
+## 14.3.1.1 Exercises:  Matching patterns with regular expressions
 
+#### 1. Explain why each of these strings don¡¯t match a \: "\", "\\", "\\\".
+
+We use strings to represent regular expressions, and \ is also used as an escape symbol in strings.
+
+* "\": escape the next character in the R string. Eg. "a\ab" will be read as "ab"
+
+* "\\": resolve to one backslash. Eg. "a\\b" will be read as "a\b"
+
+* "\\\": the first to backslash resoule to one backslash and the last backslash escape the next character in the string. Eg. "a\\\b.a" will be read as "a.a"
+
+```{r p1_q7}
+dot1 <- "a\ab"
+
+dot2 <- "a\\b"
+
+dot3 <- "a\\\b.a"
+
+writeLines(dot1)
+
+writeLines(dot2)
+
+writeLines(dot3)
+
+
+```
+
+```{r practice, eval=FALSE}
+x <- c("app.le", "banana", "pear")
+
+str_view(x, "an")
+
+str_view(x, ".")
+
+str_view(x, "\\.")
+```
+
+#### 2. How would you match the sequence "'\?
+
+`str_view(dot2, "\\\\")`
+
+```{r p1_q8, eval=FALSE}
+str_view(dot2, "\\\\")
+```
+
+#### 3. What patterns will the regular expression \..\..\.. match? How would you represent it as a string?
+
+```{r p1_q9}
+
+dot4 <- "\\..\\..\\.."
+
+writeLines(dot4)
+
+```
 
 
 # Writing functions
 
+I write a functions which can return the predicted values and predicted errors by using a quadratic regression model. The inputs are a dataset and two integers. `inyear` is in which year you want to predict the life expectancy. `offset` is the baseline of years. 
+
 ```{r p2, warning=FALSE}
-lm_ly <- function(mydat, inyear=2007, offset=1952){
+lm_ly <- function(mydat, inyear=2002, offset=1952){
   dat_train <- mydat %>% filter(year!=inyear)
   dat_test <- mydat %>% filter(year==inyear)
   fit <- lm(lifeExp ~ I(year-offset) + I(year-offset)^2, data=dat_train)

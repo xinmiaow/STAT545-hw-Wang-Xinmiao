@@ -56,8 +56,8 @@ library(tibble)
 Character data
 ==============
 
-14.2.5 Exercises
-----------------
+14.2.5 Exercises: String basics
+-------------------------------
 
 #### 1. In code that doesn't use stringr, you'll often see paste() and paste0(). What's the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
 
@@ -327,11 +327,78 @@ str_xw(my.vec2)
 
     ## [1] "A"
 
+14.3.1.1 Exercises: Matching patterns with regular expressions
+--------------------------------------------------------------
+
+#### 1. Explain why each of these strings don鈥檛 match a : "", "\\", "\\".
+
+We use strings to represent regular expressions, and  is also used as an escape symbol in strings.
+
+-   "": escape the next character in the R string. Eg. "a" will be read as "ab"
+
+-   "\\": resolve to one backslash. Eg. "a\\b" will be read as "a"
+
+-   "\\": the first to backslash resoule to one backslash and the last backslash escape the next character in the string. Eg. "a\\.a" will be read as "a.a"
+
+``` r
+dot1 <- "a\ab"
+
+dot2 <- "a\\b"
+
+dot3 <- "a\\\b.a"
+
+writeLines(dot1)
+```
+
+    ## ab
+
+``` r
+writeLines(dot2)
+```
+
+    ## a\b
+
+``` r
+writeLines(dot3)
+```
+
+    ## a\.a
+
+``` r
+x <- c("app.le", "banana", "pear")
+
+str_view(x, "an")
+
+str_view(x, ".")
+
+str_view(x, "\\.")
+```
+
+#### 2. How would you match the sequence "'?
+
+`str_view(dot2, "\\\\")`
+
+``` r
+str_view(dot2, "\\\\")
+```
+
+#### 3. What patterns will the regular expression ...... match? How would you represent it as a string?
+
+``` r
+dot4 <- "\\..\\..\\.."
+
+writeLines(dot4)
+```
+
+    ## \..\..\..
+
 Writing functions
 =================
 
+I write a functions which can return the predicted values and predicted errors by using a quadratic regression model. The inputs are a dataset and two integers. `inyear` is in which year you want to predict the life expectancy. `offset` is the baseline of years.
+
 ``` r
-lm_ly <- function(mydat, inyear=2007, offset=1952){
+lm_ly <- function(mydat, inyear=2002, offset=1952){
   dat_train <- mydat %>% filter(year!=inyear)
   dat_test <- mydat %>% filter(year==inyear)
   fit <- lm(lifeExp ~ I(year-offset) + I(year-offset)^2, data=dat_train)
@@ -344,7 +411,7 @@ lm_ly(gapminder %>% filter(country == "Zimbabwe"))
 ```
 
     ##   Predicted Value Predicted Error
-    ## 1        52.87265        9.385655
+    ## 1        53.64113        13.65213
 
 ``` r
 my_pred <- gapminder %>% 
@@ -356,12 +423,12 @@ knitr::kable(head(my_pred))
 
 | country     | continent |  Predicted Value|  Predicted Error|
 |:------------|:----------|----------------:|----------------:|
-| Afghanistan | Asia      |         45.56155|        1.7335455|
-| Albania     | Europe    |         78.14425|        1.7212545|
-| Algeria     | Africa    |         75.68245|        3.3814545|
-| Angola      | Africa    |         44.02062|        1.2896182|
-| Argentina   | Americas  |         75.47940|        0.1594000|
-| Australia   | Oceania   |         80.79582|       -0.4391818|
+| Afghanistan | Asia      |         44.12205|        1.9930481|
+| Albania     | Europe    |         76.05392|        0.4029233|
+| Algeria     | Africa    |         72.08419|        1.0901895|
+| Angola      | Africa    |         43.05529|        2.0522932|
+| Argentina   | Americas  |         74.25466|       -0.0853414|
+| Australia   | Oceania   |         79.61741|       -0.7525865|
 
 Working with a list
 ===================
