@@ -71,7 +71,7 @@ Here, I display four best countries in each continent.
 gap_bfit <- read.delim("gap_bfit.tsv")
 
 gap_bfit %>%
-  group_by(continent, country)
+  group_by(continent, country) %>% 
   summarise(mean_lifeExp = mean(lifeExp)) %>% 
   arrange(desc(mean_lifeExp)) %>% 
   knitr::kable()

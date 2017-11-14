@@ -26,7 +26,7 @@ pc2 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Asia")
 
-ggsave("Aisa.png", plot=pc2)
+ggsave("Asia.png", plot=pc2)
 
 pc3 <- gap_bfit %>% 
   filter(continent=="Americas") %>% 
