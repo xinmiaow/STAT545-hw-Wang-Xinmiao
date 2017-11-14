@@ -16,7 +16,7 @@ First, I download the dataset, `gapminder` online, and save as `gapminder.tsv`.
 Let's read the dataset and have a look at it
 
 ```{r load_data}
-gapminder <- read.delim("./hw07/gapminder.tsv")
+gapminder <- read.delim("gapminder.tsv")
 
 str(gapminder)
 ```
@@ -29,24 +29,24 @@ I an interested in the change of Life Expectancy over time. Hence, here I explor
 Here is the bar chart of continent. 
 There are six continents where we collected data, including Africa, Americas, Asia, Europe and Oceania.
 
-![The Bar Chart of Continent](./hw07/barchart.png)
+![The Bar Chart of Continent](barchart.png)
 
 Here is the Histogram of lifeExp.
 
-![The Histogram of LifeExp](./hw07/histogram.png)
+![The Histogram of LifeExp](histogram.png)
 
 To explore the change of lifeExp over time for each continent, I create the following figure. We can see the increasing trend of LifeExp in each continent.
 
-![The Plot of LifeExp over Years in Each Continent](./hw07/timeplot_lifeExp.png)
+![The Plot of LifeExp over Years in Each Continent](timeplot_lifeExp.png)
 
 To compare the LifeExp among continent, I plot the mean of LifeExp over years for each continent. We can see the life expectancy of Oceania is always larger than other continents and there is no crossover among each lines
 
-![The Plot of Mean of LifeExp over Years in Each Continent](./hw07/timeplot_meanLifeExp.png)
+![The Plot of Mean of LifeExp over Years in Each Continent](timeplot_meanLifeExp.png)
 
 Based on the figure above, I am going to reorder the level of continents by the average of lifeExp in each continent. 
 
 ```{r reorder_daat}
-gap_re_continent <- readRDS("./hw07/gap_re_continent.rds")
+gap_re_continent <- readRDS("gap_re_continent.rds")
 
 levels(gap_re_continent$continent)
 ```
@@ -62,7 +62,7 @@ Based on the residual standard error, I choose four countries in continent, whos
 
 Here, I display four best countries in each continent.
 ```{r }
-gap_bfit <- read.delim("./hw07/gap_bfit.tsv")
+gap_bfit <- read.delim("gap_bfit.tsv")
 
 gap_bfit %>%
   group_by(continent, country)
@@ -81,22 +81,22 @@ I display them in the order of their mean lifeExp, which we used it before to re
 
 The Scatterplot of LifeExp over Years in Africa
 
-![The Scatterplot of LifeExp over Years in Africa](./hw07/Africa.png)
+![The Scatterplot of LifeExp over Years in Africa](Africa.png)
 
 The Scatterplot of LifeExp over Years in Asia
 
-![The Scatterplot of LifeExp over Years in Asia](./hw07/Asia.png)
+![The Scatterplot of LifeExp over Years in Asia](Asia.png)
 
 The Scatterplot of LifeExp over Years in Americas
 
-![The Scatterplot of LifeExp over Years in Americas](./hw07/Americas.png)
+![The Scatterplot of LifeExp over Years in Americas](Americas.png)
 
 The Scatterplot of LifeExp over Years in Europe
 
-![The Scatterplot of LifeExp over Years in Europe](./hw07/Europe.png)
+![The Scatterplot of LifeExp over Years in Europe](Europe.png)
 
 The Scatterplot of LifeExp over Years in Oceania
 
-![The Scatterplot of LifeExp over Years in Oceania](./hw07/Oceania.png)
+![The Scatterplot of LifeExp over Years in Oceania](Oceania.png)
 
 
