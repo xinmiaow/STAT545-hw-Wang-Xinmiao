@@ -3,7 +3,7 @@
 all: hw07_Gapminder.md
 
 clean:
-	del -f "*.tsv" "*.rds" "*.png" "*.md" "*.html"
+	del -f "*.tsv" "*.rds" "*.png" "*.html"
 
 gapminder.tsv:
 	Rscript 0_download_data.R
