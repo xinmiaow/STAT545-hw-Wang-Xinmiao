@@ -89,29 +89,29 @@ _**Input**_
 
 ### 3_generate_figures.R
 
-_**Job**_
+1. _**Job**_
 
 * Generate the scatterplot of lifeExp vs Year for each country in each contients and save then as .png files
 
-_**Input**_
+2. _**Input**_
 
 * gap_bfit.tsv
 
-_**Output**_
+3. _**Output**_
 
 * Figures: Africa.png, Asia.png, Americas.png, Europe.png, Oceania.png
 
 ### hw07_Gapminder.Rmd
 
-_**Job**_
+1. _**Job**_
 
 * Combine the outputs above, and render a report to summarize some important results
 
-_**Input**_
+2. _**Input**_
 
 * gap_bfit.tsv
 
--**Output**-
+3. -**Output**-
 
 * Dataset: gapminder.tsv, gap_re_continent.rds, gap_bfit.tsv
 
@@ -119,7 +119,7 @@ _**Input**_
 
 ### Makefile
 
-_**Job**_
+1. _**Job**_
 
 * Automate the pipeline 
 
