@@ -24,20 +24,20 @@
 * hw07 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw07).
 
 * Files inside hw07:
+ 
+  1. [0_download_data.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/0_download_data.R)
 
-1. [0_download_data.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/0_download_data.R)
+  2. [1_exploratory_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/1_exploratory_analyses.R)
 
-2. [1_exploratory_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/1_exploratory_analyses.R)
+  3. [2_statistical_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/2_statistical_analyses.R)
 
-3. [2_statistical_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/2_statistical_analyses.R)
+  4. [3_generate_figures.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/3_generate_figures.R)
 
-4. [3_generate_figures.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/3_generate_figures.R)
+  5. [Makefile](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/Makefile)
 
-5. [Makefile](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/Makefile)
+  6. [hw07_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.Rmd)
 
-6. [hw07_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.Rmd)
-
-7. [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)
+  7. [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)
 
 ## Homework 06: Data wrangling wrap up
 
