@@ -5,7 +5,7 @@ library(devtools)
 library(forcats)
 
 # Read data
-gapminder <- read.delim("./hw07/gapminder.tsv")
+gapminder <- read.delim("gapminder.tsv")
 
 # Plots
 ## Bar chart of continent
@@ -14,7 +14,7 @@ p1 <- ggplot(gapminder, aes(x=continent))+
   theme_calc()+
   ggtitle("The Bar Chart of Continent")
 
-ggsave("./hw07/barchart.png", plot=p1)
+ggsave("barchart.png", plot=p1)
 
 ## Histogram of Life Expectancy
 p2 <- ggplot(gapminder, aes(x=lifeExp))+
@@ -23,7 +23,7 @@ p2 <- ggplot(gapminder, aes(x=lifeExp))+
   theme_calc()+
   ggtitle("The Histogram of LifeExp")
 
-ggsave("./hw07/histogram.png", plot=p2)
+ggsave("histogram.png", plot=p2)
 
 ## Time Series Plot
 p3 <- ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
@@ -32,7 +32,7 @@ p3 <- ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
   theme_calc()+
   ggtitle("The Plot of LifeExp over Years in Each Continent")
 
-ggsave("./hw07/timeplot_lifeExp.png", plot=p3)
+ggsave("timeplot_lifeExp.png", plot=p3)
 
 ## Plot Of Mean LifeExp
 p4 <- gapminder %>% 
@@ -44,11 +44,11 @@ p4 <- gapminder %>%
   theme_calc()+
   ggtitle("The Plot of Mean of LifeExp over Years in Each Continent")
 
-ggsave("./hw07/timeplot_meanLifeExp.png", plot=p4)
+ggsave("timeplot_meanLifeExp.png", plot=p4)
 
 # Reorder Contient
 gap_re_continent <- gapminder %>% 
   mutate(continent=fct_reorder(continent, lifeExp, mean))
 
 ## Save dataset
-saveRDS(gap_re_continent, "./hw07/gap_re_continent.rds")
+saveRDS(gap_re_continent, "gap_re_continent.rds")

@@ -3,7 +3,7 @@ library(tidyverse)
 library(ggthemes)
 
 # Read data
-gap_bfit <- read.delim("./hw07/gap_bfit.tsv")
+gap_bfit <- read.delim("gap_bfit.tsv")
 
 # Generate figures
 pc1 <- gap_bfit %>% 
@@ -15,7 +15,7 @@ pc1 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Africa")
 
-ggsave("./hw07/Africa.png", plot=pc1)
+ggsave("Africa.png", plot=pc1)
 
 pc2 <- gap_bfit %>% 
   filter(continent=="Asia") %>% 
@@ -26,7 +26,7 @@ pc2 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Asia")
 
-ggsave("./hw07/Aisa.png", plot=pc2)
+ggsave("Aisa.png", plot=pc2)
 
 pc3 <- gap_bfit %>% 
   filter(continent=="Americas") %>% 
@@ -37,7 +37,7 @@ pc3 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Americas")
 
-ggsave("./hw07/Americas.png", plot=pc3)
+ggsave("Americas.png", plot=pc3)
 
 pc4 <- gap_bfit %>% 
   filter(continent=="Europe") %>% 
@@ -48,7 +48,7 @@ pc4 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Europe")
 
-ggsave("./hw07/Europe.png", plot=pc4)
+ggsave("Europe.png", plot=pc4)
 
 pc5 <- gap_bfit %>% 
   filter(continent=="Oceania") %>% 
@@ -59,4 +59,4 @@ pc5 <- gap_bfit %>%
   theme_calc()+
   ggtitle("The Scatterplot of LifeExp over Years in Oceania")
 
-ggsave("./hw07/Oceania.png", plot=pc5)
+ggsave("Oceania.png", plot=pc5)
