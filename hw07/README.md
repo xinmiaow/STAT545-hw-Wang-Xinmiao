@@ -29,7 +29,7 @@ _**Automating Data-analysis Pipelines**_
 - [X] Perform statistical analyses
 - [X] Generate figures
 - [X] Automate the pipeline
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ## Report Process
 
@@ -111,7 +111,7 @@ _**Automating Data-analysis Pipelines**_
 
 * gap_bfit.tsv
 
-3. -**Output**-
+3. _**Output**_
 
 * Dataset: gapminder.tsv, gap_re_continent.rds, gap_bfit.tsv
 
@@ -130,5 +130,4 @@ _**Automating Data-analysis Pipelines**_
 
 ***
 *on Nov 13, 2017*
-
 

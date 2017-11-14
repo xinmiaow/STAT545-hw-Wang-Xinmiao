@@ -14,7 +14,7 @@
  HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: | Reshaping, Join and Merge
  HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
  HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | Strings, Functions and Lists
- HW07          |  [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                 |:ballot_box_with_check: | Automating Data-analysis Pipelines
+ HW 07         | [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                  | :ballot_box_with_check:| Automating Data-analysis Pipelines
                
 
 ## Homework 07: Automating Data-analysis Pipelines
