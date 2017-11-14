@@ -10,6 +10,12 @@ output: html_document
 In this assignment, we practice to automate the data-analysis pipeline. 
 First, we create Write some R scripts to carry out a small data analysis. The output of the first script must be the input of the second, and so on. After doing so, we write a Makefile to pipeline these R scripts together, and get the result of data analysis.
 
+# Load Package
+```{r}
+library(tidyverse)
+```
+
+
 # Download the data
 
 First, I download the dataset, `gapminder` online, and save as `gapminder.tsv`.
