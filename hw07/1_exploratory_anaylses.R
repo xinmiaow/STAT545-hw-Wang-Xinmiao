@@ -25,7 +25,7 @@ p2 <- ggplot(gapminder, aes(x=lifeExp))+
 
 ggsave("histogram.png", plot=p2)
 
-## 
+## Time Series Plot
 p3 <- ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
   geom_point()+
   facet_wrap(~continent)+
@@ -34,6 +34,7 @@ p3 <- ggplot(gapminder, aes(x=year, y=lifeExp, color=continent))+
 
 ggsave("timeplot_lifeExp.png", plot=p3)
 
+## Plot Of Mean LifeExp
 p4 <- gapminder %>% 
   group_by(continent, year) %>% 
   summarise(mean_le=mean(lifeExp)) %>% 
@@ -46,8 +47,8 @@ p4 <- gapminder %>%
 ggsave("timeplot_meanLifeExp.png", plot=p4)
 
 # Reorder Contient
-
 gap_re_continent <- gapminder %>% 
-  mutate(continent=fct_reorder(continent, lifeExp, mean, .desc = TRUE))
+  mutate(continent=fct_reorder(continent, lifeExp, mean))
 
+## Save dataset
 saveRDS(gap_re_country, "gap_re_continent.rds")
