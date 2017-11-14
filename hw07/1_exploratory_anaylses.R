@@ -48,6 +48,6 @@ ggsave("timeplot_meanLifeExp.png", plot=p4)
 # Reorder Contient
 
 gap_re_continent <- gapminder %>% 
-  mutate(continent=fct_reorder(lifeExp, mean, .desc = TRUE))
+  mutate(continent=fct_reorder(continent, lifeExp, mean, .desc = TRUE))
 
 saveRDS(gap_re_country, "gap_re_continent.rds")
