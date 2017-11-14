@@ -29,65 +29,27 @@ myfits <- gap_re_continent %>%
 write.table(myfits, "lm_fits.tsv",
             sep = "\t", row.names = FALSE, quote = FALSE)
 
-# Select Top 4 countries for Each Continent
-myfit_clean <- myfits %>% 
+# Select 4 Countries with best fitted model for Each Continent
+myfit_bfit <- myfits %>% 
   group_by(continent) %>% 
   mutate(order_RSD = order(RSD)) %>% 
   filter(order_RSD<=4) %>% 
   select(-order_RSD)
 
-# Generate figures
-pc1 <- gap_re_continent %>% 
-  filter(continent=="Africa", country %in% myfit_clean$country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_point(aes(group=country))+
-  geom_smooth(method = "lm", se=FALSE)  
-  facet_wrap(~country)+
-  theme_calc()+
-  ggtitle("The Scatterplot of LifeExp over Years in Africa")
-  
-ggsave("Africa.png", plot=pc1)
+gap_bfit <- gap_re_continent %>% 
+  filter(country %in% myfit_bfit$country)
 
-pc2 <- gap_re_continent %>% 
-  filter(continent=="Asia", country %in% myfit_clean$country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_point(aes(group=country))+
-  geom_smooth(method = "lm", se=FALSE)  
-  facet_wrap(~country)+
-  theme_calc()+
-  ggtitle("The Scatterplot of LifeExp over Years in Asia")
-  
-ggsave("Aisa.png", plot=pc2)
+# Select 4 Countries with worst fitted model for Each Continent
+myfit_wfit <- myfits %>% 
+  group_by(continent) %>% 
+  mutate(order_RSD = order(RSD, decreasing = TRUE)) %>% 
+  filter(order_RSD<=4) %>% 
+  select(-order_RSD)
 
-pc3 <- gap_re_continent %>% 
-  filter(continent=="Americas", country %in% myfit_clean$country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_point(aes(group=country))+
-  geom_smooth(method = "lm", se=FALSE)  
-  facet_wrap(~country)+
-  theme_calc()+
-  ggtitle("The Scatterplot of LifeExp over Years in Americas")
+gap_wfit <- gap_re_continent %>% 
+  filter(country %in% myfit_wfit$country)
 
-ggsave("Americas.png", plot=pc3)
 
-pc4 <- gap_re_continent %>% 
-  filter(continent=="Europe", country %in% myfit_clean$country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_point(aes(group=country))+
-  geom_smooth(method = "lm", se=FALSE)  
-  facet_wrap(~country)+
-  theme_calc()+
-  ggtitle("The Scatterplot of LifeExp over Years in Europe")
-
-ggsave("Europe.png", plot=pc4)
-
-pc5 <- gap_re_continent %>% 
-  filter(continent=="Oceania", country %in% myfit_clean$country) %>% 
-  ggplot(aes(x=year, y=lifeExp, color=country))+
-  geom_point(aes(group=country))+
-  geom_smooth(method = "lm", se=FALSE)  
-  facet_wrap(~country)+
-  theme_calc()+
-  ggtitle("The Scatterplot of LifeExp over Years in Oceania")
-
-ggsave("Oceania.png", plot=pc5)
+# Write a file
+write.table(gap_bfit, "gap_bfit.tsv",
+            sep = "\t", row.names = FALSE, quote = FALSE)
