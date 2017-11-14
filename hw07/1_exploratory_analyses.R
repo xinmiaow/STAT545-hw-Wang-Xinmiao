@@ -14,7 +14,7 @@ p1 <- ggplot(gapminder, aes(x=continent))+
   theme_calc()+
   ggtitle("The Bar Chart of Continent")
 
-ggsave("./hw07/barchar.png", plot=p1)
+ggsave("./hw07/barchart.png", plot=p1)
 
 ## Histogram of Life Expectancy
 p2 <- ggplot(gapminder, aes(x=lifeExp))+
