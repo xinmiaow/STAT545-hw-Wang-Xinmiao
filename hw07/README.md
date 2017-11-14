@@ -3,7 +3,7 @@
 
 _**Automating Data-analysis Pipelines**_
 
-:round_pushpin: Here is hw06 folder under [my STAT545 Homework Repo](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao). :octocat:
+:round_pushpin: Here is hw07 folder under [my STAT545 Homework Repo](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao). :octocat:
 
 
 ## Files inside
