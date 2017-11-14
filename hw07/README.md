@@ -35,20 +35,97 @@ _**Automating Data-analysis Pipelines**_
 
 ### 0_download_data.R
 
+_**Job**_
+
+* Download the dataset online
+
+_**Input**_
+
+* A link to the online dataset 
+
+-**Output**-
+
+* Dataset: gapminder.tsv
 
 ### 1_exploratory_analyses.R
+
+_**Job**_
+
+* Analyze the dataset, gapminder.tsv, by explore the distributions of variables of interest. 
+
+* Reorder the levels of continents by the mean of their life expectancy, and then save it as a new dataset
+
+_**Input**_
+
+* gapminder.tsv
+
+-**Output**-
+
+* Dataset: gap_re_continent.rds
+
+* Figures: barchart.png, histogram.png, timeplot_lifeExp.png, timeplot_meanLifeExp.png
 
 
 ### 2_statistical_analyses.R
 
+_**Job**_
+
+* Analyze the dataset, gap_re_continent.rds, by fit a linear regression for lifeExp to year for countries in each continent. 
+
+* Save the intercept, the slop and the residual standard error as a file, called lm_fits.tsv
+
+* Select four best and four worst countries in each continent according to the residual standard error of their lm fits
+
+* Save the data of four best countries in each continent as a file, called gap_bfit.tsv
+
+_**Input**_
+
+* gap_re_continent.rds
+
+-**Output**-
+
+* Dataset: lm_fits.tsv, gap_bfit.tsv
+
 
 ### 3_generate_figures.R
 
+_**Job**_
+
+* Generate the scatterplot of lifeExp vs Year for each country in each contients and save then as .png files
+
+_**Input**_
+
+* gap_bfit.tsv
+
+-**Output**-
+
+* Figures: Africa.png, Asia.png, Americas.png, Europe.png, Oceania.png
 
 ### hw07_Gapminder.Rmd
 
+_**Job**_
+
+* Combine the outputs above, and render a report to summarize some important results
+
+_**Input**_
+
+* gap_bfit.tsv
+
+-**Output**-
+
+* Dataset: gapminder.tsv, gap_re_continent.rds, gap_bfit.tsv
+
+* Figures: barchart.png, histogram.png, timeplot_lifeExp.png, timeplot_meanLifeExp.png, Africa.png, Asia.png, Americas.png, Europe.png, Oceania.png
 
 ### Makefile
+
+_**Job**_
+
+* Automate the pipeline 
+
+* render a Markdown file
+
+* After build all, clean all (Notes: to make hw07_Gapminder.md works well, I only delect the datasets)
 
 
 ***
