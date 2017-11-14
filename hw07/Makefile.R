@@ -9,7 +9,7 @@ outputs <- c("gapminder.tsv",                     # 0_download-data.R
 file.remove(outputs)
 
 ## run my scripts
-source("0_download-data.R")
+source("0_download_data.R")
 source("1_exploratory_analyses.R")
 source("2_statistical_analyses.R")
 source("3_generate_figures")
