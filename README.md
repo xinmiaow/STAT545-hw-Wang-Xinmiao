@@ -14,7 +14,30 @@
  HW 04         | [hw04_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw04/hw04_Gapminder.md)                  | :ballot_box_with_check: | Reshaping, Join and Merge
  HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
  HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | Strings, Functions and Lists
+ HW07          |  [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                 |:ballot_box_with_check: | Automating Data-analysis Pipelines
                
+
+## Homework 07: Automating Data-analysis Pipelines
+
+* Requirement for Homework 07: click [here](http://stat545.com/hw07_automation.html)
+
+* hw07 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw07).
+
+* Files inside hw07:
+
+1. [0_download_data.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/0_download_data.R)
+
+2. [1_exploratory_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/1_exploratory_analyses.R)
+
+3. [2_statistical_analyses.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/2_statistical_analyses.R)
+
+4. [3_generate_figures.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/3_generate_figures.R)
+
+5. [Makefile](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/Makefile)
+
+6. [hw07_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.Rmd)
+
+7. [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)
 
 ## Homework 06: Data wrangling wrap up
 

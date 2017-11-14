@@ -35,15 +35,15 @@ _**Automating Data-analysis Pipelines**_
 
 ### 0_download_data.R
 
-_**Job**_
+1. _**Job**_
 
 * Download the dataset online
 
-_**Input**_
+2. _**Input**_
 
 * A link to the online dataset 
 
--**Output**-
+3. _**Output**_
 
 * Dataset: gapminder.tsv
 
@@ -59,7 +59,7 @@ _**Input**_
 
 * gapminder.tsv
 
-3. -**Output**-
+3. _**Output**_
 
 * Dataset: gap_re_continent.rds
 
@@ -82,7 +82,7 @@ _**Input**_
 
 * gap_re_continent.rds
 
-3. -**Output**-
+3. _**Output**_
 
 * Dataset: lm_fits.tsv, gap_bfit.tsv
 
