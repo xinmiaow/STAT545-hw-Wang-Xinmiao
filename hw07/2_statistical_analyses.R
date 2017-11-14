@@ -1,5 +1,7 @@
 # Load package
 library(broom)
+library(tidyverse)
+library(ggthemes)
 
 # Read dataset
 gap_re_continent <- readRDS("gap_re_continent.rds")
@@ -34,5 +36,58 @@ myfit_clean <- myfits %>%
   filter(order_RSD<=4) %>% 
   select(-order_RSD)
 
-write.table(myfit_clean, "lm_fits_clean.tsv",
-            sep = "\t", row.names = FALSE, quote = FALSE)
+# Generate figures
+pc1 <- gap_re_continent %>% 
+  filter(continent=="Africa", country %in% myfit_clean$country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_point(aes(group=country))+
+  geom_smooth(method = "lm", se=FALSE)  
+  facet_wrap(~country)+
+  theme_calc()+
+  ggtitle("The Scatterplot of LifeExp over Years in Africa")
+  
+ggsave("Africa.png", plot=pc1)
+
+pc2 <- gap_re_continent %>% 
+  filter(continent=="Asia", country %in% myfit_clean$country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_point(aes(group=country))+
+  geom_smooth(method = "lm", se=FALSE)  
+  facet_wrap(~country)+
+  theme_calc()+
+  ggtitle("The Scatterplot of LifeExp over Years in Asia")
+  
+ggsave("Aisa.png", plot=pc2)
+
+pc3 <- gap_re_continent %>% 
+  filter(continent=="Americas", country %in% myfit_clean$country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_point(aes(group=country))+
+  geom_smooth(method = "lm", se=FALSE)  
+  facet_wrap(~country)+
+  theme_calc()+
+  ggtitle("The Scatterplot of LifeExp over Years in Americas")
+
+ggsave("Americas.png", plot=pc3)
+
+pc4 <- gap_re_continent %>% 
+  filter(continent=="Europe", country %in% myfit_clean$country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_point(aes(group=country))+
+  geom_smooth(method = "lm", se=FALSE)  
+  facet_wrap(~country)+
+  theme_calc()+
+  ggtitle("The Scatterplot of LifeExp over Years in Europe")
+
+ggsave("Europe.png", plot=pc4)
+
+pc5 <- gap_re_continent %>% 
+  filter(continent=="Oceania", country %in% myfit_clean$country) %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+  geom_point(aes(group=country))+
+  geom_smooth(method = "lm", se=FALSE)  
+  facet_wrap(~country)+
+  theme_calc()+
+  ggtitle("The Scatterplot of LifeExp over Years in Oceania")
+
+ggsave("Oceania.png", plot=pc5)

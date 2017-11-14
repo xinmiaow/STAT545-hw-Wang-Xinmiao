@@ -51,4 +51,4 @@ gap_re_continent <- gapminder %>%
   mutate(continent=fct_reorder(continent, lifeExp, mean))
 
 ## Save dataset
-saveRDS(gap_re_country, "gap_re_continent.rds")
+saveRDS(gap_re_continent, "gap_re_continent.rds")
