@@ -49,17 +49,17 @@ _**Input**_
 
 ### 1_exploratory_analyses.R
 
-_**Job**_
+1. _**Job**_
 
 * Analyze the dataset, gapminder.tsv, by explore the distributions of variables of interest. 
 
 * Reorder the levels of continents by the mean of their life expectancy, and then save it as a new dataset
 
-_**Input**_
+2. _**Input**_
 
 * gapminder.tsv
 
--**Output**-
+3. -**Output**-
 
 * Dataset: gap_re_continent.rds
 
@@ -68,7 +68,7 @@ _**Input**_
 
 ### 2_statistical_analyses.R
 
-_**Job**_
+1. _**Job**_
 
 * Analyze the dataset, gap_re_continent.rds, by fit a linear regression for lifeExp to year for countries in each continent. 
 
@@ -78,11 +78,11 @@ _**Job**_
 
 * Save the data of four best countries in each continent as a file, called gap_bfit.tsv
 
-_**Input**_
+2. _**Input**_
 
 * gap_re_continent.rds
 
--**Output**-
+3. -**Output**-
 
 * Dataset: lm_fits.tsv, gap_bfit.tsv
 
@@ -97,7 +97,7 @@ _**Input**_
 
 * gap_bfit.tsv
 
--**Output**-
+_**Output**_
 
 * Figures: Africa.png, Asia.png, Americas.png, Europe.png, Oceania.png
 
