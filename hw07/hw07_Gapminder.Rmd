@@ -73,7 +73,6 @@ gap_bfit <- read.delim("gap_bfit.tsv")
 gap_bfit %>%
   group_by(continent, country) %>% 
   summarise(mean_lifeExp = mean(lifeExp)) %>% 
-  arrange(desc(mean_lifeExp)) %>% 
   knitr::kable()
 
 ```
@@ -85,23 +84,17 @@ In this section, I use the dataset created in the second R script, called `gap_b
 
 I display them in the order of their mean lifeExp, which we used it before to reorder the levels of continent.
 
-The Scatterplot of LifeExp over Years in Africa
 
 ![The Scatterplot of LifeExp over Years in Africa](Africa.png)
 
-The Scatterplot of LifeExp over Years in Asia
-
 ![The Scatterplot of LifeExp over Years in Asia](Asia.png)
 
-The Scatterplot of LifeExp over Years in Americas
 
 ![The Scatterplot of LifeExp over Years in Americas](Americas.png)
 
-The Scatterplot of LifeExp over Years in Europe
 
 ![The Scatterplot of LifeExp over Years in Europe](Europe.png)
 
-The Scatterplot of LifeExp over Years in Oceania
 
 ![The Scatterplot of LifeExp over Years in Oceania](Oceania.png)
 
