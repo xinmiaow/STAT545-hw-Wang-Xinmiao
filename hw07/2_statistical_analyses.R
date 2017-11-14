@@ -4,7 +4,7 @@ library(tidyverse)
 library(ggthemes)
 
 # Read dataset
-gap_re_continent <- readRDS("gap_re_continent.rds")
+gap_re_continent <- readRDS("./hw07/gap_re_continent.rds")
 
 # Fit model
 ## Define a function
@@ -26,7 +26,7 @@ myfits <- gap_re_continent %>%
   do(lm_ly(.))
 
 # Write a file
-write.table(myfits, "lm_fits.tsv",
+write.table(myfits, "./hw07/lm_fits.tsv",
             sep = "\t", row.names = FALSE, quote = FALSE)
 
 # Select 4 Countries with best fitted model for Each Continent
@@ -51,5 +51,5 @@ gap_wfit <- gap_re_continent %>%
 
 
 # Write a file
-write.table(gap_bfit, "gap_bfit.tsv",
+write.table(gap_bfit, "./hw07/gap_bfit.tsv",
             sep = "\t", row.names = FALSE, quote = FALSE)
