@@ -10,7 +10,7 @@ gapminder <- read.delim("gapminder.tsv")
 # Plots
 ## Bar chart of continent
 p1 <- ggplot(gapminder, aes(x=continent))+
-  geom_bar(aes(color=continent), fill=continent_colors)+
+  geom_bar(aes(color=continent, fill=continent))+
   theme_calc()+
   ggtitle("The Bar Chart of Continent")
 
