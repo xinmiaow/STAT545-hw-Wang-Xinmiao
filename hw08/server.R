@@ -1,5 +1,8 @@
 library(tidyverse)
 library(ggthemes)
+library(DT)
+library(colourpicker)
+library(shiny)
 
 server <- function(input, output){
   bcl_data <- read.csv("./dataset/bcl-data.csv")
@@ -11,15 +14,32 @@ server <- function(input, output){
   }) 
   
   Filtered_bcl <- reactive({
-    if (is.null(input$countryInput)) {
-      return(NULL)
-    } 
+    if (input$filterCountry) {
+      if (is.null(input$countryInput)) {
+        return(NULL)
+      } else {
+        bcl_data %>% 
+          filter(Price>=input$priceIn[1], 
+                 Price<=input$priceIn[2], 
+                 Type==input$typeIn,
+                 Country==input$countryInput)
+      }
+    } else {
+      bcl_data %>% 
+        filter(Price>=input$priceIn[1], 
+               Price<=input$priceIn[2], 
+               Type==input$typeIn)
+    }
     
-    bcl_data %>% 
-      filter(Price>=input$priceIn[1], 
-             Price<=input$priceIn[2], 
-             Type==input$typeIn,
-             Country==input$countryInput)
+   
+  })
+  
+  output$nrowText <- renderText({
+    n <- nrow(Filtered_bcl())
+    if (is.null(n)) {
+      n <- 0
+    }
+    paste0("We found ", n, " options for you")
   })
 
   output$Histogram_Alcogol <- renderPlot({
@@ -29,11 +49,11 @@ server <- function(input, output){
     
     Filtered_bcl() %>% 
       ggplot(aes(x=Alcohol_Content))+
-      geom_histogram()+
+      geom_histogram(bg=input$col, col=input$col)+
       theme_calc()
   })
   
-  output$bcl_table<- renderTable({
+  output$bcl_table<- DT::renderDataTable({
     if (input$sortPrice){
       Filtered_bcl() %>% 
         arrange(Price)

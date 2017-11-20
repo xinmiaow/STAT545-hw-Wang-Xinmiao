@@ -1,11 +1,17 @@
 library(tidyverse)
 library(ggthemes)
+library(DT)
+library(colourpicker)
+library(shiny)
+library(shinythemes)
 
 bcl_data <- read.csv("./dataset/bcl-data.csv")
 
 ui <- fluidPage(
+  # Themes
+  theme = shinytheme("simplex"),
   # Application title
-  titlePanel("BC Liquor Store prices"),
+  titlePanel("BC Liquor Store Prices"),
   sidebarLayout(
     sidebarPanel(
       img(src="logo1.jpg", width="100%"),
@@ -13,15 +19,23 @@ ui <- fluidPage(
       radioButtons("typeIn", "Product type",
                    choices = c("BEER", "REFRESHMENT", "SPIRITS", "WINE"),
                    selected = "WINE"),
-      uiOutput("countryOutput"),
+      checkboxInput("filterCountry", "Filter by Country", FALSE),
+      conditionalPanel(
+        condition = "input.filterCountry",
+        uiOutput("countryOutput")
+      ),
       "Do you want sort the table by Price?",
       checkboxInput("sortPrice", "Sort by Price", FALSE),
-      verbatimTextOutput("value")
+      verbatimTextOutput("value"),
+      colourInput("col", "Select colour", "#CC0E0ED6", allowTransparent = TRUE)
     ),
     mainPanel(
-      plotOutput("Histogram_Alcogol"),
-      br(), br(),
-      tableOutput("bcl_table")
+      h4(textOutput("nrowText")),
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("Histogram_Alcogol")),
+        tabPanel("Table", DT::dataTableOutput("bcl_table")),
+        type = "tabs"
+      )
     )
   )
 )
