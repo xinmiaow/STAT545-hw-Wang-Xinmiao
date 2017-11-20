@@ -28,7 +28,11 @@ ui <- fluidPage(
       "Do you want sort the table by Price?",
       checkboxInput("sortPrice", "Sort by Price", FALSE),
       verbatimTextOutput("value"),
-      colourInput("col", "Select colour", "#CC0E0ED6", allowTransparent = TRUE)
+      colourInput("col", "Select colour", "#CC0E0ED6", allowTransparent = TRUE),
+      hr(),
+      span("Data source:", 
+           tags$a("OpenDataBC",
+                  href = "https://www.opendatabc.ca/dataset/bc-liquor-store-product-price-list-current-prices"))
     ),
     mainPanel(
       h4(textOutput("nrowText")),
