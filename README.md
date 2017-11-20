@@ -35,7 +35,7 @@
   
 * Link to My Shiny App
 
-1. [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)
+  1. [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)
 
 ## Homework 07: Automating Data-analysis Pipelines
 
