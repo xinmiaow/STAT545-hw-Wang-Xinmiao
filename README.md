@@ -15,7 +15,27 @@
  HW 05         | [hw05_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw05/hw05_Gapminder.md)                  | :ballot_box_with_check: | Factor and Figures
  HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | Strings, Functions and Lists
  HW 07         | [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                  | :ballot_box_with_check:| Automating Data-analysis Pipelines
-               
+ HW08          | [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)                                                            | :ballot_box_with_check: | Building Shiny apps
+
+## Homework 08: Building Shiny apps
+
+* Requirement for Homework 08: click [here](http://stat545.com/hw08_shiny.html)
+
+* hw08 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw08).
+
+* Files inside hw08:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw08/README.md)
+
+  2. [App.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw08/App.R)
+  
+  3. [server.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw08/server.R)
+  
+  4. [ui.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw08/ui.R)
+  
+* Link to My Shiny App
+
+1. [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)
 
 ## Homework 07: Automating Data-analysis Pipelines
 
