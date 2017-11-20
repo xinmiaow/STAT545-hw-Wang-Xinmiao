@@ -14,6 +14,10 @@ _**Building Shiny apps**_
 
 3. [ui.R](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw08/ui.R)
 
+## Link to My Shiny App
+
+1. [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)
+
 ## To-Dos List
 
 - [X] Creat files ui.R, server.R and app.R
@@ -26,9 +30,6 @@ _**Building Shiny apps**_
 - [X] Add a theme by `shinythemes`
 - [X] Show the number of results found whenever the filters change
 - [X] Provide a way for the user to show results from all countries
-- [ ] 
-- [ ] 
-- [ ] 
 - [ ] Submit the assignment
 
 ***
