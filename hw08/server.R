@@ -1,4 +1,5 @@
 library(tidyverse)
+library(ggthemes)
 
 server <- function(input, output){
   bcl_data <- read.csv("./myfiles/bcl-data.csv")
@@ -10,7 +11,8 @@ server <- function(input, output){
   output$Histogram_Alcogol <- renderPlot({
     Filtered_bcl() %>% 
       ggplot(aes(x=Alcohol_Content))+
-      geom_histogram()
+      geom_histogram()+
+      theme_calc()
   })
   output$table_head <- renderTable({
     Filtered_bcl() %>% 
