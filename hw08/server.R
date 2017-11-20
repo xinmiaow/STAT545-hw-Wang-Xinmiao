@@ -62,4 +62,13 @@ server <- function(input, output){
     }
     
   })
+  
+  output$download <- downloadHandler(
+    filename = function() {
+      "bcl-results.csv"
+    },
+    content = function(con) {
+      write.csv(Filtered_bcl(), con)
+    }
+  )
 }

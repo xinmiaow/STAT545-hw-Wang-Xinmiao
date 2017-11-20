@@ -15,6 +15,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       img(src="logo1.jpg", width="100%"),
+      hr(),
       sliderInput("priceIn", "Price", 0, 100, c(25, 40), pre = "CAD"),
       radioButtons("typeIn", "Product type",
                    choices = c("BEER", "REFRESHMENT", "SPIRITS", "WINE"),
@@ -32,8 +33,8 @@ ui <- fluidPage(
     mainPanel(
       h4(textOutput("nrowText")),
       tabsetPanel(
-        tabPanel("Plot", plotOutput("Histogram_Alcogol")),
-        tabPanel("Table", DT::dataTableOutput("bcl_table")),
+        tabPanel("Plot", br(), plotOutput("Histogram_Alcogol")),
+        tabPanel("Table", br(), downloadButton("download", "Download results"), hr(), DT::dataTableOutput("bcl_table")),
         type = "tabs"
       )
     )

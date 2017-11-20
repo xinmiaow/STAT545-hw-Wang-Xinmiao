@@ -30,6 +30,7 @@ _**Building Shiny apps**_
 - [X] Add a theme by `shinythemes`
 - [X] Show the number of results found whenever the filters change
 - [X] Provide a way for the user to show results from all countries
+- [X] Allow the user to download the results table as a ..csv file
 - [ ] Submit the assignment
 
 ***
