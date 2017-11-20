@@ -1,16 +1,27 @@
+library(tidyverse)
+library(ggthemes)
+
+bcl_data <- read.csv("./dataset/bcl-data.csv")
+
 ui <- fluidPage(
   # Application title
-  titlePanel("My liquor webpage"),
-  
-  sidebarPanel("This is my sidebar",
-               sliderInput("priceIn", "Price of booze", 
-                           min=0, max=300, value=c(10,20), pre="CAD"),
-               radioButtons("typeIn", "What kind of booze?",
-                            choices=c("BEER", "SPIRITS", "WINE"),
-                            selected="SPIRITS")
-  ),
-  
-  mainPanel(plotOutput("Histogram_Alcogol"),
-            br(), br(),
-            tableOutput("table_head"))
+  titlePanel("BC Liquor Store prices"),
+  sidebarLayout(
+    sidebarPanel(
+      img(src="logo1.jpg", width="100%"),
+      sliderInput("priceIn", "Price", 0, 100, c(25, 40), pre = "CAD"),
+      radioButtons("typeIn", "Product type",
+                   choices = c("BEER", "REFRESHMENT", "SPIRITS", "WINE"),
+                   selected = "WINE"),
+      uiOutput("countryOutput"),
+      "Do you want sort the table by Price?",
+      checkboxInput("sortPrice", "Sort by Price", FALSE),
+      verbatimTextOutput("value")
+    ),
+    mainPanel(
+      plotOutput("Histogram_Alcogol"),
+      br(), br(),
+      tableOutput("bcl_table")
+    )
+  )
 )
