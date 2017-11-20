@@ -1,7 +1,7 @@
 library(tidyverse)
 
 server <- function(input, output){
-  bcl_data <- read.csv("./dataset/bcl-data.csv")
+  bcl_data <- read.csv("./myfiles/bcl-data.csv")
   Filtered_bcl <- reactive({bcl_data %>% 
       filter(Price>=input$priceIn[1], 
              Price<=input$priceIn[2], 
