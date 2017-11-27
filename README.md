@@ -16,7 +16,7 @@
  HW 06         | [hw06_xw.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw06/hw06_xw.md)                                | :ballot_box_with_check: | Strings, Functions and Lists
  HW 07         | [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                  | :ballot_box_with_check:| Automating Data-analysis Pipelines
  HW 08         | [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)                                                            | :ballot_box_with_check: | Building Shiny apps
- HW 09         | [foofactors Package](https://github.com/xinmiaow/foofactors)                                                           | :ballot_box_with_check: | Building Your own R Package
+ HW 09         | [foofactors Package](https://github.com/xinmiaow/foofactors)                                                                  | :ballot_box_with_check: | Building Your own R Package
 
 
 ## Homework 09: Building Your own R Package

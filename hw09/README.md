@@ -14,7 +14,7 @@ _**Building Shiny apps**_
 - [X] detect_fct(): detect factors that should be character
 - [X] reorder(): write a version of reorder() that uses desc() a la (d)plyr
 - [X] factor_asis():  sets levels to the order in which they appear in the data
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ## Report My Process
 
