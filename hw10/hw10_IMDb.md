@@ -458,11 +458,12 @@ Runtime
 Most of top rated movies lasts for around 130 minutes.
 
 ``` r
-summary(movie.dat$runtime)
+knitr::kable(t(summary(movie.dat$runtime)))
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    ##    14.0   105.0   126.0   127.4   147.0   238.0      41
+|  Min.|  1st Qu.|  Median|   Mean|  3rd Qu.|  Max.|  NA's|
+|-----:|--------:|-------:|------:|--------:|-----:|-----:|
+|    14|      105|     126|  127.4|      147|   238|    41|
 
 ``` r
 movie.dat %>% 
@@ -478,7 +479,7 @@ movie.dat %>%
 Runtime verse Year
 ------------------
 
-There is no exact pattern of the running time over year.
+There is no exact pattern of the running time over year. Similar to the histogram, Most of top rated movies lasts for between 100 minutes and 150 minutes
 
 ``` r
 movie.dat %>% 
@@ -517,6 +518,7 @@ movie.dat %>%
 ![](hw10_IMDb_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-1.png)
 
 Reference
+=========
 
 -   [IMDb: Top Rated Movies](http://www.imdb.com/chart/top?ref_=nv_mv_250_6)
 
