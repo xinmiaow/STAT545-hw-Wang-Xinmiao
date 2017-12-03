@@ -17,6 +17,20 @@
  HW 07         | [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)                  | :ballot_box_with_check:| Automating Data-analysis Pipelines
  HW 08         | [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)                                                            | :ballot_box_with_check: | Building Shiny apps
  HW 09         | [foofactors Package](https://github.com/xinmiaow/foofactors)                                                                  | :ballot_box_with_check: | Building Your own R Package
+ HW 10         | [hw10_IMDb.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw10/hw10_IMDb.md)                                                                 | :ballot_box_with_check: | Data from the Web
+
+
+## Homework 10: Data from the Web
+
+* Requirement for Homework 10: click [here](http://stat545.com/hw10_data-from-web.html)
+
+* hw10 folder: [here](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/tree/master/hw10).
+
+* Files inside hw10:
+
+  1. [README.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw10/README.md)
+  2. [hw10_IMDb.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw10/hw10_IMDb.Rmd)
+  3. [hw10_IMDb.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw10/hw10_IMDb.md)
 
 
 ## Homework 09: Building Your own R Package
@@ -48,6 +62,7 @@
 
   1. [Shiny App: BC Liquor Store](https://xinmiaow.shinyapps.io/hw08/)
 
+
 ## Homework 07: Automating Data-analysis Pipelines
 
 * Requirement for Homework 07: click [here](http://stat545.com/hw07_automation.html)
@@ -69,6 +84,7 @@
   6. [hw07_Gapminder.Rmd](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.Rmd)
 
   7. [hw07_Gapminder.md](https://github.com/xinmiaow/STAT545-hw-Wang-Xinmiao/blob/master/hw07/hw07_Gapminder.md)
+
 
 ## Homework 06: Data wrangling wrap up
 
@@ -147,7 +163,4 @@
 
 
 ***
-
-
-
 
