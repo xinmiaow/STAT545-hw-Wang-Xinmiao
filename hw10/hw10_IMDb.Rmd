@@ -186,7 +186,7 @@ head(movie.info, 5)
 sum(is.na(movie.info$runtime))
 ```
 
-# Merge Dataset
+## Merge Dataset
 To combine the information from different source, I will merge the two datatsets so that we can use the information later.
 ```{r}
 movie.dat.tmp <- topmovie %>% 
@@ -197,7 +197,7 @@ knitr::kable(head(movie.dat.tmp, 10))
 ```
 
 ## Remove Title
-Because I merge the two dataset by `rank`, there are two variables about title in our final dataset. As we can see above, there are some differences between the title from two dataset. It is because of the way I clean the title collected from IMDB website. The tile from OMDb are supposed to be a right format. Hence, I am going to remove the title.x
+Because I merge the two dataset by `rank`, there are two variables about title in our final dataset. As we can see above, there are some differences between the title from two dataset. It is because of the way I clean the title collected from IMDb website. The tile from OMDb are supposed to be a right format. Hence, I am going to remove the title.x
 ```{r}
 movie.dat <- movie.dat.tmp %>% 
   mutate(title.x = title.y) %>% 
@@ -220,17 +220,17 @@ sum(is.na(movie.dat$runtime))
 
 # Dataset
 
-`movie. dat` collects top 250 rated movies from IMDB and contains the information about each movie.
+`movie. dat` collects top 250 rated movies from IMDb and contains the information about each movie.
 
 In the dataset, there are `r nrow(movie.dat)` observations with `r ncol(movie.dat)` variables,
 
-+ **Catergorical variables**
+**Catergorical variables**
    - title: The title of each movie
    - country: the country where the movie were produced. 
    - language: the language of the movie
    - genre: the genre of the movie
 
-+ **Quantitative variables**
+**Quantitative variables**
    - rank: the rank of the movie
    - year: when the movie were produced
    - rate: the rate of the movie
@@ -243,10 +243,13 @@ str(movie.dat)
 # Explanatory Analysis
 
 ## Country 
+
+Most of top rated movie were produced in USA.
 ```{r warning=FALSE}
 movie.dat %>% 
   group_by(country) %>% 
   summarise(count = length(title)) %>% 
+  t() %>% 
   knitr::kable()
 
 ```
@@ -263,10 +266,13 @@ movie.dat %>%
 
 
 ## Genre
+
+Most of top rated movies are Drama.
 ```{r warning=FALSE}
 movie.dat %>% 
   group_by(genre) %>% 
   summarise(count = length(title)) %>% 
+  t() %>% 
   knitr::kable()
 
 ```
@@ -284,6 +290,7 @@ movie.dat %>%
 
 ## Runtime
 
+Most of top rated movies lasts for around 130 minutes.
 ```{r}
 summary(movie.dat$runtime)
 ```
@@ -300,13 +307,8 @@ movie.dat %>%
 
 
 ## Runtime verse Year
-```{r}
-movie.dat %>% 
-  group_by(year) %>% 
-  summarise(Mean = mean(runtime, na.rm = TRUE)) %>% 
-  knitr::kable()
-```
 
+There is no exact pattern of the running time over year.
 
 ```{r}
 movie.dat %>% 
@@ -318,20 +320,14 @@ movie.dat %>%
 
 
 ## Rate
+
+The minimum rate among these top-rated movies is 8.
 ```{r}
-summary(movie.dat$rate)
+knitr::kable(t(summary(movie.dat$rate)))
 ```
 
 
 ## Rate verse Year
-```{r}
-movie.dat %>% 
-  group_by(year) %>% 
-  summarise(Mean = mean(rate, na.rm = TRUE)) %>% 
-  knitr::kable()
-```
-
-
 ```{r}
 movie.dat %>% 
   ggplot(aes(x=year, y=rate, group=year))+
@@ -339,3 +335,11 @@ movie.dat %>%
   theme_calc()+
   ggtitle("The Plot of Rate over year")
 ```
+
+Reference
+
+- [IMDb: Top Rated Movies](http://www.imdb.com/chart/top?ref_=nv_mv_250_6)
+
+- [OMDb API](http://www.omdbapi.com/)
+
+- [scraping-data-without-an-api](https://github.com/ropensci/user2016-tutorial/blob/master/03-scraping-data-without-an-api.pdf)

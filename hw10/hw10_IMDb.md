@@ -294,7 +294,7 @@ sum(is.na(movie.info$runtime))
     ## [1] 41
 
 Merge Dataset
-=============
+-------------
 
 To combine the information from different source, I will merge the two datatsets so that we can use the information later.
 
@@ -321,7 +321,7 @@ knitr::kable(head(movie.dat.tmp, 10))
 Remove Title
 ------------
 
-Because I merge the two dataset by `rank`, there are two variables about title in our final dataset. As we can see above, there are some differences between the title from two dataset. It is because of the way I clean the title collected from IMDB website. The tile from OMDb are supposed to be a right format. Hence, I am going to remove the title.x
+Because I merge the two dataset by `rank`, there are two variables about title in our final dataset. As we can see above, there are some differences between the title from two dataset. It is because of the way I clean the title collected from IMDb website. The tile from OMDb are supposed to be a right format. Hence, I am going to remove the title.x
 
 ``` r
 movie.dat <- movie.dat.tmp %>% 
@@ -367,21 +367,13 @@ sum(is.na(movie.dat$runtime))
 Dataset
 =======
 
-`movie. dat` collects top 250 rated movies from IMDB and contains the information about each movie.
+`movie. dat` collects top 250 rated movies from IMDb and contains the information about each movie.
 
 In the dataset, there are 250 observations with 8 variables,
 
--   **Catergorical variables**
--   title: The title of each movie
--   country: the country where the movie were produced.
--   language: the language of the movie
--   genre: the genre of the movie
+**Catergorical variables** - title: The title of each movie - country: the country where the movie were produced. - language: the language of the movie - genre: the genre of the movie
 
--   **Quantitative variables**
--   rank: the rank of the movie
--   year: when the movie were produced
--   rate: the rate of the movie
--   runtime: the running time of the movie
+**Quantitative variables** - rank: the rank of the movie - year: when the movie were produced - rate: the rate of the movie - runtime: the running time of the movie
 
 ``` r
 str(movie.dat)
@@ -403,33 +395,20 @@ Explanatory Analysis
 Country
 -------
 
+Most of top rated movie were produced in USA.
+
 ``` r
 movie.dat %>% 
   group_by(country) %>% 
   summarise(count = length(title)) %>% 
+  t() %>% 
   knitr::kable()
 ```
 
-| country      |  count|
-|:-------------|------:|
-| Australia    |      3|
-| Canada       |      2|
-| Denmark      |      1|
-| France       |      6|
-| Germany      |      5|
-| India        |      5|
-| Ireland      |      2|
-| Italy        |      3|
-| Japan        |      3|
-| Mexico       |      1|
-| New Zealand  |      1|
-| Soviet Union |      2|
-| Spain        |      1|
-| Sweden       |      2|
-| UK           |     22|
-| USA          |    148|
-| West Germany |      2|
-| NA           |     41|
+|         |           |        |         |        |         |       |         |       |       |        |             |              |       |        |     |     |              |     |
+|:--------|:----------|:-------|:--------|:-------|:--------|:------|:--------|:------|:------|:-------|:------------|:-------------|:------|:-------|:----|:----|:-------------|:----|
+| country | Australia | Canada | Denmark | France | Germany | India | Ireland | Italy | Japan | Mexico | New Zealand | Soviet Union | Spain | Sweden | UK  | USA | West Germany | NA  |
+| count   | 3         | 2      | 1       | 6      | 5       | 5     | 2       | 3     | 3     | 1      | 1           | 2            | 1     | 2      | 22  | 148 | 2            | 41  |
 
 ``` r
 movie.dat %>%
@@ -446,30 +425,20 @@ movie.dat %>%
 Genre
 -----
 
+Most of top rated movies are Drama.
+
 ``` r
 movie.dat %>% 
   group_by(genre) %>% 
   summarise(count = length(title)) %>% 
+  t() %>% 
   knitr::kable()
 ```
 
-| genre       |  count|
-|:------------|------:|
-| Action      |     27|
-| Adventure   |     24|
-| Animation   |     11|
-| Biography   |     19|
-| Comedy      |     24|
-| Crime       |     34|
-| Documentary |      5|
-| Drama       |     51|
-| Film-Noir   |      2|
-| Horror      |      3|
-| Mystery     |      6|
-| Sci-Fi      |      1|
-| Short       |      1|
-| Western     |      1|
-| NA          |     41|
+|       |        |           |           |           |        |       |             |       |           |        |         |        |       |         |     |
+|:------|:-------|:----------|:----------|:----------|:-------|:------|:------------|:------|:----------|:-------|:--------|:-------|:------|:--------|:----|
+| genre | Action | Adventure | Animation | Biography | Comedy | Crime | Documentary | Drama | Film-Noir | Horror | Mystery | Sci-Fi | Short | Western | NA  |
+| count | 27     | 24        | 11        | 19        | 24     | 34    | 5           | 51    | 2         | 3      | 6       | 1      | 1     | 1       | 41  |
 
 ``` r
 movie.dat %>%
@@ -485,6 +454,8 @@ movie.dat %>%
 
 Runtime
 -------
+
+Most of top rated movies lasts for around 130 minutes.
 
 ``` r
 summary(movie.dat$runtime)
@@ -507,96 +478,7 @@ movie.dat %>%
 Runtime verse Year
 ------------------
 
-``` r
-movie.dat %>% 
-  group_by(year) %>% 
-  summarise(Mean = mean(runtime, na.rm = TRUE)) %>% 
-  knitr::kable()
-```
-
-|  year|       Mean|
-|-----:|----------:|
-|  1921|   68.00000|
-|  1925|   95.00000|
-|  1926|   67.00000|
-|  1927|  153.00000|
-|  1928|        NaN|
-|  1931|   93.00000|
-|  1934|  105.00000|
-|  1936|   87.00000|
-|  1939|  156.33333|
-|  1940|  128.00000|
-|  1941|  109.50000|
-|  1942|  102.00000|
-|  1944|  107.00000|
-|  1946|  150.00000|
-|  1948|  126.00000|
-|  1949|   93.00000|
-|  1950|  113.00000|
-|  1952|  123.00000|
-|  1953|        NaN|
-|  1954|  108.33333|
-|  1955|        NaN|
-|  1957|   95.00000|
-|  1958|  111.50000|
-|  1959|  156.33333|
-|  1960|  117.00000|
-|  1961|  186.00000|
-|  1962|  172.50000|
-|  1963|  155.00000|
-|  1964|   95.00000|
-|  1965|        NaN|
-|  1966|  144.00000|
-|  1967|  126.00000|
-|  1968|  156.50000|
-|  1969|  110.00000|
-|  1971|  136.00000|
-|  1972|  175.00000|
-|  1973|  115.50000|
-|  1974|  166.00000|
-|  1975|  131.40000|
-|  1976|  118.00000|
-|  1977|  107.00000|
-|  1978|  183.00000|
-|  1979|  130.00000|
-|  1980|  130.75000|
-|  1981|  132.00000|
-|  1982|  139.00000|
-|  1983|  150.50000|
-|  1984|  160.25000|
-|  1985|  139.00000|
-|  1986|  115.33333|
-|  1987|  107.00000|
-|  1988|  131.00000|
-|  1989|  127.50000|
-|  1990|  146.00000|
-|  1991|   75.66667|
-|  1992|  114.50000|
-|  1993|  139.00000|
-|  1994|  127.20000|
-|  1995|  129.77778|
-|  1996|   96.00000|
-|  1997|  126.00000|
-|  1998|  107.60000|
-|  1999|  138.60000|
-|  2000|  125.20000|
-|  2001|  128.00000|
-|  2002|  156.66667|
-|  2003|  138.75000|
-|  2004|  104.75000|
-|  2005|  136.00000|
-|  2006|  138.60000|
-|  2007|  135.75000|
-|  2008|  117.50000|
-|  2009|  120.80000|
-|  2010|  123.60000|
-|  2011|  132.00000|
-|  2012|  117.00000|
-|  2013|  147.50000|
-|  2014|  135.40000|
-|  2015|  115.25000|
-|  2016|  142.66667|
-|  2017|  116.75000|
+There is no exact pattern of the running time over year.
 
 ``` r
 movie.dat %>% 
@@ -606,111 +488,23 @@ movie.dat %>%
   ggtitle("The Plot of Running Time over year")
 ```
 
-![](hw10_IMDb_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-23-1.png)
+![](hw10_IMDb_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-22-1.png)
 
 Rate
 ----
 
+The minimum rate among these top-rated movies is 8.
+
 ``` r
-summary(movie.dat$rate)
+knitr::kable(t(summary(movie.dat$rate)))
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   8.000   8.100   8.200   8.263   8.400   9.200
+|  Min.|  1st Qu.|  Median|   Mean|  3rd Qu.|  Max.|
+|-----:|--------:|-------:|------:|--------:|-----:|
+|     8|      8.1|     8.2|  8.263|      8.4|   9.2|
 
 Rate verse Year
 ---------------
-
-``` r
-movie.dat %>% 
-  group_by(year) %>% 
-  summarise(Mean = mean(rate, na.rm = TRUE)) %>% 
-  knitr::kable()
-```
-
-|  year|      Mean|
-|-----:|---------:|
-|  1921|  8.300000|
-|  1925|  8.200000|
-|  1926|  8.100000|
-|  1927|  8.150000|
-|  1928|  8.100000|
-|  1931|  8.400000|
-|  1934|  8.100000|
-|  1936|  8.500000|
-|  1939|  8.100000|
-|  1940|  8.166667|
-|  1941|  8.200000|
-|  1942|  8.500000|
-|  1944|  8.300000|
-|  1946|  8.300000|
-|  1948|  8.250000|
-|  1949|  8.200000|
-|  1950|  8.266667|
-|  1952|  8.250000|
-|  1953|  8.100000|
-|  1954|  8.350000|
-|  1955|  8.000000|
-|  1957|  8.314286|
-|  1958|  8.150000|
-|  1959|  8.175000|
-|  1960|  8.350000|
-|  1961|  8.200000|
-|  1962|  8.300000|
-|  1963|  8.100000|
-|  1964|  8.400000|
-|  1965|  8.300000|
-|  1966|  8.250000|
-|  1967|  8.100000|
-|  1968|  8.400000|
-|  1969|  8.100000|
-|  1971|  8.300000|
-|  1972|  9.200000|
-|  1973|  8.150000|
-|  1974|  8.600000|
-|  1975|  8.200000|
-|  1976|  8.133333|
-|  1977|  8.300000|
-|  1978|  8.100000|
-|  1979|  8.275000|
-|  1980|  8.350000|
-|  1981|  8.400000|
-|  1982|  8.100000|
-|  1983|  8.300000|
-|  1984|  8.160000|
-|  1985|  8.266667|
-|  1986|  8.200000|
-|  1987|  8.200000|
-|  1988|  8.300000|
-|  1989|  8.100000|
-|  1990|  8.700000|
-|  1991|  8.366667|
-|  1992|  8.250000|
-|  1993|  8.275000|
-|  1994|  8.760000|
-|  1995|  8.255556|
-|  1996|  8.100000|
-|  1997|  8.360000|
-|  1998|  8.280000|
-|  1999|  8.500000|
-|  2000|  8.283333|
-|  2001|  8.300000|
-|  2002|  8.360000|
-|  2003|  8.228571|
-|  2004|  8.180000|
-|  2005|  8.166667|
-|  2006|  8.340000|
-|  2007|  8.120000|
-|  2008|  8.400000|
-|  2009|  8.200000|
-|  2010|  8.280000|
-|  2011|  8.160000|
-|  2012|  8.366667|
-|  2013|  8.075000|
-|  2014|  8.216667|
-|  2015|  8.120000|
-|  2016|  8.160000|
-|  2017|  8.225000|
 
 ``` r
 movie.dat %>% 
@@ -720,4 +514,12 @@ movie.dat %>%
   ggtitle("The Plot of Rate over year")
 ```
 
-![](hw10_IMDb_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-26-1.png)
+![](hw10_IMDb_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-1.png)
+
+Reference
+
+-   [IMDb: Top Rated Movies](http://www.imdb.com/chart/top?ref_=nv_mv_250_6)
+
+-   [OMDb API](http://www.omdbapi.com/)
+
+-   [scraping-data-without-an-api](https://github.com/ropensci/user2016-tutorial/blob/master/03-scraping-data-without-an-api.pdf)
