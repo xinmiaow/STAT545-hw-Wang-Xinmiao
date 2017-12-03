@@ -17,7 +17,7 @@ _**Data from the Web**_
 - [X] Make API queries "by hand" using httr
 - [X] Merge datasets
 - [X] Explanatory Analysis
-- [ ] Submit the assignment
+- [X] Submit the assignment
 
 ## Reflection
 
