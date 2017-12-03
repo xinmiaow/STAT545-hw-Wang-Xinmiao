@@ -283,6 +283,7 @@ movie.dat %>%
   filter(length(title)>1) %>% 
   ggplot(aes(x=genre))+
   geom_bar(aes(color=genre, fill=genre))+
+  scale_x_discrete(labels = abbreviate)+
   theme_calc()+
   ggtitle("The Bar Chart of Genre (count>1)")
 ```
