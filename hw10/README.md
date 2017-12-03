@@ -14,14 +14,14 @@ _**Data from the Web**_
 ## To-Dos List
 
 - [X] Scrape Data
-- [X] Make API queries ¡°by hand¡± using httr
+- [X] Make API queries "by hand" using httr
 - [X] Merge datasets
-- [X] Generate figures
 - [X] Explanatory Analysis
 - [ ] Submit the assignment
 
-## Report Process
+## Reflection
 
+This assignment is not hard as long as we follow the lecture notes. I think it's an interesting topic and also a good assignment to practice and review what we learned before.
 
 ***
 *on Dec 03, 2017*
